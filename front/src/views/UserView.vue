@@ -1,5 +1,5 @@
 <template>
-  <div>질문입니다.</div>
+  <div>유저입니다</div>
 </template>
 
 <script setup></script>
