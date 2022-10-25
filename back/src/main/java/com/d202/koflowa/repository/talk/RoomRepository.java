@@ -1,6 +1,6 @@
 package com.d202.koflowa.repository.talk;
 
-import com.d202.koflowa.dto.talk.RoomDto;
+import com.d202.koflowa.dto.talktalk.RoomDto;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;

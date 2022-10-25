@@ -1,4 +1,4 @@
-package com.d202.koflowa.dto.talk;
+package com.d202.koflowa.dto.talktalk;
 
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
