@@ -1,5 +1,6 @@
 <template>
-  {{ count }}
+  <div>HomeView</div>
+  <div>{{ count }}</div>
 </template>
 
 <script setup>
