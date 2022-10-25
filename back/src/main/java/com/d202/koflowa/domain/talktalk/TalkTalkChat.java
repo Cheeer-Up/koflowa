@@ -23,9 +23,6 @@ public class TalkTalkChat {
     @JsonBackReference
     private TalkTalk talkTalk;
 
-    @OneToOne(mappedBy = "talkTalkChat")
-    private TalkTalkMeeting talkTalkMeeting;
-
     @Column(name = "talk_talk_user")
     private Long user;
 
@@ -40,4 +37,10 @@ public class TalkTalkChat {
 
     @Column(name = "talk_talk_chat_type")
     private int type;
+
+    @Column(name = "chatroom_seq")
+    private int chatroomSeq;
+
+    @Column(name = "session_code")
+    private int sessionCode;
 }
