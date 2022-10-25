@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+    include: oauth,secret
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    displayRequestDuration: true
+    groups-order: DESC
+
+server:
+  port: 8081
+  tomcat:
+    max-http-form-post-size: 20MB
+
+logging:
+  level:
+    #    root: debug
+    org.hibernate.SQL: debug
+    org.springframework.web: debug
+    #    org.hibernate.type: trace
+    com.d202.koflowa: debug
+
