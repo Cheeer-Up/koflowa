@@ -7,6 +7,7 @@ spring:
     url: jdbc:mysql://localhost:3306/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
   jpa:
     open-in-view: false
+    database: mysql
     hibernate:
       ddl-auto: update
     properties:

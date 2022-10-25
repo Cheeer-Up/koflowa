@@ -1,5 +1,6 @@
 package com.d202.koflowa.domain.talktalk;
 
+import com.d202.koflowa.domain.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "talk_talk_chat")
-public class TalkTalkChat {
+public class TalkTalkChat extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
