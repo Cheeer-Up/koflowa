@@ -1,7 +1,7 @@
 package com.d202.koflowa.controller;
 
 
-import com.d202.koflowa.dto.talk.MessageDto;
+import com.d202.koflowa.dto.talktalk.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
