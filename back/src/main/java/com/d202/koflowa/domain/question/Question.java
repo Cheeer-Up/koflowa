@@ -3,16 +3,22 @@ package com.d202.koflowa.domain.question;
 import com.d202.koflowa.domain.BaseTimeEntity;
 import com.d202.koflowa.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 
+@Builder
+//모든 필드값을 파라미터로 받는 생성자 자동 생성
+@AllArgsConstructor
+//final, not null 등만 받는 생성자 생성
+//@RequiredArgsConstructor
 @Entity
 @Getter
+@Setter
+//파라미터가 없는 기본 생성자 자동 생성
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@RequiredArgsConstructor
 @Table(name = "question")
 public class Question extends BaseTimeEntity {
 
@@ -30,6 +36,5 @@ public class Question extends BaseTimeEntity {
     private String title;
 
     @Column(name = "question_content", columnDefinition = "")
-    private String question_content;
-
+    private String content;
 }
