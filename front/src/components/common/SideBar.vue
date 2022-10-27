@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
     <ul>
-      <router-link to="/"><div>홈</div></router-link>
-      <router-link to="/ask"><div>질문</div></router-link>
-      <router-link to="/tag"><div>태그</div></router-link>
-      <router-link to="/user"><div>사용자</div></router-link>
-      <router-link to="/codereview"><div>코드 리뷰</div></router-link>
+      <router-link to="/"><li>홈</li></router-link>
+      <router-link to="/ask"><li>질문</li></router-link>
+      <router-link to="/tag"><li>태그</li></router-link>
+      <router-link to="/user"><li>사용자</li></router-link>
+      <router-link to="/codereview"><li>코드 리뷰</li></router-link>
       <li>코톡</li>
     </ul>
   </div>
@@ -18,14 +18,23 @@
   list-style-type: none;
 }
 
+.sidebar ul a {
+  text-decoration-line: none;
+  text-decoration: none;
+}
+
+.router-link-exact-active li {
+  border-right: solid 4px #5f8bff;
+}
+
 .sidebar li {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 0.5rem;
+  color: black;
 }
 
-.sidebar li:last-child {
-  margin-bottom: 1.5rem;
-}
-
-.sidebar {
+.sidebar li:hover {
+  background-color: #ececec;
+  font-weight: bold;
 }
 </style>

@@ -1,14 +1,13 @@
 <template>
   <b-container>
     <b-row>
-      <b-col flex>
+      <b-col class="title">
         <p>인기질문</p>
-        <b-button>질문 등록</b-button>
+        <b-button variant="dark">질문 등록</b-button>
       </b-col>
     </b-row>
-    <b-row>
-      <!-- 질문 컴포넌트-->
-    </b-row>
+    <hr />
+    <b-row> </b-row>
   </b-container>
 </template>
 
@@ -20,4 +19,17 @@ const store = useBoardStore();
 store.increment();
 </script>
 
-<style scoped></style>
+<style scoped>
+.title {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.title p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+</style>
