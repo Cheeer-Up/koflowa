@@ -5,12 +5,14 @@ import CodeReviewView from "@/views/CodeReviewView.vue";
 import UserView from "@/views/UserView.vue";
 import askRouter from "./askRouter";
 import TagView from "@/views/Tag/TagView.vue";
+import talkRouter from "./talkRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     ...authRouter,
     ...askRouter,
+    ...talkRouter,
     {
       path: "/",
       name: "home",
