@@ -5,11 +5,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public class TagDto {
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Request {
         private Long seq;
         private String name;

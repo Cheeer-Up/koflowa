@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "tag")
 public class Tag extends BaseTimeEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_seq")
     private Long seq;
 
