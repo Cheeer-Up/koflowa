@@ -5,6 +5,8 @@ import com.d202.koflowa.domain.common.UDType;
 import com.d202.koflowa.domain.question.Comment;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 public class CommentDto {
     @Data
     @AllArgsConstructor
@@ -35,6 +37,8 @@ public class CommentDto {
         private Long boardSeq;
         private QAType type;
         private String content;
+        private LocalDateTime createdTime;
+        private LocalDateTime modifiedTime;
 
         /* Entity -> Dto*/
         public Response(Response response){
@@ -43,6 +47,8 @@ public class CommentDto {
             this.boardSeq = response.getBoardSeq();
             this.type = response.getType();
             this.content = response.getContent();
+            this.createdTime = response.getCreatedTime();
+            this.modifiedTime = response.getModifiedTime();
         }
     }
 }
