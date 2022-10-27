@@ -12,13 +12,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic", "queuex`");
-        config.setApplicationDestinationPrefixes("/app");
+        config.setApplicationDestinationPrefixes("/pub");
+        config.enableSimpleBroker("/sub");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/koflowa-websocket").withSockJS();
+        registry.addEndpoint("/ws/chat").withSockJS();
     }
 
 }
