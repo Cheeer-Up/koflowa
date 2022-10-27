@@ -18,13 +18,12 @@ public class TalkController {
     //"/pub/chat/enter"
     @MessageMapping(value = "/chat/enter")
     public void enter(MessageDto message){
-        message.setMessage(message.getSender() + "님이 채팅방에 참여하였습니다.");
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/sub/chat/room/" + message.getUser_seq(), message);
     }
 
     @MessageMapping(value = "/chat/message")
     public void message(MessageDto message){
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/sub/chat/room/" + message.getUser_seq(), message);
     }
 
 }
