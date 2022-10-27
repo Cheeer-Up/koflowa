@@ -6,7 +6,7 @@
       <router-link to="/tag"><li>태그</li></router-link>
       <router-link to="/user"><li>사용자</li></router-link>
       <router-link to="/codereview"><li>코드 리뷰</li></router-link>
-      <li>코톡</li>
+      <router-link to="/talk"><li>코톡</li></router-link>
     </ul>
   </div>
 </template>
