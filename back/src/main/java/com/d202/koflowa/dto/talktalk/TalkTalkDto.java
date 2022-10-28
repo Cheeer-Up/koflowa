@@ -9,7 +9,7 @@ public class TalkTalkDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    private static class Request{
+    public static class Request{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
@@ -29,7 +29,7 @@ public class TalkTalkDto {
     }
 
     @Getter
-    private static class Response{
+    public static class Response{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
