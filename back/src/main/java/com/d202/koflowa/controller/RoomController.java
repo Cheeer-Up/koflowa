@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/chat")
-
 public class RoomController {
     private final RoomRepository repository;
 
