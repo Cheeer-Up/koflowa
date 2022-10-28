@@ -1,9 +1,9 @@
-// import logo from './logo.svg';
+import logo from "./logo.svg";
 import React from "react";
-import { Provider } from "react-redux";
-import { Switch } from "react-router-dom";
+import Provider from "redux";
+import Switch from "react-router-dom";
 
-import store from "./redux/store";
+import store from "./redux/store.js";
 
 import "./App.css";
 
