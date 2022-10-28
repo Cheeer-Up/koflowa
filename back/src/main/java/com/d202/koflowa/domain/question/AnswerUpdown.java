@@ -31,6 +31,7 @@ public class AnswerUpdown {
     private Answer answer;
 
     @Column(name = "answer_updown_type")
+    @Enumerated(EnumType.STRING)
     private UDType type;
 
 }

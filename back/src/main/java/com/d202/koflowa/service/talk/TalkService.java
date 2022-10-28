@@ -19,24 +19,26 @@ public class TalkService {
 
     /* 유저 ID에 해당하는 채팅방을 검색 */
     public List<TalkTalkDto.Response> getTalkTalkList(Long userSeq){
-        List<TalkTalk> talkTalkList = talkTalkRepository.findAllByTalkTalkUser1OrTalkTalkUser2(userSeq);
-        List<TalkTalkDto.Response> talkTalkDtoList = new ArrayList<>();
-        for(int i = 0; i < talkTalkList.size(); i++){
-            TalkTalkDto.Response talkTalkDto = new TalkTalkDto.Response(talkTalkList.get(i));
-            talkTalkDtoList.add(talkTalkDto);
-        }
+//        List<TalkTalk> talkTalkList = talkTalkRepository.findAllByTalkTalkUser1OrTalkTalkUser2(userSeq);
+//        List<TalkTalkDto.Response> talkTalkDtoList = new ArrayList<>();
+//        for(int i = 0; i < talkTalkList.size(); i++){
+//            TalkTalkDto.Response talkTalkDto = new TalkTalkDto.Response(talkTalkList.get(i));
+//            talkTalkDtoList.add(talkTalkDto);
+//        }
 
-        return talkTalkDtoList;
+//        return talkTalkDtoList;
+        return null;
     }
 
     public TalkTalkDto.Response createTalkTalk(TalkTalkDto.Request talkTalkDto){
-        TalkTalk talkTalk = talkTalkRepository.findAllByTalkTalkUser1AndTalkTalkUser2(talkTalkDto.getTalk_talk_user1(), talkTalkDto.getTalk_talk_user2());
-
-        if(talkTalk == null){
-            talkTalk = talkTalkRepository.save(talkTalkDto.toEntity());
-        }
-
-        return new TalkTalkDto.Response(talkTalk);
+//        TalkTalk talkTalk = talkTalkRepository.findAllByTalkTalkUser1AndTalkTalkUser2(talkTalkDto.getTalk_talk_user1(), talkTalkDto.getTalk_talk_user2());
+//
+//        if(talkTalk == null){
+//            talkTalk = talkTalkRepository.save(talkTalkDto.toEntity());
+//        }
+//
+//        return new TalkTalkDto.Response(talkTalk);
+        return null;
     }
     
 }

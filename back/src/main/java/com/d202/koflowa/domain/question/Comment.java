@@ -26,6 +26,7 @@ public class Comment extends BaseTimeEntity {
     private Long boardSeq;
 
     @Column(name = "comment_type", length = 10)
+    @Enumerated(EnumType.STRING)
     private QAType type;
 
     @Column(name = "comment_content", length = 500)
