@@ -28,6 +28,8 @@ springdoc:
     groups-order: DESC
 
 server:
+  servlet:
+    context-path: /api
   port: 8081
   tomcat:
     max-http-form-post-size: 20MB
