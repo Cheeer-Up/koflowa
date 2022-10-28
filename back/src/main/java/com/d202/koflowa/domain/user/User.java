@@ -36,9 +36,11 @@ public class User extends BaseTimeEntity {
     private String about;
 
     @Column(name = "user_role", length = 10)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "user_auth_provider", length = 20)
+    @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
     @Column(name = "user_refresh_token", length = 255)
