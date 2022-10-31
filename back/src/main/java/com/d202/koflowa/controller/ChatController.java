@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-public class TalkController {
+public class ChatController {
 
     private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 
