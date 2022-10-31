@@ -1,18 +1,19 @@
 package com.d202.koflowa.domain.user;
 
+import com.d202.koflowa.domain.BaseTimeEntity;
 import com.d202.koflowa.domain.common.AuthProvider;
 import com.d202.koflowa.domain.common.Role;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
-public class User {
+public class User extends BaseTimeEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +36,11 @@ public class User {
     private String about;
 
     @Column(name = "user_role", length = 10)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "user_auth_provider", length = 20)
+    @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
     @Column(name = "user_refresh_token", length = 255)

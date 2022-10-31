@@ -40,6 +40,7 @@ dependencies {
 	/* springdoc 설정 */
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.11'
 
+<<<<<<< HEAD
 	/* Spring Security */
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
@@ -56,6 +57,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+=======
+	/* openvidu */
+	implementation 'io.openvidu:openvidu-java-client:2.23.0'
+>>>>>>> 2175f3dd0d4d348db9275e26fa76411fd7af9344
 }
 
 tasks.named('test') {

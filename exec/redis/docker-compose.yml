@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   redis-cluster:
     platform: linux/x86_64 # m1 MacOS의 경우
@@ -8,9 +8,8 @@ services:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
-      - 6380:6380
-      - 6381:6381
-      - 6379:6379
+      - 7001:7001
+      - 17001:17001
 
   redis-node-1:
     network_mode: "service:redis-cluster"
@@ -18,8 +17,11 @@ services:
     image: redis:6.2.7
     container_name: redis1
     volumes:
-      - ./redis1.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
+      - ./redis-master-2.conf:/etc/redis.conf
+    restart: always
+    ports:
+      - 7002:7002
+      - 17002:17002
 
   redis-node-2:
     network_mode: "service:redis-cluster"
