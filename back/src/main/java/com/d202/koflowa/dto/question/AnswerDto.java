@@ -2,10 +2,9 @@ package com.d202.koflowa.dto.question;
 
 
 import com.d202.koflowa.domain.question.Answer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 public class AnswerDto {
 
@@ -13,25 +12,39 @@ public class AnswerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    private static class Request{
+    public static class Request{
         private Long questionSeq;
         private String content;
 
-//        public Answer toEntity() {
-//            Answer answer = Answer.builder()
-////                    .question()   // question
-//        }
+        /* Dto -> Entity */
+        public Answer toEntity() {
+            Answer answer = Answer.builder()
+//                    .question()   // question
+                    .content(content)
+                    .build();
+            return answer;
+        }
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    private static class Response{
+    @Getter
+    public static class Response{
         private Long seq;
         private Long questionSeq;
         private String content;
         private Long userSeq;
         private Boolean accept;
+        private LocalDateTime createdTime;
+        private LocalDateTime modifiedTime;
+
+        /* Entity -> Dto*/
+        public Response(Answer answer){
+            this.seq = answer.getSeq();
+            this.questionSeq = answer.getQuestion().getSeq();
+            this.content = answer.getContent();
+            this.userSeq = answer.getUserSeq();
+            this.accept = answer.getAccept();
+            this.createdTime = answer.getCreatedTime();
+            this.modifiedTime = answer.getModifiedTime();
+        }
     }
 }

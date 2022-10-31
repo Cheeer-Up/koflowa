@@ -39,6 +39,9 @@ dependencies {
 
 	/* springdoc 설정 */
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.11'
+
+	/* openvidu */
+	implementation 'io.openvidu:openvidu-java-client:2.23.0'
 }
 
 tasks.named('test') {

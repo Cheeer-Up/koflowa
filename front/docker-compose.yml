@@ -1,0 +1,17 @@
+# front/docker-compose.yml
+version: '3.7'
+
+services:
+  frontend:
+    container_name: "koflowa_frontend"
+    image: koflowa_frontend:0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    # [인증서 파일 저장 경로]:/root
+    volumes:
+      - /etc/letsencrypt/live/k7d202.p.ssafy.io/:/root
+    environment:
+      - TZ=Asia/Seoul

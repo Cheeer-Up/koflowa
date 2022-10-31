@@ -1,13 +1,13 @@
 package com.d202.koflowa.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tag")
 public class Tag extends BaseTimeEntity{
@@ -21,4 +21,12 @@ public class Tag extends BaseTimeEntity{
 
     @Column(name = "tag_discription", nullable = false)
     private String discription;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDiscription(String discription) {
+        this.discription = discription;
+    }
 }

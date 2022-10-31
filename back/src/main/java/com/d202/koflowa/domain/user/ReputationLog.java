@@ -2,14 +2,14 @@ package com.d202.koflowa.domain.user;
 
 import com.d202.koflowa.domain.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "reputation_log")
 public class ReputationLog extends BaseTimeEntity {
