@@ -4,9 +4,10 @@ spring:
     include: oauth,secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3307/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
   jpa:
     open-in-view: false
+    database: mysql
     hibernate:
       ddl-auto: update
     properties:
@@ -30,6 +31,8 @@ springdoc:
     groups-order: DESC
 
 server:
+  servlet:
+    context-path: /api
   port: 8081
   tomcat:
     max-http-form-post-size: 20MB

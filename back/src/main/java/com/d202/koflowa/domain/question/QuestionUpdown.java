@@ -31,5 +31,6 @@ public class QuestionUpdown {
     private User user;
 
     @Column(name = "question_updown_type", length = 4)
+    @Enumerated(EnumType.STRING)
     private UDType type;
 }
