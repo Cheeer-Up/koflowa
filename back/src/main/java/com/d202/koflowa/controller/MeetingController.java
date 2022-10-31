@@ -28,7 +28,8 @@ public class MeetingController {
         }catch (JsonProcessingException e){
             response.put("result", "FAIL");
             response.put("reason", "세션 생성 실패");
-        } catch (OpenViduJavaClientException e) {
+        }
+        catch (OpenViduJavaClientException e) {
             throw new RuntimeException(e);
         } catch (OpenViduHttpException e) {
             throw new RuntimeException(e);
