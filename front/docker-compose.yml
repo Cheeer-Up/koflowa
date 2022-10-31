@@ -6,7 +6,7 @@ services:
     container_name: "koflowa_frontend"
     image: koflowa_frontend:0.1
     build:
-      context: front/
+      context: ./
       dockerfile: Dockerfile
     ports:
       - "3000:80"
