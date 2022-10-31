@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
+// import { useEffect } from "react";
 
-class MainPage extends Component {
-  render() {
-    return <div></div>;
-  }
+export function MainPage(props) {
+  // useEffect(() => (document.title = props.title), []);
+  return <div>메인 페이지 입니다</div>;
 }
 
 export default MainPage;
