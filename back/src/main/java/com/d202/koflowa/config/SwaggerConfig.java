@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+/*
+ * http://localhost:8081/api/swagger-ui/index.html
+ */
 @Configuration
 public class SwaggerConfig {
     @Bean
@@ -25,7 +28,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-//                .addServersItem(new Server().url("http://localhost:8081"))
+                .addServersItem(new Server().url("http://localhost:8081/api"))
                 .addServersItem(new Server().url("https://k7d202.p.ssafy.io/api"))
 //                .components(new Components().addSecuritySchemes("bearerAuth",
 //                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
