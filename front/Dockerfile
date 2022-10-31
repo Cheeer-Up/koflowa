@@ -19,8 +19,6 @@ WORKDIR /app
 
 RUN mkdir ./build
 
-ADD ./build /app/build
-
 COPY --from=builder /app/build /app/build
 
 RUN rm /etc/nginx/conf.d/default.conf
