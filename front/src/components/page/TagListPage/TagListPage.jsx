@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 
-class TagListPage extends Component {
-  render() {
-    return <div></div>;
-  }
+function TagListPage(props) {
+  useEffect(() => (document.title = props.title), []);
+  return <div>태그 리스트들이 있는 페이지 입니다</div>;
 }
 
 export default TagListPage;

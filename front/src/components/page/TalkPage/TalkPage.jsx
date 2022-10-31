@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class TalkPage extends Component {
   render() {
-    return <div></div>;
+    return <div>톡톡 페이지 입니다</div>;
   }
 }
 
