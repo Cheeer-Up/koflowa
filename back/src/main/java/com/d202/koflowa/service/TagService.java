@@ -26,6 +26,9 @@ public class TagService {
     public Optional<Tag> findByName(String name) {
         return tagRepository.findByName(name);
     }
+    public Optional<Tag> findBySeq(Long seq) {
+        return tagRepository.findBySeq(seq);
+    }
 
     @Transactional
     public String saveTag(Tag tag) {
