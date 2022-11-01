@@ -22,7 +22,7 @@ public class TalkTalkChat extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "talk_talk_seq")
     @JsonBackReference
-    private TalkTalk talkTalkSeq;
+    private TalkTalk talkTalk;
 
     @Column(name = "checked")
     private Boolean checked;
