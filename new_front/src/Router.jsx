@@ -1,28 +1,22 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React from "react";
+import { Route } from "react-router-dom";
 
-import LayoutWrapper from './components/organisms/LayoutWrapper/LayoutWrapper.component';
+import LayoutWrapper from "./components/Layouts/LayoutWrapper/LayoutWrapper.component";
 
-import usePageTitle from './hooks/usePageTitle';
+import usePageTitle from "./hooks/usePageTitle";
 
 export const LayoutRoute = ({ title, children, ...props }) => {
   usePageTitle(title);
 
   return (
     <Route {...props}>
-      <LayoutWrapper>
-        {children}
-      </LayoutWrapper>
+      <LayoutWrapper>{children}</LayoutWrapper>
     </Route>
-  )
-}
+  );
+};
 
 export const BaseRoute = ({ title, children, ...props }) => {
   usePageTitle(title);
 
-  return (
-    <Route {...props}>
-      {children}
-    </Route>
-  )
-}
+  return <Route {...props}>{children}</Route>;
+};
