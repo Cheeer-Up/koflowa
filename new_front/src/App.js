@@ -37,64 +37,56 @@ const App = () => {
     <Provider store={store}>
       <div className="App">
         <Header />
+        {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
+            좌, 우 사이드바, 푸터가 필요한 페이지는 LayoutRoute
+            아무것도 안넣을 페이지는 BaseRoute 컴포넌트로 만들어주면된다. 
+        */}
+
+        {/*  */}
+
         <Alert />
         <Switch>
+          {/* 
+              {}로 감싸진 부분이 props로 넘어갈 부분
+              {
+              exact path : "" 에 url 경로
+              title : "" 보여질 타이틀
+              }
+              <보여줄 컴포넌트 /> 를 넣어주면 됨
+           */}
           <LayoutRoute
             exact
             path="/"
-            title="CLONE Stack Overflow - Where Developers Learn, Share, & Build Careers"
+            title="코플로와 - 막히는 부분, 궁금한 부분등을 물어보거나 자신의 지식을 공유해 보아요"
           >
             <HomePage />
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path="/questions"
-            title="All Questions - CLONE Stack Overflow"
-          >
+
+          <LayoutRoute exact path="/questions" title="질문 - 코플로와">
             <QuestionsPage />
           </LayoutRoute>
-          <LayoutRoute exact path="/tags" title="Tags - CLONE Stack Overflow">
+          <LayoutRoute exact path="/tags" title="태그 - 코플로와">
             <AllTagsPage />
           </LayoutRoute>
-          <LayoutRoute exact path="/users" title="Users - CLONE Stack Overflow">
+          <LayoutRoute exact path="/users" title="사용자 - 코플로와">
             <AllUsersPage />
           </LayoutRoute>
-          <BaseRoute
-            exact
-            path="/register"
-            title="Sign Up - CLONE Stack Overflow"
-          >
+          <BaseRoute exact path="/register" title="회원가입 - 코플로와">
             <Register />
           </BaseRoute>
-          <BaseRoute exact path="/login" title="Log In - CLONE Stack Overflow">
+          <BaseRoute exact path="/login" title="로그인 - 코플로와">
             <Login />
           </BaseRoute>
-          <LayoutRoute
-            exact
-            path="/questions/:id"
-            title="Users - CLONE Stack Overflow"
-          >
+          <LayoutRoute exact path="/questions/:id" title="Users - 코플로와">
             <Post />
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path="/users/:id"
-            title="Users - CLONE Stack Overflow"
-          >
+          <LayoutRoute exact path="/users/:id" title="Users - 코플로와">
             <ProfilePage />
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path="/tags/:tagname"
-            title="Users - CLONE Stack Overflow"
-          >
+          <LayoutRoute exact path="/tags/:tagname" title="Users - 코플로와">
             <TagPage />
           </LayoutRoute>
-          <BaseRoute
-            exact
-            path="/add/question"
-            title="Ask a Question - CLONE Stack Overflow"
-          >
+          <BaseRoute exact path="/add/question" title="질문하기 - 코플로와">
             <PostForm />
           </BaseRoute>
           <BaseRoute path="*" title="Error 404">

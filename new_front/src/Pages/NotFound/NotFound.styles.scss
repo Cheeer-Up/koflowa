@@ -1,12 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu);
 //variables
-$purple: #28254C;
-$l-purple: #332F63;
-$t-purple: #8C8AA7;
-$pink: #FF5E65;
+$purple: #28254c;
+$l-purple: #332f63;
+$t-purple: #8c8aa7;
+$pink: #ff5e65;
 $white: #fff;
 
-html, body {
+html,
+body {
   min-width: auto;
 }
 * {
@@ -32,13 +33,14 @@ html, body {
     top: 30%;
     transform: translate(-50%, -30%);
 
-    .symbol{
+    .symbol {
       &:nth-child(1) {
-        opacity: .2;
+        opacity: 0.2;
         animation: shine 4s ease-in-out 3s infinite;
 
-        &:before, &:after {
-          content: '';
+        &:before,
+        &:after {
+          content: "";
           width: 12px;
           height: 4px;
           background: $white;
@@ -63,15 +65,16 @@ html, body {
         border: 4px solid;
         border-radius: 50%;
         border-color: $white;
-        opacity: .2;
+        opacity: 0.2;
         animation: shine 4s ease-in-out 1.3s infinite;
       }
       &:nth-child(3) {
-        opacity: .2;
-        animation: shine 3s ease-in-out .5s infinite;
+        opacity: 0.2;
+        animation: shine 3s ease-in-out 0.5s infinite;
 
-        &:before, &:after {
-          content: '';
+        &:before,
+        &:after {
+          content: "";
           width: 12px;
           height: 4px;
           background: $white;
@@ -88,11 +91,12 @@ html, body {
         }
       }
       &:nth-child(4) {
-        opacity: .2;
+        opacity: 0.2;
         animation: shine 6s ease-in-out 1.6s infinite;
 
-        &:before, &:after {
-          content: '';
+        &:before,
+        &:after {
+          content: "";
           width: 15px;
           height: 4px;
           background: $white;
@@ -117,15 +121,16 @@ html, body {
         border: 3px solid;
         border-radius: 50%;
         border-color: $white;
-        opacity: .2;
+        opacity: 0.2;
         animation: shine 1.7s ease-in-out 7s infinite;
       }
       &:nth-child(6) {
-        opacity: .2;
+        opacity: 0.2;
         animation: shine 2s ease-in-out 6s infinite;
 
-        &:before, &:after {
-          content: '';
+        &:before,
+        &:after {
+          content: "";
           width: 15px;
           height: 4px;
           background: $white;
@@ -181,18 +186,18 @@ html, body {
       }
 
       .box__ghost-bottom {
-        display:flex;
+        display: flex;
         position: absolute;
-        top:100%;
-        left:0;
-        right:0;
+        top: 100%;
+        left: 0;
+        right: 0;
 
         div {
-          flex-grow:1;
+          flex-grow: 1;
           position: relative;
-          top:-10px;
-          height:20px;
-          border-radius:100%;
+          top: -10px;
+          height: 20px;
+          border-radius: 100%;
           background-color: $white;
 
           &:nth-child(2n) {
@@ -229,7 +234,7 @@ html, body {
 
       .box__description-title {
         font-size: 24px;
-        letter-spacing: .5px;
+        letter-spacing: 0.5px;
       }
 
       .box__description-text {
@@ -242,7 +247,7 @@ html, body {
     .box__button {
       display: block;
       position: relative;
-      background: #f48024;
+      background: #5f8bff;
       border: 1px solid transparent;
       border-radius: 50px;
       height: 50px;
@@ -254,12 +259,12 @@ html, body {
       padding: 0 70px;
       white-space: nowrap;
       margin-top: 25px;
-      transition: background .5s ease;
+      transition: background 0.5s ease;
       overflow: hidden;
       //-webkit-mask-image: -webkit-radial-gradient(white, black);
 
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         width: 20px;
         height: 100px;
@@ -268,7 +273,7 @@ html, body {
         left: 0;
         border: 2px solid $white;
         transform: translateX(-50px) rotate(45deg);
-        transition: transform .5s ease;
+        transition: transform 0.5s ease;
       }
 
       &:hover {
@@ -280,18 +285,38 @@ html, body {
 
 //keyframes
 @keyframes upndown {
-  0% {transform: translateY(5px);}
-  50% {transform: translateY(15px);}
-  100% {transform: translateY(5px);}
+  0% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
 }
 @keyframes smallnbig {
-  0% {width: 90px;}
-  50% {width: 100px;}
-  100% {width: 90px;}
+  0% {
+    width: 90px;
+  }
+  50% {
+    width: 100px;
+  }
+  100% {
+    width: 90px;
+  }
 }
 @keyframes shine {
-  0% {opacity: .2;}
-  25% {opacity: .1;}
-  50% {opacity: .2;}
-  100% {opacity: .2;}
+  0% {
+    opacity: 0.2;
+  }
+  25% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.2;
+  }
 }
