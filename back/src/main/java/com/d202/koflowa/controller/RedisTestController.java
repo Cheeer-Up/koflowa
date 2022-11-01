@@ -4,6 +4,8 @@ import com.d202.koflowa.dto.redisTest.RedisTest;
 import com.d202.koflowa.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,13 +19,18 @@ public class RedisTestController {
     private RedisTestService redisTestService;
 
     @PostMapping("/save")
-    public void saveTest() {
-        redisTestService.saveDataTest();
+    public ResponseEntity saveTest(@RequestBody RedisTest redisTest) {
+
+        if(redisTestService.saveDataTest(redisTest)){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
     }
 
     @GetMapping("/get")
-    public RedisTest getTest(){
-        Optional<RedisTest> t = redisTestService.getDataTest();
+    public RedisTest getTest(String id){
+        Optional<RedisTest> t = redisTestService.getDataTest(id);
         RedisTest redisTest = t.get();
         return redisTest;
     }
