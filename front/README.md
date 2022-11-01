@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+# 사용법
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```bash
+# nodejs 모듈 설치
+npm install package.json
+or
+npm install
 
-## Available Scripts
+# 미리보기 실행
+npm start
 
-In the project directory, you can run:
+#  배포를 위한 빌드생성
+npm run build
 
-### `npm start`
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# 다뤄져야할 컴포넌트(jsx, js 파일)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 큰틀
 
-### `npm test`
+- **App.js** - 라우터 설정
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 레이아웃
 
-### `npm run build`
+- **Header.jsx** : 헤더 내용
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  위치 : components/Layouts/Header/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Footer.jsx** : 푸터
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  위치 : components/Layouts/Footer/
 
-### `npm run eject`
+## 페이지
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **홈페이지** : 기본 사이트에 접속하였을때 보여줄 페이지
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **질문리스트 페이지** : 모든 질문글들이 보여질 페이지
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  위치 : src/Pages/QuestionPage/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **태그 페이지** : 모든 태그들의 정보를 보여줄 페이지
 
-## Learn More
+  위치 : src/Pages/AllTagsPage/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **사용자들 페이지** : 모든 사용자들의 정보를 보여줄 페이지
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  위치 : src/Pages/AllUsersPage/
 
-### Code Splitting
+  위치 : src/Pages/HomePage/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **회원가입 페이지** : 회원가입시 보여질 페이지
 
-### Analyzing the Bundle Size
+  위치 : src/Pages/Register/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **로그인 페이지** : 로그인시 보여질 페이지
 
-### Making a Progressive Web App
+  위치 : src/Pages/Login/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **게시글 상세 페이지** : 게시글 상세정보 ex 질문 내용, 답변 내용, 채택여부 등등등
 
-### Advanced Configuration
+  위치 : src/Pages/Post/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **사용자 프로필 페이지** : 특정 사용자들의 정보가 나타나는 페이지
 
-### Deployment
+  위치 : src/Pages/ProfilePage/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **태그 페이지** : 해당 태그의 디테일한 정보가 있고, 관심, 무시 기능이 존재하는 페이지
 
-### `npm run build` fails to minify
+  위치 : src/Pages/TagPage/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **질문하는 페이지** : 질문하기 버튼을 눌렀을때 보여질 페이지, 글작성이 여기서 이루어지
+
+  위치 : src/Pages/PostForm
+
+- **404 페이지** : 라우터 테이블상 존재하지 않는 url에 접속했을시 보여질 페이지
+
+  위치 : src/Pages/NotFound/
+
+# 리덕스 사용법
+
+# 컴포넌트 구성법
+
+스니펫 사용해도 상관x
+
+```jsx
+// 함수형으로 사용할때
+import React from 'react';
+
+function App(props) {
+  return (
+    <div></div>
+  );
+}
+
+export default App;
+
+// 화살표 함수 형식
+import React from 'react';
+
+const App = () => {
+  return (
+    <div></div>
+  );
+};
+
+export default App;
+
+// 클래스형 + 콤포넌트
+import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    return (
+      <div></div>
+    );
+  }
+}
+
+export default App;
+// 등등 다양하게 만들수 있다.
+// https://www.hanl.tech/blog/vs-code-react-time-awesome-snippets/ 참조글
+
+```
