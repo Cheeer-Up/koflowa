@@ -1,8 +1,8 @@
 .navbar {
   height: 63px;
-  border-top: 3px solid #f48024;
+  border-top: 3px solid #5f8bff;
   padding: 3px 3px 0 0;
-  box-shadow: 5px 2px rgba(0,0,0,0.1);
+  box-shadow: 5px 2px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   background-color: #3d3d3d;
   display: flex;
@@ -77,11 +77,11 @@
 
 .bar-items {
   font-size: 14px;
-  color:  rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
   margin: 0 10px;
 }
 
-.px12  {
+.px12 {
   padding-left: 12px !important;
   padding-right: 12px !important;
 }
@@ -94,7 +94,7 @@
 .header-search-div {
   display: flex;
   justify-content: flex-end;
-  align-items: center
+  align-items: center;
 }
 
 .glyph-logo {
@@ -136,7 +136,7 @@
   right: 5%;
 }
 
-.s-input__search{
+.s-input__search {
   margin-top: 10px;
 }
 .s-input-icon {
@@ -151,28 +151,28 @@
 
 ///////////////
 
-@media(max-width: 1280px) {
+@media (max-width: 1280px) {
   .navbar-brand {
     margin-left: 60px;
   }
 }
 
-@media(max-width: 1200px) {
+@media (max-width: 1200px) {
   .btns {
     margin-right: 30px;
   }
 }
 
-@media (max-width:986px) {
+@media (max-width: 986px) {
   .navbar-brand {
-    margin-left: 20px ;
+    margin-left: 20px;
   }
   .btns {
     margin-right: 20px;
   }
 }
 
-@media (max-width: 877px){
+@media (max-width: 877px) {
   .navbar-brand {
     margin-left: 0;
   }
@@ -184,15 +184,15 @@
     justify-content: space-around;
   }
   .searchbar {
-      display: none;
-    }
-    .search-icon {
-      display: block;
-      margin-right: 1rem;
-      position: absolute;
-      left: 77%;
-      top: 30%;
-    }
+    display: none;
+  }
+  .search-icon {
+    display: block;
+    margin-right: 1rem;
+    position: absolute;
+    left: 77%;
+    top: 30%;
+  }
 
   .btns {
     margin-right: 20px;
@@ -201,7 +201,6 @@
     max-width: 250px;
   }
 }
-
 
 @media (max-width: 715px) {
   .glyph-logo {
@@ -242,13 +241,14 @@
     display: block;
     padding-top: 6px;
   }
-  .header-search-div, .header-brand-div {
+  .header-search-div,
+  .header-brand-div {
     transform: scale(0.8);
   }
 }
 
 @media (max-width: 420px) {
-  .glyph-logo{
+  .glyph-logo {
     display: none;
   }
   .s-navigation .s-navigation--item {

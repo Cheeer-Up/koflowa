@@ -35,28 +35,6 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
     </div>
   );
 
-  const authTabs = (
-    <div className="s-navigation">
-      <Link to="/" className="s-navigation--item is-selected">
-        Products
-      </Link>
-    </div>
-  );
-
-  const guestTabs = (
-    <div className="s-navigation">
-      <Link to="/" className="s-navigation--item is-selected">
-        Products
-      </Link>
-      <Link to="/" className="s-navigation--item not-selected">
-        Customers
-      </Link>
-      <Link to="/" className="s-navigation--item not-selected">
-        Use cases
-      </Link>
-    </div>
-  );
-
   const guestLinks = (
     <div className="btns">
       <LinkButton text={"Log in"} link={"/login"} type={"s-btn__primary"} />
@@ -96,10 +74,8 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           <Link className="navbar-brand" to="/">
             <Logo className="full-logo" />
             <SmallLogo className="glyph-logo" />
+            {/* 로고 부분 보여주고 싶은 로고 고르면됨 */}
           </Link>
-          {!loading && (
-            <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
-          )}
         </div>
 
         <form
@@ -126,6 +102,7 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
             onClick={() => setSearchState(!searchState)}
           />
           {!loading && (
+            // <Fragment>{isAuthenticated ? guestLinks : authLinks}</Fragment>
             <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
           )}
         </div>
