@@ -1,28 +1,28 @@
-import React, {useEffect} from 'react';
-import {Provider} from 'react-redux';
-import {Switch} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Provider } from "react-redux";
+import { Switch } from "react-router-dom";
 
-import store from './redux/store';
-import setAuthToken from './redux/auth/auth.utils';
-import {loadUser} from './redux/auth/auth.actions';
+import store from "./redux/store";
+import setAuthToken from "./redux/auth/auth.utils";
+import { loadUser } from "./redux/auth/auth.actions";
 
-import Header from './components/organisms/Header/Header.component';
-import Alert from './components/Alert/Alert.component';
-import HomePage from './modules/HomePage/HomePage.component';
-import QuestionsPage from './modules/QuestionsPage/QuestionsPage.component';
-import AllTagsPage from './modules/AllTagsPage/AllTagsPage.component';
-import AllUsersPage from './modules/AllUsersPage/AllUsersPage.component';
-import Register from './modules/Register/Register.component';
-import Login from './modules/Login/Login.component';
-import Post from './modules/Post/Post.component';
-import PostForm from './modules/PostForm/PostForm.component';
-import TagPage from './modules/TagPage/TagPage.component';
-import ProfilePage from './modules/ProfilePage/ProfilePage.component';
-import NotFound from './modules/NotFound/NotFound.component';
+import Header from "./components/Layouts/Header/Header.component";
+import Alert from "./components/Alert/Alert.component";
+import HomePage from "./Pages/HomePage/HomePage.component";
+import QuestionsPage from "./Pages/QuestionsPage/QuestionsPage.component";
+import AllTagsPage from "./Pages/AllTagsPage/AllTagsPage.component";
+import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component";
+import Register from "./Pages/Register/Register.component";
+import Login from "./Pages/Login/Login.component";
+import Post from "./Pages/Post/Post.component";
+import PostForm from "./Pages/PostForm/PostForm.component";
+import TagPage from "./Pages/TagPage/TagPage.component";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage.component";
+import NotFound from "./Pages/NotFound/NotFound.component";
 
-import { BaseRoute, LayoutRoute } from './Router';
+import { BaseRoute, LayoutRoute } from "./Router";
 
-import './App.css';
+import "./App.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -35,85 +35,70 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className='App'>
+      <div className="App">
         <Header />
         <Alert />
         <Switch>
           <LayoutRoute
             exact
-            path='/'
-            title='CLONE Stack Overflow - Where Developers Learn, Share, & Build Careers'
+            path="/"
+            title="CLONE Stack Overflow - Where Developers Learn, Share, & Build Careers"
           >
-            <HomePage/>
+            <HomePage />
           </LayoutRoute>
           <LayoutRoute
             exact
-            path='/questions'
-            title='All Questions - CLONE Stack Overflow'
+            path="/questions"
+            title="All Questions - CLONE Stack Overflow"
           >
-            <QuestionsPage/>
+            <QuestionsPage />
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path='/tags'
-            title='Tags - CLONE Stack Overflow'
-          >
-            <AllTagsPage/>
+          <LayoutRoute exact path="/tags" title="Tags - CLONE Stack Overflow">
+            <AllTagsPage />
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path='/users'
-            title='Users - CLONE Stack Overflow'
-          >
-            <AllUsersPage/>
+          <LayoutRoute exact path="/users" title="Users - CLONE Stack Overflow">
+            <AllUsersPage />
           </LayoutRoute>
           <BaseRoute
             exact
-            path='/register'
-            title='Sign Up - CLONE Stack Overflow'
+            path="/register"
+            title="Sign Up - CLONE Stack Overflow"
           >
-            <Register/>
+            <Register />
           </BaseRoute>
-          <BaseRoute
-            exact
-            path='/login'
-            title='Log In - CLONE Stack Overflow'
-          >
-            <Login/>
+          <BaseRoute exact path="/login" title="Log In - CLONE Stack Overflow">
+            <Login />
           </BaseRoute>
           <LayoutRoute
             exact
-            path='/questions/:id'
-            title='Users - CLONE Stack Overflow'
+            path="/questions/:id"
+            title="Users - CLONE Stack Overflow"
           >
-            <Post/>
+            <Post />
           </LayoutRoute>
           <LayoutRoute
             exact
-            path='/users/:id'
-            title='Users - CLONE Stack Overflow'
+            path="/users/:id"
+            title="Users - CLONE Stack Overflow"
           >
-            <ProfilePage/>
+            <ProfilePage />
           </LayoutRoute>
           <LayoutRoute
             exact
-            path='/tags/:tagname'
-            title='Users - CLONE Stack Overflow'
+            path="/tags/:tagname"
+            title="Users - CLONE Stack Overflow"
           >
-            <TagPage/>
+            <TagPage />
           </LayoutRoute>
           <BaseRoute
             exact
-            path='/add/question'
-            title='Ask a Question - CLONE Stack Overflow'
+            path="/add/question"
+            title="Ask a Question - CLONE Stack Overflow"
           >
-            <PostForm/>
+            <PostForm />
           </BaseRoute>
-          <BaseRoute
-            path='*'
-            title='Error 404'
-          >
-            <NotFound/>
+          <BaseRoute path="*" title="Error 404">
+            <NotFound />
           </BaseRoute>
         </Switch>
       </div>
