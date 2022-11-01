@@ -17,7 +17,7 @@ public class TalkTalkChatController {
 
     /* 메시지 송신 */
     @PostMapping
-    public Map<String, Object> sendChatMessage(@RequestBody TalkTalkChatDto.RequestMessage talkTalkChatDto) {
+    public Map<String, Object> sendChatMessage(@RequestBody TalkTalkChatDto.RequestTalkTalkChatDto talkTalkChatDto) {
         Map<String, Object> response = new HashMap<>();
         System.out.println("talkTalkSeq " + talkTalkChatDto);
 
@@ -32,9 +32,9 @@ public class TalkTalkChatController {
         return response;
     }
 
-    /* 채팅방의 메시지들을 조회 */
+    /* 채팅방의 메시지들을 조회 : 나중에 최적화 필요 DTO를 다시 만들던가 하기 : Spring Security로 ID값 받고 요청 SEQ값 조회 */
     @PostMapping("/log")
-    public Map<String, Object> getChatMessageList(@RequestBody TalkTalkDto.Request talkTalkDto) {
+    public Map<String, Object> getChatMessageList(@RequestBody TalkTalkDto.RequestTalkTalkDto talkTalkDto) {
         Map<String, Object> response = new HashMap<>();
         System.out.println("talkTalkSeq " + talkTalkDto);
 
@@ -50,8 +50,8 @@ public class TalkTalkChatController {
     }
 
     /* 메시지 삭제 */
-    @DeleteMapping ("")
-    public Map<String, Object> deleteChatMessage(@RequestBody TalkTalkChatDto.RequestMessage talkTalkChatDto) {
+    @DeleteMapping
+    public Map<String, Object> deleteChatMessage(@RequestBody TalkTalkChatDto.RequestTalkTalkChatDto talkTalkChatDto) {
         Map<String, Object> response = new HashMap<>();
         System.out.println("talkTalkSeq " + talkTalkChatDto);
 

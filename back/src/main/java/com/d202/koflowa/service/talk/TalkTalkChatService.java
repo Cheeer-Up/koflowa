@@ -22,28 +22,29 @@ public class TalkTalkChatService {
     private final TalkTalkChatRepository talkTalkChatRepository;
     private final TalkTalkRepository talkTalkRepository;
 
-    public List<TalkTalkChatDto.Response> getChatMessageList(TalkTalkDto.Request talkTalkDto){
-        List<TalkTalkChat> talkChatMessageList = talkTalkChatRepository.findAllByTalkTalkSeqOrderByCreatedTime(talkTalkDto.getTalk_talk_seq());
-        List<TalkTalkChatDto.Response> talkTalkChatDtoList = new ArrayList<>();
+    public List<TalkTalkChatDto.ResponseTalkTalkChatDto> getChatMessageList(TalkTalkDto.RequestTalkTalkDto talkTalkDto){
+        System.out.println("들어왔나?" + talkTalkDto.getTalk_talk_seq());
+        List<TalkTalkChat> talkChatMessageList = talkTalkChatRepository.findAllByTalkTalkOrderByCreatedTime(talkTalkRepository.findByTalkTalkSeq(talkTalkDto.getTalk_talk_seq()));
+        List<TalkTalkChatDto.ResponseTalkTalkChatDto> talkTalkChatDtoList = new ArrayList<>();
 
 
         for(int i = 0; i < talkChatMessageList.size(); i++){
-            TalkTalkChatDto.Response talkTalkChatDto = new TalkTalkChatDto.Response(talkChatMessageList.get(i));
+            TalkTalkChatDto.ResponseTalkTalkChatDto talkTalkChatDto = new TalkTalkChatDto.ResponseTalkTalkChatDto(talkChatMessageList.get(i));
             talkTalkChatDtoList.add(talkTalkChatDto);
         }
 
         return talkTalkChatDtoList;
     }
 
-    public TalkTalkChatDto.Response createTalkTalkChat(TalkTalkChatDto.RequestMessage talkTalkChatDto){
+    public TalkTalkChatDto.ResponseTalkTalkChatDto createTalkTalkChat(TalkTalkChatDto.RequestTalkTalkChatDto talkTalkChatDto){
         /* 양방향 매핑하지 않고 프론트 단에서 두 번 호출한다 */
         TalkTalkChat talkTalkChat = talkTalkChatRepository.save(talkTalkChatDto.toEntity(talkTalkRepository.findByTalkTalkSeq(talkTalkChatDto.getTalk_talk_seq())));
 
-        return new TalkTalkChatDto.Response(talkTalkChat);
+        return new TalkTalkChatDto.ResponseTalkTalkChatDto(talkTalkChat);
     }
 
-    public void deleteTalkTalkChat(TalkTalkChatDto.RequestMessage talkTalkChatDto){
+    public void deleteTalkTalkChat(TalkTalkChatDto.RequestTalkTalkChatDto talkTalkChatDto){
         /* 양방향 매핑하지 않고 프론트 단에서 두 번 호출한다 */
-        talkTalkChatRepository.delete(talkTalkChatDto.toEntity(talkTalkRepository.findByTalkTalkSeq(talkTalkChatDto.getTalk_talk_seq())));
+        talkTalkChatRepository.delete(talkTalkChatRepository.findByTalkTalkChatSeq(talkTalkChatDto.getTalk_talk_chat_seq()));
     }
 }

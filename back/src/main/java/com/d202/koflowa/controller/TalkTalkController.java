@@ -15,25 +15,8 @@ public class TalkTalkController {
 
     private final TalkTalkService talkTalkService;
 
-    //token 도입시 파라미터를 삭제할 것
-    @GetMapping("/history")
-    public Map<String, Object> getMyChatRoom(@RequestParam TalkTalkDto.Request talkTalkDto) {
-        Map<String, Object> response = new HashMap<>();
-        System.out.println("아이디값 들어옴 " + talkTalkDto);
-
-        try {
-            response.put("result", talkTalkService.getTalkTalkList(talkTalkDto.getTalk_talk_seq()));
-        }
-        catch (Exception e){
-            response.put("result", "FAIL");
-            response.put("reason", "방 조회 실패");
-        }
-
-        return response;
-    }
-
-    @PostMapping("")
-    public Map<String, Object> createChatRoom(@RequestBody TalkTalkDto.Request talkTalkDto) {
+    @PostMapping
+    public Map<String, Object> createChatRoom(@RequestBody TalkTalkDto.RequestTalkTalkDto talkTalkDto) {
         Map<String, Object> response = new HashMap<>();
         System.out.println("값 들어옴 " + talkTalkDto.toString());
 
@@ -49,8 +32,25 @@ public class TalkTalkController {
         return response;
     }
 
-    @DeleteMapping()
-    public Map<String, Object> deleteChatRoom(@RequestBody TalkTalkDto.Request talkTalkDto) {
+    //token 도입시 파라미터를 삭제하고 토큰 값에서 조회할 것
+    @PostMapping("/history")
+    public Map<String, Object> getMyChatRoom(@RequestBody TalkTalkDto.RequestTalkTalkDto talkTalkDto) {
+        Map<String, Object> response = new HashMap<>();
+        System.out.println("아이디값 들어옴 " + talkTalkDto.getTalk_talk_user1());
+
+        try {
+            response.put("result", talkTalkService.getTalkTalkList(talkTalkDto.getTalk_talk_user1()));
+        }
+        catch (Exception e){
+            response.put("result", "FAIL");
+            response.put("reason", "방 조회 실패");
+        }
+
+        return response;
+    }
+
+    @DeleteMapping
+    public Map<String, Object> deleteChatRoom(@RequestBody TalkTalkDto.RequestTalkTalkDto talkTalkDto) {
         Map<String, Object> response = new HashMap<>();
         System.out.println("값 들어옴 " + talkTalkDto);
 
