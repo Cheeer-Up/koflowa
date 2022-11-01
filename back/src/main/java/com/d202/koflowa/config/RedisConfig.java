@@ -20,12 +20,11 @@ public class RedisConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         //		return new LettuceConnectionFactory(redisHost, redisPort);
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterNodes);
-        return new LettuceConnectionFactory(redisClusterConfiguration);
+        return new LettuceConnectionFactory("127.0.0.1",6379);
     }
 
     @Bean
     public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         return new StringRedisTemplate(redisConnectionFactory);
     }
-
 }

@@ -26,25 +26,26 @@ public class testRedisConnection {
     }
     @Test
     void test(){
-        redisTemplate.getConnectionFactory().getConnection().info().toString();
+//        redisTemplate.getConnectionFactory().getConnection().info().toString();
 
-        for(int i = 0; i < 2; i++){
-            redisTemplate.opsForValue().set(i,"chung" + i);
-        }
 
-        for(int i = 0; i < 2; i++){
-            String returnValue = (String) redisTemplate.opsForValue().get(i);
-            System.out.println(returnValue);
-        }
+//        for(int i = 0; i < 2; i++){
+//            redisTemplate.opsForValue().set(i,"chung" + i);
+//        }
+//
+//        for(int i = 0; i < 2; i++){
+//            String returnValue = (String) redisTemplate.opsForValue().get(i);
+//            System.out.println(returnValue);
+//        }
 
 //        redisTemplate.opsForValue().set(0,"chung" + 0);
 //        String returnValue = (String) redisTemplate.opsForValue().get("a");
 //        System.out.println(returnValue);
 
 
-//        RedisTest redisTest = new RedisTest("abcd", "Chung", 22, LocalDateTime.now());
+        RedisTest redisTest = new RedisTest("abcd", "Chung", 22, LocalDateTime.now());
 
-//        redisTestRepository.save(redisTest);
+        redisTestRepository.save(redisTest);
 
 //        Optional<RedisTest> redisTest2 = redisTestRepository.findById(redisTest.getId());
 //        System.out.println(redisTest2);
