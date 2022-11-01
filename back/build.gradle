@@ -41,10 +41,11 @@ dependencies {
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.11'
 
 	/* Spring Security */
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
-	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
-	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.7.4'
+
+//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+//	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
+//	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+//	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.7.4'
 
 	/* JWT */
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api

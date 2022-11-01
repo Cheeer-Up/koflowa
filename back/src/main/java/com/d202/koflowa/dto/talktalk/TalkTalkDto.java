@@ -4,9 +4,10 @@ import com.d202.koflowa.domain.talktalk.TalkTalk;
 import lombok.*;
 
 public class TalkTalkDto {
+
     @Getter
     @Builder
-    public static class Request{
+    public static class RequestTalkTalkDto{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
@@ -37,16 +38,15 @@ public class TalkTalkDto {
         }
     }
 
-
     @Getter
-    public static class Response{
+    public static class ResponseTalkTalkDto{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
         private String talk_talk_user1_nickname;
         private String talk_talk_user2_nickname;
 
-        public Response(TalkTalk talkTalk) {
+        public ResponseTalkTalkDto(TalkTalk talkTalk) {
             this.talk_talk_seq = talkTalk.getTalkTalkSeq();
             this.talk_talk_user1 = talkTalk.getTalkTalkUser1();
             this.talk_talk_user2 = talkTalk.getTalkTalkUser2();
