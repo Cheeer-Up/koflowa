@@ -17,6 +17,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+  redis:
+    cluster:
+      nodes: k7d202.p.ssafy.io:6379,k7d202.p.ssafy.io:6380,k7d202.p.ssafy.io:6381
+#    host: k7d202.p.ssafy.io
+#    port: 6379
 
 springdoc:
   api-docs:

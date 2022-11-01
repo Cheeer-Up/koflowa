@@ -40,6 +40,22 @@ dependencies {
 	/* springdoc 설정 */
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.11'
 
+	/* Spring Security */
+//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+//	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
+//	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+//	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.7.4'
+
+	/* JWT */
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
+	/* redis */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	/* openvidu */
 	implementation 'io.openvidu:openvidu-java-client:2.23.0'
 }

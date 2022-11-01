@@ -12,18 +12,20 @@ public class TagDto {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Request {
-        private Long seq;
         private String name;
         private String discription;
         public Tag toEntity() {
             return Tag.builder()
-                    .seq(seq)
                     .name(name)
                     .discription(discription)
                     .build();
         }
     }
 
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Response {
         private Long seq;
         private String name;

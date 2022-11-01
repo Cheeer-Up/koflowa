@@ -4,12 +4,9 @@ import com.d202.koflowa.domain.talktalk.TalkTalk;
 import lombok.*;
 
 public class TalkTalkDto {
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
+    @Getter
     @Builder
-    private static class Request{
+    public static class Request{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
@@ -26,10 +23,23 @@ public class TalkTalkDto {
                     .build();
             return talkTalk;
         }
+
+        /* 유저1과 유저2의 값의 위치를 바꾸어 저장한다 */
+        public TalkTalk toEntity2() {
+            TalkTalk talkTalk = TalkTalk.builder()
+                    .talkTalkSeq(talk_talk_seq)
+                    .talkTalkUser1(talk_talk_user2)
+                    .talkTalkUser2(talk_talk_user1)
+                    .talkTalkUser1Nickname(talk_talk_user2_nickname)
+                    .talkTalkUser2Nickname(talk_talk_user1_nickname)
+                    .build();
+            return talkTalk;
+        }
     }
 
+
     @Getter
-    private static class Response{
+    public static class Response{
         private Long talk_talk_seq;
         private Long talk_talk_user1;
         private Long talk_talk_user2;
