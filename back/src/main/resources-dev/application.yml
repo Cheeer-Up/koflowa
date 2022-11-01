@@ -19,7 +19,7 @@ spring:
       matching-strategy: ant-path-matcher
   redis:
     cluster:
-      nodes: k7d202.p.ssafy.io:6379,k7d202.p.ssafy.io:6380,k7d202.p.ssafy.io:6381
+      nodes: k7d202.p.ssafy.io:6379,k7d202.p.ssafy.io:7000,k7d202.p.ssafy.io:7001
 #    host: k7d202.p.ssafy.io
 #    port: 6379
 

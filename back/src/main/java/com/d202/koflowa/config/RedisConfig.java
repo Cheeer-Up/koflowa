@@ -1,30 +1,37 @@
 package com.d202.koflowa.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import io.lettuce.core.ReadFrom;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.*;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.List;
-
-
+@EnableCaching
 @Configuration
 public class RedisConfig {
 
-    @Value("${spring.redis.cluster.nodes}")
-    private List<String> clusterNodes;
-
+    public static String IMAGE = "proxy-img:";
+    public static String TOPGAINER = "top-gainer";
+    public static String TOPLOSER = "top-loser";
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        //		return new LettuceConnectionFactory(redisHost, redisPort);
-        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterNodes);
-        return new LettuceConnectionFactory("127.0.0.1",6379);
+    public LettuceConnectionFactory redisConnectionFactory() {
+        LettuceClientConfiguration clientConfiguration = LettuceClientConfiguration.builder().
+                readFrom(ReadFrom.REPLICA_PREFERRED).build();
+
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
+        redisClusterConfiguration.clusterNode("k7d202.p.ssafy.io",6379);
+        redisClusterConfiguration.clusterNode("k7d202.p.ssafy.io",7000);
+        redisClusterConfiguration.clusterNode("k7d202.p.ssafy.io",7001);
+
+        return new LettuceConnectionFactory("k7d202.p.ssafy.io", 6379);
     }
-
     @Bean
-    public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        return new StringRedisTemplate(redisConnectionFactory);
+    public RedisTemplate<?, ?> redisTemplate() {
+        RedisTemplate<String, byte[]> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
     }
 }
