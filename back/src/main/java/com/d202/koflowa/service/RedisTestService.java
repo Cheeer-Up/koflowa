@@ -14,11 +14,18 @@ public class RedisTestService {
     @Autowired
     private RedisTestRepository redisTestRepository;
 
-    public void saveDataTest(){
-        redisTestRepository.save(new RedisTest("010","chung",3, LocalDateTime.now()));
+
+    public boolean saveDataTest(RedisTest redisTest){
+        try{
+            redisTestRepository.save(redisTest);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
-    public Optional<RedisTest> getDataTest(){
-        return redisTestRepository.findById("010");
+    public Optional<RedisTest> getDataTest(String id){
+        return redisTestRepository.findById(id);
 
     }
 }
