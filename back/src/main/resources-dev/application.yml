@@ -4,7 +4,7 @@ spring:
     include: oauth,secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3307/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
   jpa:
     open-in-view: false
     database: mysql
@@ -17,6 +17,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+  redis:
+    cluster:
+      nodes: k7d202.p.ssafy.io:6379,k7d202.p.ssafy.io:7000,k7d202.p.ssafy.io:7001
+#    host: k7d202.p.ssafy.io
+#    port: 6379
 
 springdoc:
   api-docs:

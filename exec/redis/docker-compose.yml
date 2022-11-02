@@ -2,8 +2,8 @@ version: "3"
 services:
   redis-cluster:
     platform: linux/x86_64 # m1 MacOS의 경우
-    image: redis:6.3.7
-    container_name: redis
+    image: redis:6.2
+    container_name: redis-test
     volumes: # 작성한 설정 파일을 볼륨을 통해 컨테이너에 공유
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -15,8 +15,8 @@ services:
   redis-node-1:
     network_mode: "service:redis-cluster"
     platform: linux/x86_64
-    image: redis:6.3.7
-    container_name: redis1
+    image: redis:6.2
+    container_name: redis-test1
     volumes:
       - ./redis1.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -24,8 +24,8 @@ services:
   redis-node-2:
     network_mode: "service:redis-cluster"
     platform: linux/x86_64
-    image: redis:6.3.7
-    container_name: redis2
+    image: redis:6.2
+    container_name: redis-test2
     volumes:
       - ./redis2.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -33,7 +33,7 @@ services:
   redis-cluster-entry:
     network_mode: "service:redis-cluster"
     platform: linux/x86_64
-    image: redis:6.3.7
+    image: redis:6.2
     container_name: redis-cluster-entry
     command: redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 --cluster-yes
     depends_on:
