@@ -1,9 +1,16 @@
 package com.d202.koflowa.service;
 
+import com.d202.koflowa.dto.meeting.TokenDto;
+import com.d202.koflowa.exception.SessionNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import io.openvidu.java.client.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MeetingService {
@@ -11,78 +18,54 @@ public class MeetingService {
     private final OpenVidu openvidu = new OpenVidu(url, "koflowa202");
 
 
-    public String requestToOpenviduCreate(Long seq, Long oppSeq) throws JsonProcessingException, OpenViduJavaClientException, OpenViduHttpException {
-//        String url = "https://k7d202.p.ssafy.io/openvidu/api/sessions";
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        // Header set
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//        // auth 값 숨김 필요
-//        httpHeaders.setBasicAuth("OPENVIDUAPP","koflowa202");
-//
-//        // Body set
-//        RequestOpenViduBody requestOpenviduBody = RequestOpenViduBody.builder()
-//                .customSessionId(seq.toString()+'_'+oppSeq.toString())
-//                .build();
-//
-//        // Message
-//        HttpEntity<?> requestMessage = new HttpEntity<>(requestOpenviduBody, httpHeaders);
-//
-//        // Request
-//        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
-//
-//        // Response 파싱
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-//        SessionDto sessionDto = objectMapper.readValue(response.getBody(), SessionDto.class);
-//
-//        return sessionDto;
+    public TokenDto requestToOpenviduCreate(String sessionId) throws JsonProcessingException, OpenViduJavaClientException, OpenViduHttpException {
 
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Long seq = user.getSeq();
 
         SessionProperties properties = new SessionProperties.Builder()
-                .customSessionId(seq.toString()+'_'+oppSeq.toString())
+                .customSessionId(sessionId)
                 .build();
         Session session = openvidu.createSession(properties);
+        //연결까지 한번에
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
                 .type(ConnectionType.WEBRTC)
                 .role(OpenViduRole.PUBLISHER)
-                .data("user_data")//?
+//                .data("user_data")//?
                 .build();
         Connection connection = session.createConnection(connectionProperties);
-        String token = connection.getToken();
-        return token;
+        TokenDto tokenDto = TokenDto.builder()
+                .token(connection.getToken())
+                .build();
+        return tokenDto;
     }
 
-    public String requestToOpenviduJoin(String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
+    public TokenDto requestToOpenviduJoin(String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
+        if (session == null)
+            throw new SessionNotFoundException("Session Not Found");
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
                 .type(ConnectionType.WEBRTC)
                 .role(OpenViduRole.PUBLISHER)
-                .data("user_data")
+//                .data("user_data")
                 .build();
         Connection connection = session.createConnection(connectionProperties);
-        String token = connection.getToken();
-        return token;
+        TokenDto tokenDto = TokenDto.builder()
+                .token(connection.getToken())
+                .build();
+        return tokenDto;
     }
 
-    public void requestToOpenViduDelete(String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        // Header set
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//        // auth 값 숨김 필요
-//        httpHeaders.setBasicAuth("OPENVIDUAPP","koflowa202");
-//
-//
-//        // Message
-//        HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);
-//
-//        // Request
-////        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
-//        restTemplate.delete(url, requestMessage, String.class);
-        Session session = openvidu.getActiveSession(sessionId);
-        session.close();
+    public Map<String, Object> requestToOpenViduDelete(String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Session session = openvidu.getActiveSession(sessionId);
+            session.close();
+            response.put("result", "SUCCESS");
+        }catch (Exception e){
+            response.put("result", "FAIL");
+            response.put("reason", "세션 삭제 실패");
+        }
+        return response;
     }
 }
