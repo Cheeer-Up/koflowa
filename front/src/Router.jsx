@@ -1,23 +1,25 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React from "react"
+// import { Route } from "react-router-dom"
 
-import LayoutWrapper from "./components/Layouts/LayoutWrapper/LayoutWrapper.component";
+import LayoutWrapper from "./components/Layouts/LayoutWrapper/LayoutWrapper.component"
 
-import usePageTitle from "./hooks/usePageTitle";
+import usePageTitle from "./hooks/usePageTitle"
 // 이부분은 페이지 타이틀 변경을 위한훅 신경x
 
 export const LayoutRoute = ({ title, children, ...props }) => {
-  usePageTitle(title);
+  usePageTitle(title)
 
   return (
-    <Route {...props}>
+    // <Route {...props}>
+    // </Route>
+    <div {...props}>
       <LayoutWrapper>{children}</LayoutWrapper>
-    </Route>
-  );
-};
+    </div>
+  )
+}
 
 export const BaseRoute = ({ title, children, ...props }) => {
-  usePageTitle(title);
+  usePageTitle(title)
 
-  return <Route {...props}>{children}</Route>;
-};
+  return <div {...props}>{children}</div>
+}
