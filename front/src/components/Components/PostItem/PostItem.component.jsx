@@ -1,17 +1,17 @@
-import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
 
-import censorBadWords from "../../../utils/censorBadWords";
+import censorBadWords from "../../../utils/censorBadWords"
 
-import htmlSubstring from "../../../utils/htmlSubstring";
-import injectEllipsis from "../../../utils/injectEllipsis";
+import htmlSubstring from "../../../utils/htmlSubstring"
+import injectEllipsis from "../../../utils/injectEllipsis"
 
-import UserCard from "../UserCard/UserCard.component";
-import TagBadge from "../TagBadge/TagBadge.component";
+import UserCard from "../UserCard/UserCard.component"
+import TagBadge from "../TagBadge/TagBadge.component"
 
-import "./PostItem.styles.scss";
+import "./PostItem.styles.scss"
 
 const PostItem = ({
   post: {
@@ -29,48 +29,48 @@ const PostItem = ({
   },
 }) => {
   const answerVoteUp = (
-    <div className="vote answer">
-      <span className="vote-count">{answer_count}</span>
-      <div className="count-text">answers</div>
+    <div className='vote answer'>
+      <span className='vote-count'>{answer_count}</span>
+      <div className='count-text'>답변</div>
     </div>
-  );
+  )
 
   const answerVoteDown = (
-    <div className="vote">
-      <span className="vote-count">{answer_count}</span>
-      <div className="count-text">answers</div>
+    <div className='vote'>
+      <span className='vote-count'>{answer_count}</span>
+      <div className='count-text'>답변</div>
     </div>
-  );
+  )
 
   return (
-    <div className="posts">
-      <div className="stats-container fc-black-500">
-        <div className="stats">
-          <div className="vote">
-            <span className="vote-count">{comment_count}</span>
-            <div className="count-text">comments</div>
+    <div className='posts'>
+      <div className='stats-container fc-black-500'>
+        <div className='stats'>
+          <div className='vote'>
+            <span className='vote-count'>{comment_count}</span>
+            <div className='count-text'>코멘트</div>
           </div>
           {answer_count > 0 ? answerVoteUp : answerVoteDown}
-          <div className="vote">
-            <span className="vote-count">{tags.length}</span>
-            <div className="count-text">tags</div>
+          <div className='vote'>
+            <span className='vote-count'>{tags.length}</span>
+            <div className='count-text'>태그</div>
           </div>
-          <div className="vote">
-            <div className="count-text">{views} views</div>
+          <div className='vote'>
+            <div className='count-text'>{views} 조회수</div>
           </div>
         </div>
       </div>
-      <div className="summary">
+      <div className='summary'>
         <h3>
           <Link to={`/questions/${id}`}>{censorBadWords(title)}</Link>
         </h3>
         <div
-          className="brief"
+          className='brief'
           dangerouslySetInnerHTML={{
             __html: injectEllipsis(censorBadWords(htmlSubstring(body, 200))),
           }}
         ></div>
-        <div className="profile-tags">
+        <div className='profile-tags'>
           {tags.map((tag, index) => (
             <TagBadge key={index} tag_name={tag.tagname} size={"s-tag"} />
           ))}
@@ -85,11 +85,11 @@ const PostItem = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
-};
+}
 
-export default connect(null)(PostItem);
+export default connect(null)(PostItem)

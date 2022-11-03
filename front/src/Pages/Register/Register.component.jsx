@@ -1,25 +1,25 @@
-import React, { Fragment } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import { setAlert } from "../../redux/alert/alert.actions";
+import React, { Fragment } from "react"
+import { connect } from "react-redux"
+import { Navigate } from "react-router-dom"
+import PropTypes from "prop-types"
+import { setAlert } from "../../redux/alert/alert.actions"
 
-import Caption from "./Caption/Caption.component";
-import AuthForm from "../../components/Layouts/AuthForm/AuthForm.component";
-import Footer from "../../components/Layouts/Footer/Footer.component";
+import Caption from "./Caption/Caption.component"
+import AuthForm from "../../components/Layouts/AuthForm/AuthForm.component"
+import Footer from "../../components/Layouts/Footer/Footer.component"
 
-import "./Register.styles.scss";
+import "./Register.styles.scss"
 
 const Register = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Navigate to='/' />
   }
 
   return (
     <Fragment>
-      <div className="auth-page">
-        <div className="register-content">
-          <div className="register-grid">
+      <div className='auth-page'>
+        <div className='register-content'>
+          <div className='register-grid'>
             <Caption />
             <AuthForm action={"Sign up"} />
           </div>
@@ -27,16 +27,16 @@ const Register = ({ isAuthenticated }) => {
       </div>
       <Footer />
     </Fragment>
-  );
-};
+  )
+}
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-});
+})
 
-export default connect(mapStateToProps, { setAlert })(Register);
+export default connect(mapStateToProps, { setAlert })(Register)
