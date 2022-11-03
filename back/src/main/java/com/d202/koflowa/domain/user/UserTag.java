@@ -2,15 +2,16 @@ package com.d202.koflowa.domain.user;
 
 
 import com.d202.koflowa.domain.Tag;
+import com.d202.koflowa.domain.common.TagStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_tag")
 public class UserTag {
@@ -28,4 +29,8 @@ public class UserTag {
     @JoinColumn(name = "tag_seq")
     @JsonBackReference
     private Tag tag;
+
+    @Column(name = "tag_status", length = 10)
+    @Enumerated(EnumType.STRING)
+    private TagStatus tagStatus;
 }
