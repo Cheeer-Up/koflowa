@@ -6,6 +6,7 @@
   box-shadow: 0 0 0 rgba(12, 13, 14, 0.05);
   transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s;
   position: relative !important;
+  // background-color: #ffffff;
   background-color: #3d3d3d;
 
   .side-bar-tabs {
@@ -18,6 +19,7 @@
 
     .nav-link {
       text-decoration: none;
+      // color: #525960;
       color: #c4c8cc;
 
       li {
@@ -29,6 +31,10 @@
 
         .menu-list-text {
           margin: 0 !important;
+          &:hover {
+            // color: #0c0d0e;
+            color: #ffffff;
+          }
         }
       }
     }
@@ -60,7 +66,9 @@
     .active {
       li {
         font-weight: bold;
+        // background: #f1f2f3;
         background: #2d2d2d;
+        // color: #0c0d0e;
         color: #f2f2f3;
         border-right: 3px solid #5f8bff;
       }
