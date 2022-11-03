@@ -4,7 +4,8 @@ $purple: #28254c;
 $l-purple: #332f63;
 $t-purple: #8c8aa7;
 $pink: #ff5e65;
-$white: #fff;
+// $white: #fff;
+$white: #3d72ff;
 
 html,
 body {
@@ -155,7 +156,7 @@ body {
       border-radius: 100px 100px 0 0;
       position: relative;
       margin: 0 auto;
-      animation: upndown 3s ease-in-out infinite;
+      animation: upndown 2s ease-in-out infinite;
 
       .box__ghost-eyes {
         position: absolute;
@@ -168,7 +169,8 @@ body {
         .box__eye-left {
           width: 12px;
           height: 12px;
-          background: #2d2d2d;
+          // background: #2d2d2d;
+          background: #ffffff;
           border-radius: 50%;
           margin: 0 10px;
           position: absolute;
@@ -177,7 +179,8 @@ body {
         .box__eye-right {
           width: 12px;
           height: 12px;
-          background: #2d2d2d;
+          // background: #2d2d2d;
+          background: #ffffff;
           border-radius: 50%;
           margin: 0 10px;
           position: absolute;
@@ -212,6 +215,7 @@ body {
 
     .box__ghost-shadow {
       height: 20px;
+      // box-shadow: 0 50px 15px 5px #454545aa;
       box-shadow: 0 50px 15px 5px #454545aa;
       border-radius: 50%;
       margin: 0 auto;
@@ -226,6 +230,7 @@ body {
     transform: translateX(-50%);
 
     .box__description-container {
+      // color: $white;
       color: $white;
       text-align: center;
       width: 200px;
@@ -253,7 +258,8 @@ body {
       height: 50px;
       text-align: center;
       text-decoration: none;
-      color: $white;
+      // color: $white;
+      color: #ffffff;
       line-height: 50px;
       font-size: 18px;
       padding: 0 70px;
@@ -277,7 +283,8 @@ body {
       }
 
       &:hover {
-        background: #cc7525;
+        background: #3d72ff;
+        // background: #cc7525;
       }
     }
   }
