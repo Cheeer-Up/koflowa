@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    Room findByRoomSeq(Long roomSeq);
+    Optional<Room> findByRoomSeq(Long roomSeq);
 
     /* 나의 채팅방 목록 전체 조회*/
     @Query(value = "select room " + "from Room room " +
