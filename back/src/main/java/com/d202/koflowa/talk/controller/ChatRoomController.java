@@ -1,6 +1,6 @@
-package com.d202.koflowa.kotalk.controller;
+package com.d202.koflowa.talk.controller;
 
-import com.d202.koflowa.kotalk.repository.RoomRepository;
+import com.d202.koflowa.talk.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/chat")
-public class RoomController {
-    private final RoomRepository repository;
+public class ChatRoomController {
+    private final ChatRoomRepository chatRoomRepository;
 
     //채팅방 목록 조회
     @GetMapping(value = "/rooms")
@@ -23,7 +23,7 @@ public class RoomController {
         System.out.println("# All Chat Rooms");
         ModelAndView mv = new ModelAndView("chat/rooms");
 
-        mv.addObject("data", repository.findAllRooms());
+        mv.addObject("data", chatRoomRepository.findAllRooms());
 
         return mv;
     }
@@ -33,7 +33,7 @@ public class RoomController {
     public String create(RedirectAttributes rttr){
 
         System.out.println("# Create Chat Room");
-        rttr.addFlashAttribute("roomName", repository.createRoomDto());
+        rttr.addFlashAttribute("roomName", chatRoomRepository.createRoomDto());
         return "redirect:/chat/rooms";
     }
 
@@ -43,6 +43,6 @@ public class RoomController {
 
         System.out.println("# get Chat Room, roomID : " + roomId);
 
-        model.addAttribute("room", repository.findRoomById(roomId));
+        model.addAttribute("room", chatRoomRepository.findRoomById(roomId));
     }
 }

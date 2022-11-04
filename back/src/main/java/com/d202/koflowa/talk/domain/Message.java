@@ -1,4 +1,4 @@
-package com.d202.koflowa.kotalk.domain;
+package com.d202.koflowa.talk.domain;
 
 import com.d202.koflowa.common.domain.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -11,27 +11,27 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "talk_talk_chat")
-public class TalkTalkChat extends BaseTimeEntity {
+@Table(name = "message")
+public class Message extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "talk_talk_chat_seq", columnDefinition = "bigint unsigned")
-    private Long talkTalkChatSeq;
+    @Column(name = "message_seq", columnDefinition = "bigint unsigned")
+    private Long messageSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "talk_talk_seq")
+    @JoinColumn(name = "room_seq")
     @JsonBackReference
-    private TalkTalk talkTalk;
+    private Room room;
 
     @Column(name = "checked")
     private Boolean checked;
 
-    @Column(name = "chat_content")
-    private String chatContent;
+    @Column(name = "content")
+    private String content;
 
-    @Column(name = "talk_talk_chat_type")
-    private int talkTalkChatType;
+    @Column(name = "type")
+    private int type;
 
     @Column(name = "session_code")
     private int sessionCode;
