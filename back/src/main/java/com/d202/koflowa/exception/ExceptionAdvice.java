@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
+    /* Talk 기능 Exception */
     @ExceptionHandler(User1NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response User1NotFoundException() {
