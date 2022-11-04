@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface UserTagRepository extends JpaRepository<UserTag, Long> {
 
     public Optional<UserTag> findByUserAndTagAndTagStatus(User user, Tag tag, TagStatus tagStatus);
+
+    List<UserTag> findByUser_Seq(long userSeq);
 }

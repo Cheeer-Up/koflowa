@@ -1,4 +1,4 @@
-package com.d202.koflowa.dto;
+package com.d202.koflowa.dto.tag;
 
 import com.d202.koflowa.domain.Tag;
 import lombok.*;
@@ -10,7 +10,7 @@ public class TagDto {
     @Getter
     @Builder
     @AllArgsConstructor
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor()
     public static class Request {
         private String name;
         private String discription;

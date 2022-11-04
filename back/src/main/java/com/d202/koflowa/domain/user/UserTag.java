@@ -20,12 +20,12 @@ public class UserTag {
     @Column(name = "user_tag_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_seq")
     @JsonBackReference
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "tag_seq")
     @JsonBackReference
     private Tag tag;
