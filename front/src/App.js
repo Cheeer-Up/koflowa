@@ -23,7 +23,6 @@ import NotFound from "./Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
 // css 추가
-import "./App.css"
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -44,7 +43,6 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser())
   }, [])
-
   const location = useLocation()
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
 
