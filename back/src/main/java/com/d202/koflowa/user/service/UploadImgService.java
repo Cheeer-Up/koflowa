@@ -1,8 +1,8 @@
 package com.d202.koflowa.user.service;
 
-//import com.amazonaws.services.s3.AmazonS3Client;
-//import com.amazonaws.services.s3.model.CannedAccessControlList;
-//import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.d202.koflowa.exception.ImageConvertException;
 import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.user.domain.User;
@@ -25,11 +25,11 @@ import java.util.UUID;
 @Slf4j
 @Transactional
 public class UploadImgService {
-//    private final AmazonS3Client amazonS3Client;
+    private final AmazonS3Client amazonS3Client;
     private final UserRepository userRepository;
 
-//    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    @Value("${cloud.aws.s3.bucket}")
+private String bucket;
 
     public String upload(MultipartFile multipartFile, String dirname, long id) throws IOException {
         File uploadFile = convert(multipartFile)
@@ -59,10 +59,9 @@ public class UploadImgService {
     }
 
     private String saveS3(File uploadFile, String fileName){
-//        amazonS3Client.putObject(new PutObjectRequest(bucket,fileName, uploadFile)
-//                .withCannedAcl(CannedAccessControlList.PublicRead));
-//        return amazonS3Client.getUrl(bucket, fileName).toString();
-        return "";
+        amazonS3Client.putObject(new PutObjectRequest(bucket,fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
     private void removeNewFile(File targetFile){
@@ -75,12 +74,10 @@ public class UploadImgService {
 
     private Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(file.getOriginalFilename());
-        if (convertFile.createNewFile()){
             try(FileOutputStream fos = new FileOutputStream(convertFile)){
+                log.debug("2");
                 fos.write(file.getBytes());
             }
             return Optional.of(convertFile);
-        }
-        return Optional.empty();
     }
 }
