@@ -16,11 +16,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
-  redis:
-    cluster:
-      nodes: k7d202.p.ssafy.io:6379,k7d202.p.ssafy.io:6380,k7d202.p.ssafy.io:6381
 
 springdoc:
+  use-fqn: true
   api-docs:
     groups:
       enabled: true
