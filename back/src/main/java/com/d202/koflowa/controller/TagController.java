@@ -2,9 +2,7 @@ package com.d202.koflowa.controller;
 
 import com.d202.koflowa.domain.Tag;
 import com.d202.koflowa.domain.common.TagStatus;
-import com.d202.koflowa.dto.ResponseDto;
-import com.d202.koflowa.dto.TagDto;
-import com.d202.koflowa.repository.tag.TagRepository;
+import com.d202.koflowa.dto.tag.TagDto;
 import com.d202.koflowa.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Tag", description = "Tag api 입니다.")
 @Slf4j

@@ -3,6 +3,7 @@ package com.d202.koflowa.domain.user;
 import com.d202.koflowa.domain.BaseTimeEntity;
 import com.d202.koflowa.domain.common.AuthProvider;
 import com.d202.koflowa.domain.common.Role;
+import com.d202.koflowa.dto.user.UserDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -48,4 +49,17 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "reputation_score", columnDefinition = "int unsigned")
     private int reputationScore;
+
+    public void putUser(UserDto.Request user){
+        this.nickname = user.getNickname();
+        this.about = user.getAbout();
+    }
+
+    public void putProfile(String profile){
+        this.profile = profile;
+    }
+
+    public void putReputationScore(int reputationScore){
+        this.reputationScore = reputationScore;
+    }
 }
