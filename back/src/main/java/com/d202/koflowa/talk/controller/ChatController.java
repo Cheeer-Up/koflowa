@@ -1,7 +1,6 @@
-package com.d202.koflowa.kotalk.controller;
+package com.d202.koflowa.talk.controller;
 
-
-import com.d202.koflowa.kotalk.dto.MessageDto;
+import com.d202.koflowa.talk.dto.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,13 +16,13 @@ public class ChatController {
     //stompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     //"/pub/chat/enter"
     @MessageMapping(value = "/chat/enter")
-    public void enter(MessageDto message){
-        template.convertAndSend("/sub/chat/room/" + message.getUser_seq(), message);
+    public void enter(ChatDto chatDto){
+        template.convertAndSend("/sub/chat/room/" + chatDto.getUser_seq(), chatDto);
     }
 
     @MessageMapping(value = "/chat/message")
-    public void message(MessageDto message){
-        template.convertAndSend("/sub/chat/room/" + message.getUser_seq(), message);
+    public void message(ChatDto chatDto){
+        template.convertAndSend("/sub/chat/room/" + chatDto.getUser_seq(), chatDto);
     }
 
 }

@@ -1,34 +1,34 @@
-package com.d202.koflowa.kotalk.repository;
+package com.d202.koflowa.talk.repository;
 
-import com.d202.koflowa.kotalk.dto.RoomDto;
+import com.d202.koflowa.talk.dto.ChatRoomDto;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Repository
-public class RoomRepository {
-    private Map<String, RoomDto> roomDtoMap;
+public class ChatRoomRepository {
+    private Map<String, ChatRoomDto> roomDtoMap;
 
     @PostConstruct
     private void init(){
         roomDtoMap = new LinkedHashMap<>();
     }
 
-    public List<RoomDto> findAllRooms(){
+    public List<ChatRoomDto> findAllRooms(){
         //채팅방 생성 순서 최근 순으로 반환
-        List<RoomDto> result = new ArrayList<>(roomDtoMap.values());
+        List<ChatRoomDto> result = new ArrayList<>(roomDtoMap.values());
         Collections.reverse(result);
 
         return result;
     }
 
-    public RoomDto findRoomById(String id){
+    public ChatRoomDto findRoomById(String id){
         return roomDtoMap.get(id);
     }
 
-    public RoomDto createRoomDto(){
-        RoomDto room = RoomDto.create();
+    public ChatRoomDto createRoomDto(){
+        ChatRoomDto room = ChatRoomDto.create();
         roomDtoMap.put(room.getRoomId(), room);
 
         return room;
