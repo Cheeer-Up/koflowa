@@ -8,11 +8,10 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @SpringBootApplication
 @EnableJpaAuditing // JPA Auditing 활성화
-@EnableRedisRepositories(basePackages = {"com.d202.koflowa.repository.redisTest"})
+//@EnableRedisRepositories(basePackages = {"com.d202.koflowa.repository.redisTest"})
 public class KoflowaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KoflowaApplication.class, args);
 	}
-
 }
