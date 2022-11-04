@@ -1,125 +1,123 @@
-https://user-images.githubusercontent.com/43780137/158059050-481ffa30-e415-4156-aea7-072c817f2ae2.mp4
+# 사용법
 
-[![Version](https://img.shields.io/static/v1?label=version&message=2.0.0&color=blue)](https://shields.io/)
-[![NPM](https://img.shields.io/static/v1?label=npm&message=6.8.5&color=blue)](https://shields.io/)
-[![NODE](https://img.shields.io/static/v1?label=node&message=10.12.8&color=success)](https://shields.io/)
-[![MYSQL](https://img.shields.io/static/v1?label=mysql&message=8.0.10&color=blueviolet)](https://shields.io/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/)
+```bash
+# nodejs 모듈 설치
+npm install package.json
+or
+npm install
 
-### [🌐 Website](https://stackoverflow-clone-client.vercel.app)  |  [📹 Demo Video](https://www.youtube.com/watch?v=bUAAgfGOfYg)
+# 미리보기 실행
+npm start
 
-### API Hosted On
-- __[stackoverflow-clone-api.onrender.com](https://stackoverflow-clone-api.onrender.com) (Primary)__
-- __[stackoverflow-clone-backend.herokuapp.com](https://stackoverflow-clone-backend.herokuapp.com)__
+#  배포를 위한 빌드생성
+npm run build
 
-As the name suggests, this project is a clone of a famous Q/A website for professional and enthusiast programmers built solely by me using a completely different stack.
+```
 
-This repo consists of the Frontend code of the project, the backend code is in __[Stackoverflow-Clone-Backend](https://github.com/Mayank0255/Stackoverflow-Clone-Backend)__
+# 다뤄져야할 컴포넌트(jsx, js 파일)
 
-## My Tech Stack (MERN)
+## 큰틀
 
-#### Front-end
+- **App.js** - 라우터 설정
 
-- Front-end Framework: `React.js (with Redux)`
-- Styling: `SASS` and `BOOTSTRAP`
+## 레이아웃
 
-#### Back-end
+- **Header.jsx** : 헤더 내용
 
-- For handling index requests: `Node.js with Express.js Framework`
-- As Database: `MySQL with Sequelize`
-- API tested using: `POSTMAN`
+  위치 : components/Layouts/Header/
 
-## Guidelines to setup
+- **Footer.jsx** : 푸터
 
-There are two ways to setup the project: manually or using the Dockerfile. Read below for more details:
+  위치 : components/Layouts/Footer/
 
-### Manual Setup
+## 페이지
 
-1. Open your local CLI -
+- **홈페이지** : 기본 사이트에 접속하였을때 보여줄 페이지
 
-   ```
-   mkdir Stackoverflow-Clone
-   cd Stackoverflow-Clone
-   ```
+- **질문리스트 페이지** : 모든 질문글들이 보여질 페이지
 
-2. Setup the backend code -
-   
-   __NOTE:__ For Frontend Developers, if they dont want to setup the Backend Code, they can skip the Step 2, and make sure they follow the optional step mentioned in Step 4
+  위치 : src/Pages/QuestionPage/
 
-   - Create a `.env` file and the format should be as given in `.env.example`.
-   - Clone the code & install the modules-
+- **태그 페이지** : 모든 태그들의 정보를 보여줄 페이지
 
-     ```
-     git clone https://github.com/Mayank0255/Stackoverflow-Clone-Backend.git
-     cd Stackoverflow-Clone-Backend
+  위치 : src/Pages/AllTagsPage/
 
-     npm install
-     ```
+- **사용자들 페이지** : 모든 사용자들의 정보를 보여줄 페이지
 
-   - Open your MySQL Client -
+  위치 : src/Pages/AllUsersPage/
 
-     ```
-     CREATE DATABASE stack_overflow;
-     ```
-     NOTE: Don't forget to keep the database name same in the `.env` and here.
+  위치 : src/Pages/HomePage/
 
-   - Run the index `npm start`.
+- **회원가입 페이지** : 회원가입시 보여질 페이지
 
-3. Open a new CLI terminal and goto the root `Stackoverflow-Clone` folder you created in the first step.
-4. Setup the Frontend code -
+  위치 : src/Pages/Register/
 
-   - Clone the code & install the modules-
+- **로그인 페이지** : 로그인시 보여질 페이지
 
-     ```
-     git clone https://github.com/Mayank0255/Stackoverflow-Clone-Frontend.git
-     cd Stackoverflow-Clone-Frontend
+  위치 : src/Pages/Login/
 
-     npm install
-     ```
+- **게시글 상세 페이지** : 게시글 상세정보 ex 질문 내용, 답변 내용, 채택여부 등등등
 
-   - Run the client index `npm start`.
-   
-   __OPTIONAL (Recommended For Frontend Developers):__ Can just change the path [here](https://github.com/Mayank0255/Stackoverflow-Clone-Frontend/blob/53b64c37981c618802547cd17483525532de83f0/src/config/index.js#L6) to this `https://stackoverflow-clone-backend.herokuapp.com`
-   Now, it will hit PROD
+  위치 : src/Pages/Post/
 
-Let me know if you are interested and would want me to assign it to you
+- **사용자 프로필 페이지** : 특정 사용자들의 정보가 나타나는 페이지
 
-### Docker Setup
+  위치 : src/Pages/ProfilePage/
 
-The back-end has support for Docker. So if you want to run the back-end in a container, you need do:
+- **태그 페이지** : 해당 태그의 디테일한 정보가 있고, 관심, 무시 기능이 존재하는 페이지
 
-- Setup environment variables in `.env` file. Note when you use Docker setup and run the database in localhost (host machine), you need to setup the environment variables for use correct IP of MySQL Database. Please, read [here](https://docs.docker.com/compose/environment-variables/) and [here](https://docs.docker.com/desktop/windows/networking/) for more details.
+  위치 : src/Pages/TagPage/
 
-- Build the Docker image:
-  ```
-  docker build -t stackoverflowclone .
-  ```
-- Run the container. For example, if you want to run the container in a new terminal, you can do:
-  ```
-  docker run -d -p 5000:5000 stackoverflowclone
-  ```
+- **질문하는 페이지** : 질문하기 버튼을 눌렀을때 보여질 페이지, 글작성이 여기서 이루어지
 
-The default port of api is 5000. After running the container, you can access the api by typing:
+  위치 : src/Pages/PostForm
 
-    http://localhost:5000/api/<endpoint that you request - see next section>
+- **404 페이지** : 라우터 테이블상 존재하지 않는 url에 접속했을시 보여질 페이지
 
-_Follow the steps properly (manual or Docker) and you are good to go._
+  위치 : src/Pages/NotFound/
 
-## Contributing
+# 리덕스 사용법
 
-- Go to `Contributing.md`
+# 컴포넌트 구성법
 
-## DEMO
+스니펫 사용해도 상관x
 
-#### VIDEO - [Watch the video](https://www.youtube.com/watch?v=bUAAgfGOfYg)
+```jsx
+// 함수형으로 사용할때
+import React from 'react';
 
-_Video Last Updated on 7th March, 2022_
+function App(props) {
+  return (
+    <div></div>
+  );
+}
 
-#### IMAGES
+export default App;
 
-<img src="/demo/images/1.png" width=340px /><img src="/demo/images/2.png" width=340px />
-<img src="/demo/images/3.png" width=340px /><img src="/demo/images/4.png" width=340px />
-<img src="/demo/images/5.png" width=340px /><img src="/demo/images/6.png" width=340px />
-<img src="/demo/images/7.png" width=340px /><img src="/demo/images/8.png" width=340px />
-<img src="/demo/images/9.png" width=340px /><img src="/demo/images/10.png" width=340px />
-<img src="/demo/images/11.png" width=340px /><img src="/demo/images/12.png" width=340px />
+// 화살표 함수 형식
+import React from 'react';
+
+const App = () => {
+  return (
+    <div></div>
+  );
+};
+
+export default App;
+
+// 클래스형 + 콤포넌트
+import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    return (
+      <div></div>
+    );
+  }
+}
+
+export default App;
+// 등등 다양하게 만들수 있다.
+// https://www.hanl.tech/blog/vs-code-react-time-awesome-snippets/ 참조글
+
+```
