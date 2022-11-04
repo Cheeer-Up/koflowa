@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { connect } from "react-redux"
+// useSelector, useDispatch - redux
 import PropTypes from "prop-types"
 
 import { getPosts } from "../../redux/posts/posts.actions"
@@ -13,9 +14,19 @@ import handleFilter from "../../utils/handleFilter"
 
 import "./HomePage.styles.scss"
 
+//redux 사용하기 위한 함수
+
+// import { setY, selectY } from "../../redux/slice/CharSlice"
+
 const itemsPerPage = 10
 
 const HomePage = ({ getPosts, post: { posts, loading } }) => {
+  // const dispatcher = useDispatch()
+
+  // const [charX, setCharX] = useState(useSelector(selectY))
+  // setCharX(400)
+  // dispatcher(setY(charX))
+
   useEffect(() => {
     getPosts()
   }, [getPosts])
