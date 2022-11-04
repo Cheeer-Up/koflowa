@@ -5,6 +5,7 @@ import com.d202.koflowa.user.domain.ReputationLog;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.dto.UserDto;
 import com.d202.koflowa.user.dto.UserTagDto;
+import com.d202.koflowa.user.service.UploadImgService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,8 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "MyPage", description = "MyPage API")
 public class MyPageController {
-
     private final MyPageService myPageService;
+//    private final UploadImgService uploadImgService;
 
     @GetMapping("/profile")
     @Operation(summary = "사용자 프로필 조회", description = "")
@@ -40,8 +42,9 @@ public class MyPageController {
 
     @PutMapping("/profile/image")
     @Operation(summary = "사용자 프로필 이미지 수정", description = "")
-    public void putProfileImg(@RequestParam("data")MultipartFile multipartFile){
-
+    public ResponseEntity<String> putProfileImg(@RequestParam("data")MultipartFile multipartFile) throws IOException {
+//       return new ResponseEntity<>(uploadImgService.upload(multipartFile, "static",1), HttpStatus.OK);
+        return new ResponseEntity<>("이미지", HttpStatus.OK);
     }
 
     @GetMapping("/tags")
