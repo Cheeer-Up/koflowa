@@ -15,3 +15,5 @@ services:
       - /etc/letsencrypt/live/k7d202.p.ssafy.io/:/root
     environment:
       - TZ=Asia/Seoul
+    networks:
+      - redis-net
