@@ -25,8 +25,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "MyPage", description = "MyPage API")
 public class MyPageController {
+
     private final MyPageService myPageService;
-//    private final UploadImgService uploadImgService;
+    private final UploadImgService uploadImgService;
 
     @GetMapping("/profile")
     @Operation(summary = "사용자 프로필 조회", description = "")
@@ -43,8 +44,7 @@ public class MyPageController {
     @PutMapping("/profile/image")
     @Operation(summary = "사용자 프로필 이미지 수정", description = "")
     public ResponseEntity<String> putProfileImg(@RequestParam("data")MultipartFile multipartFile) throws IOException {
-//       return new ResponseEntity<>(uploadImgService.upload(multipartFile, "static",1), HttpStatus.OK);
-        return new ResponseEntity<>("이미지", HttpStatus.OK);
+       return new ResponseEntity<>(uploadImgService.upload(multipartFile, "static",1), HttpStatus.OK);
     }
 
     @GetMapping("/tags")
