@@ -24,6 +24,7 @@ spring:
 #    port: 6379
 
 springdoc:
+  use-fqn: true
   api-docs:
     groups:
       enabled: true
