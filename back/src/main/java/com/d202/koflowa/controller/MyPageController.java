@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MyPageController {
 
     @PutMapping("/profile/image")
     @Operation(summary = "사용자 프로필 이미지 수정", description = "")
-    public void putProfileImg(){
+    public void putProfileImg(@RequestParam("data")MultipartFile multipartFile){
 
     }
 
