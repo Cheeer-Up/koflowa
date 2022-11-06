@@ -1,5 +1,5 @@
 #back/docker-compose.yml
-version: '3.7'
+version: '3.9'
 
 services:
   backend:
@@ -17,3 +17,6 @@ services:
       - TZ=Asia/Seoul
     networks:
       - redis-net
+networks:
+  redis-net:
+    external: true
