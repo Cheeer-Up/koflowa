@@ -39,18 +39,24 @@
 // //index.js에 사용함
 // export const persistor = persistStore(store)
 
+import { getDefaultMiddleware } from "@reduxjs/toolkit"
 import { createStore, applyMiddleware } from "redux"
-// import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { composeWithDevTools } from "redux-devtools-extension"
 import thunk from "redux-thunk"
 import rootReducer from "./root-reducer"
 
 const initialState = {}
 
-const middleware = [thunk]
+const middlewares = [thunk]
 
-export const store = createStore(
-  rootReducer,
+// export const store = createStore(
+//   rootReducer,
+//   initialState,
+//   composeWithDevTools(applyMiddleware(...middleware))
+// )
+export const store = configureStore({
+  reducer: rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-)
+  middleware: [...middlewares],
+})
