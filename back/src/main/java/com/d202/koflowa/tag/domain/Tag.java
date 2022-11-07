@@ -20,7 +20,7 @@ public class Tag extends BaseTimeEntity {
     @Column(name = "tag_name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "tag_description", nullable = false)
+    @Column(name = "tag_description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     public void setName(String name) {
