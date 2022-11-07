@@ -2,7 +2,8 @@
 import React, { useEffect } from "react"
 import { Provider } from "react-redux"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
-import store from "./redux/store"
+// import store from "./redux/store"
+import { store } from "./redux/store"
 import setAuthToken from "./redux/auth/auth.utils"
 import { loadUser } from "./redux/auth/auth.actions"
 
