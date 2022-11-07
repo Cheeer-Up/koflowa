@@ -79,6 +79,11 @@ public class TagService {
 
 
     public ResponseDto postUserTag(Long tagSeq, Long userSeq, TagStatus tagStatus) {
+        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagSeqAndTagStatus(userSeq, tagSeq, tagStatus);
+        if (userTag.isPresent()) {
+            throw new UserTagExistException("이미 등록된 태그입니다.");
+        }
+
         Optional<Tag> tag = tagRepository.findBySeq(tagSeq);
         if (tag.isEmpty()) {
             throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
@@ -87,11 +92,6 @@ public class TagService {
         Optional<User> user = userRepository.findBySeq(userSeq);
         if (user.isEmpty()) {
             throw new UserNotFoundException("존재하지 않는 유저 seq 입니다.");
-        }
-
-        Optional<UserTag> userTag = userTagRepository.findByUserAndTagAndTagStatus(user.get(), tag.get(), tagStatus);
-        if (userTag.isPresent()) {
-            throw new UserTagExistException("이미 등록된 태그입니다.");
         }
 
         // 주시 태그 저장
@@ -110,17 +110,18 @@ public class TagService {
 
 
     public ResponseDto deleteUserTag(Long tagSeq, Long userSeq, TagStatus tagStatus) {
-        Optional<Tag> tag = tagRepository.findBySeq(tagSeq);
-        if (tag.isEmpty()) {
-            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
-        }
+//        Optional<Tag> tag = tagRepository.findBySeq(tagSeq);
+//        if (tag.isEmpty()) {
+//            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
+//        }
+//
+//        Optional<User> user = userRepository.findBySeq(userSeq);
+//        if (user.isEmpty()) {
+//            throw new UserNotFoundException("존재하지 않는 유저 seq 입니다.");
+//        }
 
-        Optional<User> user = userRepository.findBySeq(userSeq);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("존재하지 않는 유저 seq 입니다.");
-        }
-
-        Optional<UserTag> userTag = userTagRepository.findByUserAndTagAndTagStatus(user.get(), tag.get(), tagStatus);
+//        Optional<UserTag> userTag = userTagRepository.findByUserAndTagAndTagStatus(user.get(), tag.get(), tagStatus);
+        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagSeqAndTagStatus(userSeq, tagSeq, tagStatus);
         if (userTag.isEmpty()) {
             throw new UserTagNotFoundException("태그가 존재하지 않습니다.");
         }
