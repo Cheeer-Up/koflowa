@@ -14,11 +14,11 @@ import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.com
 import "./TagPage.styles.scss"
 
 const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
-  const { tagname } = useParams()
+  const { name } = useParams()
 
   useEffect(() => {
-    getTagPosts(tagname)
-    getTag(tagname)
+    getTagPosts(name)
+    getTag(name)
     // eslint-disable-next-line
   }, [getTag, getTagPosts])
 
@@ -34,7 +34,7 @@ const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
     <Fragment>
       <div id='mainbar' className='questions-page fc-black-800'>
         <div className='questions-grid'>
-          <h3 className='questions-headline'>Questions tagged [{tag.tag.tagname}]</h3>
+          <h3 className='questions-headline'>Questions tagged [{tag.tag.name}]</h3>
           <div className='questions-btn'>
             <LinkButton text={"Ask Question"} link={"/add/question"} type={"s-btn__primary"} />
           </div>
