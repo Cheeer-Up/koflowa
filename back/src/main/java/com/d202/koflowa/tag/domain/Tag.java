@@ -20,14 +20,14 @@ public class Tag extends BaseTimeEntity {
     @Column(name = "tag_name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "tag_discription", nullable = false)
-    private String discription;
+    @Column(name = "tag_description", nullable = false)
+    private String description;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
