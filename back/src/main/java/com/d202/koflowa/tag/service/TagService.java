@@ -71,7 +71,7 @@ public class TagService {
 
         // 태그 정보 수정
         tag.get().setName(req.getName());
-        tag.get().setDiscription(req.getDiscription());
+        tag.get().setDescription(req.getDescription());
 
         // 수정된 태그 저장 및 리턴
         return tagRepository.save(tag.get());
