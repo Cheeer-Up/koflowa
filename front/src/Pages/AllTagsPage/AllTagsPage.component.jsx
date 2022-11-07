@@ -14,10 +14,182 @@ import "./AllTagsPage.styles.scss"
 
 const itemsPerPage = 12
 
-const AllTagsPage = ({ getTags, tag: { tags, loading } }) => {
-  useEffect(() => {
-    getTags()
-  }, [getTags])
+// const AllTagsPage = ({ getTags, tag: { tags, loading } }) => {
+const AllTagsPage = ({ getTags, tag: { tags2, loading } }) => {
+  // useEffect(() => {
+  //   getTags()
+  // }, [getTags])
+
+  const tags = [
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+    {
+      seq: 1,
+      name: "java",
+      description:
+        "썬 마이크로시스템즈에서 1995년에 개발한 객체 지향 프로그래밍 언어. 창시자는 제임스 고슬링이다. 2010년에 오라클이 썬 마이크로시스템즈를 인수하면서 Java의 저작권을 소유하였다. 현재는 OpenJDK는 GPL2이나 오라클이 배포하는 Oracle JDK는 상업라이선스로 2019년 1월부터 유료화정책을 강화하고 있다. Java EE는 이클립스 재단의 소유이다. Java 언어는 J2SE 1.4부터는 Java Community Process (JCP)에서 개발을 주도하고 있다. C#과 문법적 성향이 굉장히 비슷하며[2], 그에 비해 2019년 Q3에서 가장 많이 이용하는 언어로 뽑혔다.",
+      createdTime: "2022-11-07T15:23:37.393141",
+      modifiedTime: "2022-11-07T15:23:37.393141",
+    },
+    {
+      seq: 2,
+      name: "Python",
+      description:
+        "1991년에 발표된 인터프리터 방식의 프로그래밍 언어. 영어 문법과 비슷해서 읽고 쓰기 쉬운 특유의 문법과, 이 점에 매료된 프로그래머들로부터 만들어진 수많은 패키지들 덕분에 2010년대 중반부터 전 세계에서 가장 많이 사용되는 프로그래밍 언어 중 하나로 떠올랐다.",
+      createdTime: "2022-11-07T15:24:34.593238",
+      modifiedTime: "2022-11-07T15:24:34.593238",
+    },
+    {
+      seq: 3,
+      name: "JavaScript",
+      description:
+        "Ecma International의 프로토타입 기반의 프로그래밍 언어로, 스크립트 언어에 해당된다. 특수한 목적이 아닌 이상 모든 웹 브라우저에 인터프리터가 내장되어 있다. 오늘날 HTML, CSS와 함께 웹을 구성하는 요소 중 하나다. HTML이 웹 페이지의 기본 구조를 담당하고, CSS가 디자인을 담당한다면 JavaScript는 클라이언트 단에서 웹 페이지가 동작하는 것을 담당한다.[1] 웹 페이지를 자동차에 비유하자면, HTML은 자동차의 뼈대, CSS는 자동차의 외관, JavaScript는 자동차의 동력이라고 볼 수 있다.",
+      createdTime: "2022-11-07T15:24:55.105625",
+      modifiedTime: "2022-11-07T15:24:55.105625",
+    },
+  ]
 
   const [page, setPage] = useState(1)
   const [fetchSearch, setSearch] = useState("")
@@ -59,7 +231,7 @@ const AllTagsPage = ({ getTags, tag: { tags, loading } }) => {
         <div className='user-browser'>
           <div className='grid-layout'>
             {tags
-              .filter((tag) => tag.tagname.toLowerCase().includes(fetchSearch.toLowerCase()))
+              .filter((tag) => tag.name.toLowerCase().includes(fetchSearch.toLowerCase()))
               ?.sort(handleSorting(sortType))
               .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
               .map((tag, index) => (
@@ -70,7 +242,7 @@ const AllTagsPage = ({ getTags, tag: { tags, loading } }) => {
         <Pagination
           page={page}
           itemList={tags.filter((tag) =>
-            tag.tagname.toLowerCase().includes(fetchSearch.toLowerCase())
+            tag.name.toLowerCase().includes(fetchSearch.toLowerCase())
           )}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
