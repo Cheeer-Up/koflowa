@@ -29,6 +29,25 @@ public class QuestionDto {
                     .build();
         }
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class RequestCreate{
+        private Long user_seq;
+        private String question_title;
+        private String question_content;
+
+        public Question toEntity(User user){
+            return Question.builder()
+                    .user(user)
+                    .title(question_title)
+                    .content(question_title)
+                    .build();
+        }
+    }
+
     @Getter
     public static class Response{
         private Long question_seq;
