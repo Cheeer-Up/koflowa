@@ -2,6 +2,7 @@ package com.d202.koflowa.answer.dto;
 
 
 import com.d202.koflowa.answer.domain.Answer;
+import com.d202.koflowa.question.domain.Question;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,13 +14,13 @@ public class AnswerDto {
     @NoArgsConstructor
     @Builder
     public static class Request{
-        private Long questionSeq;
+        private Long answerSeq;
         private String content;
 
         /* Dto -> Entity */
-        public Answer toEntity() {
+        public Answer toEntity(Question question) {
             Answer answer = Answer.builder()
-//                    .question()   // question
+                    .question(question)
                     .content(content)
                     .build();
             return answer;
