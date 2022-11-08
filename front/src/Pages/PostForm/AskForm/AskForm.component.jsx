@@ -1,161 +1,160 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { addPost } from "../../../redux/posts/posts.actions";
-import MarkdownEditor from "../../../components/Layouts/MarkdownEditor/MarkdownEditor.component";
-import { badWordsFilter } from "../../../utils/censorBadWords";
+import React, { Fragment, useState, useEffect, useRef } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { addPost } from "../../../redux/posts/posts.actions"
+import MarkdownEditor from "../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
+import { badWordsFilter } from "../../../utils/censorBadWords"
 
-import "./AskForm.styles.scss";
+import "./AskForm.styles.scss"
 
 const AskForm = ({ addPost }) => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    tagname: "",
-  });
+    name: "",
+  })
 
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({})
 
   useEffect(() => {
-    setFormErrors({});
-  }, [formData]);
+    setFormErrors({})
+  }, [formData])
 
-  const markdownEditorRef = useRef(null);
+  const markdownEditorRef = useRef(null)
 
-  const { title, body, tagname } = formData;
+  const { title, body, name } = formData
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const validateFormData = () => {
-    const errors = [];
+    const errors = []
 
-    const tags = formData.tagname
+    const tags = formData.name
       .split(",")
       .filter(Boolean)
-      .map((tag) => tag.trim());
+      .map((tag) => tag.trim())
 
     tags.forEach((tag) => {
       if (tag.length > 25) {
         errors.push({
-          tagname: `A tag name can't be longer than 25 characters.`,
-        });
+          name: `태그이름은 25글자 보다 길어질수 없습니다.`,
+          // name: `A tag name can't be longer than 25 characters.`,
+        })
       } else if (/[^a-zA-Z]/.test(tag)) {
         errors.push({
-          tagname: `${tag} tag must contain English alphabets only (no spaces).`,
-        });
+          // name: `${tag} tag must contain English alphabets only (no spaces).`,
+          name: `${tag} 태그는 항상 알파벳으로만 이루어져 있고 공백이 있어선 안됩니다.`,
+        })
       }
-    });
+    })
 
-    if (badWordsFilter.isProfane(formData.tagname)) {
-      errors.push({ tagname: "Inappropriate words are not allowed." });
+    if (badWordsFilter.isProfane(formData.name)) {
+      // errors.push({ name: "Inappropriate words are not allowed." })
+      errors.push({ name: "부적절한 단어는 허용되지 않습니다." })
     }
 
-    errors
-      .reverse()
-      .forEach((err) => setFormErrors((prev) => ({ ...prev, ...err })));
+    errors.reverse().forEach((err) => setFormErrors((prev) => ({ ...prev, ...err })))
 
-    return errors;
-  };
+    return errors
+  }
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const errors = validateFormData();
+    const errors = validateFormData()
 
     // if there are errors, don't submit
-    if (errors.length > 0) return;
+    if (errors.length > 0) return
 
-    addPost({ title, body, tagname });
+    addPost({ title, body, name })
 
     setFormData({
       title: "",
       body: "",
-      tagname: "",
-    });
-    markdownEditorRef.current.cleanEditorState();
-  };
+      name: "",
+    })
+    markdownEditorRef.current.cleanEditorState()
+  }
 
   const updateConvertedContent = (htmlConvertedContent) => {
-    setFormData({ ...formData, body: htmlConvertedContent });
-  };
+    setFormData({ ...formData, body: htmlConvertedContent })
+  }
 
   return (
     <Fragment>
       <form onSubmit={(e) => onSubmit(e)}>
-        <div className="question-form p16 s-card">
-          <div className="question-layout">
-            <div className="title-grid">
-              <label className="form-label s-label">
-                Title
-                <p className="title-desc fw-normal fs-caption">
-                  Be specific and imagine you’re asking a question to another
-                  person
+        <div className='question-form p16 s-card'>
+          <div className='question-layout'>
+            <div className='title-grid'>
+              <label className='form-label s-label'>
+                {/* Title */}
+                제목
+                <p className='title-desc fw-normal fs-caption'>
+                  {/* Be specific and imagine you’re asking a question to another person */}
+                  구체적으로 다른 사람에게 질문을 하고 있다고 상상해 보세요.
                 </p>
               </label>
               <input
-                className="title-input s-input"
-                type="text"
-                name="title"
+                className='title-input s-input'
+                type='text'
+                name='title'
                 value={title}
                 onChange={(e) => onChange(e)}
-                id="title"
-                placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                id='title'
+                // placeholder='e.g. Is there an R function for finding the index of an element in a vector?'
+                placeholder='예시) 벡터에서 요소의 인덱스를 찾는 R 함수가 있습니까?'
                 required
               />
             </div>
-            <div className="body-grid">
-              <label className="form-label s-label fc-black-800">
-                Body
-                <p className="body-desc fw-normal fs-caption fc-black-800">
-                  Include all the information someone would need to answer your
-                  question
+            <div className='body-grid'>
+              <label className='form-label s-label fc-black-800'>
+                {/* Body */}
+                내용
+                <p className='body-desc fw-normal fs-caption fc-black-800'>
+                  {/* Include all the information someone would need to answer your question */}
+                  누군가가 귀하의 질문에 대답하는 데 필요한 모든 정보를 포함하십시오.
                 </p>
               </label>
-              <div className="s-textarea rich-text-editor-container">
-                <MarkdownEditor
-                  ref={markdownEditorRef}
-                  onChange={updateConvertedContent}
-                />
+              <div className='s-textarea rich-text-editor-container'>
+                <MarkdownEditor ref={markdownEditorRef} onChange={updateConvertedContent} />
               </div>
             </div>
-            <div className="tag-grid">
-              <label className="form-label s-label">
-                Tag Name
-                <p className="tag-desc fw-normal fs-caption">
-                  Add up to 5 tags to describe what your question is about
+            <div className='tag-grid'>
+              <label className='form-label s-label'>
+                {/* Tag Name */}
+                태그 이름
+                <p className='tag-desc fw-normal fs-caption'>
+                  {/* Add up to 5 tags to describe what your question is about */}
+                  질문의 내용을 설명하는 최대 5개의 태그를 추가하세요.
                 </p>
               </label>
               <input
-                className="tag-input s-input"
-                type="text"
-                name="tagname"
-                value={tagname}
+                className='tag-input s-input'
+                type='text'
+                name='name'
+                value={name}
                 onChange={(e) => onChange(e)}
-                id="tagname"
-                placeholder="e.g. (ajax, django, string)"
+                id='name'
+                placeholder='예시) (python, spring, c)'
                 required
               />
-              <p className="fc-error fw-bold ml8 mt4">{formErrors.tagname}</p>
+              <p className='fc-error fw-bold ml8 mt4'>{formErrors.name}</p>
             </div>
           </div>
         </div>
-        <div className="post-button mt32">
-          <button
-            className="s-btn s-btn__primary"
-            id="submit-button"
-            name="submit-button"
-          >
-            Post your question
+        <div className='post-button mt32'>
+          <button className='s-btn s-btn__primary' id='submit-button' name='submit-button'>
+            {/* Post your question */}
+            질문 개시
           </button>
         </div>
       </form>
     </Fragment>
-  );
-};
+  )
+}
 
 AskForm.propTypes = {
   addPost: PropTypes.func.isRequired,
-};
+}
 
-export default connect(null, { addPost })(AskForm);
+export default connect(null, { addPost })(AskForm)
