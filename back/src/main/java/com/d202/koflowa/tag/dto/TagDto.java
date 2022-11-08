@@ -13,11 +13,11 @@ public class TagDto {
     @NoArgsConstructor()
     public static class Request {
         private String name;
-        private String discription;
+        private String description;
         public Tag toEntity() {
             return Tag.builder()
                     .name(name)
-                    .discription(discription)
+                    .description(description)
                     .build();
         }
     }
@@ -29,13 +29,13 @@ public class TagDto {
     public static class Response {
         private Long seq;
         private String name;
-        private String discription;
+        private String description;
         private LocalDateTime createdTime, modifiedTime;
 
         public Response(Tag tag) {
             this.seq = tag.getSeq();
             this.name = tag.getName();
-            this.discription = tag.getDiscription();
+            this.description = tag.getDescription();
             this.createdTime = tag.getCreatedTime();
             this.modifiedTime = tag.getModifiedTime();
         }
