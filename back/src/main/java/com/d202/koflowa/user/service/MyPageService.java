@@ -68,7 +68,7 @@ public class MyPageService {
     }
 
     public List<Question> getQuestion(long id, Pageable pageable){
-        return questionRepository.findByUser_Seq(id, pageable).getContent();
+        return questionRepository.findByUserSeq(id, pageable).getContent();
     }
 
     public List<Answer> getAnswer(long id, Pageable pageable){
