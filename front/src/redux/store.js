@@ -29,10 +29,10 @@ const rootReducer = combineReducers({
 //persistReducer(설정, 최종 리듀서)
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-//index.js에 사용함
-export const persistor = persistStore(store)
-
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: [thunk],
 })
+
+//index.js에 사용함
+export const persistor = persistStore(store)

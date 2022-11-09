@@ -1,39 +1,28 @@
 // 기본패키지들 임포트
 import React, { useEffect } from "react"
-// import { Provider } from "react-redux"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
-// import store from "./redux/store"
-import setAuthToken from "./redux/auth/auth.utils"
-import { loadUser } from "./redux/auth/auth.actions"
-//redux-persist 관련 함수
-
-
-//react-redux 관련 함수
-
-import { store } from "./redux/store"
-// import { store, persistor } from "./redux/store"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
-import Header from "./components/Layouts/Header/Header.component"
-// import Alert from "./components/Alert/Alert.component"
-import HomePage from "./Pages/HomePage/HomePage.component"
-import QuestionsPage from "./Pages/QuestionsPage/QuestionsPage.component"
-import AllTagsPage from "./Pages/AllTagsPage/AllTagsPage.component"
-import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
-import Register from "./Pages/Register/Register.component"
-import Login from "./Pages/Login/Login.component"
-// import Post from "./Pages/Post/Post.component"
-import PostForm from "./Pages/PostForm/PostForm.component"
-import TagPage from "./Pages/TagPage/TagPage.component"
-// import ProfilePage from "./Pages/ProfilePage/ProfilePage.component"
-import NotFound from "./Pages/NotFound/NotFound.component"
+import Header from "components/Layouts/Header/Header.component"
+// import Alert from "components/Alert/Alert.component"
+import HomePage from "Pages/HomePage/HomePage.component"
+import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
+import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
+import AllUsersPage from "Pages/AllUsersPage/AllUsersPage.component"
+import Register from "Pages/Register/Register.component"
+import Login from "Pages/Login/Login.component"
+// import Post from "Pages/Post/Post.component"
+import PostForm from "Pages/PostForm/PostForm.component"
+import TagPage from "Pages/TagPage/TagPage.component"
+// import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
 // css 추가
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token)
-}
+// if (localStorage.token) {
+//   setAuthToken(localStorage.token)
+// }
 const titles = {
   // 해당 페이지에 들어갈 타이틀
   "/": "코플로와 - 막히는 부분, 궁금한 부분등을 물어보거나 자신의 지식을 공유해 보아요",
@@ -47,27 +36,22 @@ const titles = {
 }
 
 const App = () => {
-  useEffect(() => {
-    store.dispatch(loadUser())
-  }, [])
+  // useEffect(() => {
+  //   store.dispatch(loadUser())
+  // }, [])
   const location = useLocation()
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
-
-  //       {/* <ReduxProvider store={store}> */}
-  // {/* <PersistGate loading={null} persistor={persistor}> */}
-  // {/* </PersistGate> */}
-  // {/* </ReduxProvider> */}
   return (
-      <div className='App'>
-        <Header />
-        {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
+    <div className='App'>
+      <Header />
+      {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
             좌, 우 사이드바, 푸터가 필요한 페이지는 LayoutRoute
             아무것도 안넣을 페이지는 BaseRoute 컴포넌트로 만들어주면된다. 
           */}
 
-        {/* <Alert /> */}
-        <Routes>
-          {/* 기본틀
+      {/* <Alert /> */}
+      <Routes>
+        {/* 기본틀
           <Route
           
           path='/'
@@ -78,92 +62,91 @@ const App = () => {
           }
         ></Route> */}
 
-          {/* 홈 */}
-          <Route
-            path='/'
-            element={
-              <LayoutRoute>
-                <HomePage />
-              </LayoutRoute>
-            }
-          />
+        {/* 홈 */}
+        <Route
+          path='/'
+          element={
+            <LayoutRoute>
+              <HomePage />
+            </LayoutRoute>
+          }
+        />
 
-          <Route
-            path='/questions'
-            element={
-              <LayoutRoute>
-                <QuestionsPage />
-              </LayoutRoute>
-            }
-          />
+        <Route
+          path='/questions'
+          element={
+            <LayoutRoute>
+              <QuestionsPage />
+            </LayoutRoute>
+          }
+        />
 
-          <Route
-            path='/tags'
-            element={
-              <LayoutRoute>
-                <AllTagsPage />
-              </LayoutRoute>
-            }
-          />
-          <Route
-            path='/tags/:tagname'
-            element={
-              <LayoutRoute>
-                <TagPage />
-              </LayoutRoute>
-            }
-          />
+        <Route
+          path='/tags'
+          element={
+            <LayoutRoute>
+              <AllTagsPage />
+            </LayoutRoute>
+          }
+        />
+        <Route
+          path='/tags/:tagname'
+          element={
+            <LayoutRoute>
+              <TagPage />
+            </LayoutRoute>
+          }
+        />
 
-          <Route
-            path='/users'
-            element={
-              <LayoutRoute>
-                <AllUsersPage />
-              </LayoutRoute>
-            }
-          />
+        <Route
+          path='/users'
+          element={
+            <LayoutRoute>
+              <AllUsersPage />
+            </LayoutRoute>
+          }
+        />
+        <Route
+          path='/login'
+          element={
+            <LayoutRoute>
+              <Login />
+            </LayoutRoute>
+          }
+        />
 
-          <Route
-            path='/login'
-            element={
-              <BaseRoute>
-                <Login />
-              </BaseRoute>
-            }
-          />
+        <Route
+          path='/register'
+          element={
+            <BaseRoute>
+              <Register />
+            </BaseRoute>
+          }
+        />
 
-          <Route
-            path='/register'
-            element={
-              <BaseRoute>
-                <Register />
-              </BaseRoute>
-            }
-          />
+        <Route
+          path='/add/question'
+          element={
+            <BaseRoute>
+              <PostForm />
+            </BaseRoute>
+          }
+        />
 
-          <Route
-            path='/add/question'
-            element={
-              <BaseRoute>
-                <PostForm />
-              </BaseRoute>
-            }
-          />
+        <Route
+          path='/404'
+          element={
+            <BaseRoute>
+              <NotFound />
+            </BaseRoute>
+          }
+        />
 
-          <Route
-            path='/404'
-            element={
-              <BaseRoute>
-                <NotFound />
-              </BaseRoute>
-            }
-          />
+        <Route path='*' element={<Navigate to='/404' />} />
 
-          <Route path='*' element={<Navigate to='/404' />} />
+        {/* <Route  path="" element={}/> */}
 
-          {/* <Route  path="" element={}/> */}
-
-          {/* 
+        {/* 
           <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
           <Post />
           </LayoutRoute>
@@ -176,8 +159,8 @@ const App = () => {
           <BaseRoute  path='/add/question' title='질문하기 - 코플로와'>
           <PostForm />
         </BaseRoute>*/}
-        </Routes>
-      </div>
+      </Routes>
+    </div>
   )
 }
 

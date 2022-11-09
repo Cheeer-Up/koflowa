@@ -1,16 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react"
-import { connect } from "react-redux"
 // useSelector, useDispatch - redux
 import PropTypes from "prop-types"
 
-import { getPosts } from "../../redux/posts/posts.actions"
-import LinkButton from "../../components/Components/LinkButton/LinkButton.component"
-import PostItem from "../../components/Components/PostItem/PostItem.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
-import handleSorting from "../../utils/handleSorting"
-import Pagination from "../../components/Layouts/Pagination/Pagination.component"
-import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.component"
-import handleFilter from "../../utils/handleFilter"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
+import PostItem from "components/Components/PostItem/PostItem.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import handleSorting from "utils/handleSorting"
+import Pagination from "components/Layouts/Pagination/Pagination.component"
+import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
+import handleFilter from "utils/handleFilter"
 
 import "./HomePage.styles.scss"
 
@@ -20,7 +18,8 @@ import "./HomePage.styles.scss"
 
 const itemsPerPage = 10
 
-const HomePage = ({ getPosts, post: { posts1, loading } }) => {
+const HomePage = () => {
+  const loading = false // test
   const posts = [
     {
       index: 1,
@@ -40,9 +39,9 @@ const HomePage = ({ getPosts, post: { posts1, loading } }) => {
     },
   ]
 
-  useEffect(() => {
-    getPosts()
-  }, [getPosts])
+  // useEffect(() => {
+  //   getPosts()
+  // }, [getPosts])
 
   const [page, setPage] = useState(1)
   const [sortType, setSortType] = useState("Month")
@@ -94,12 +93,8 @@ const HomePage = ({ getPosts, post: { posts1, loading } }) => {
 }
 
 HomePage.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+  // getPosts: PropTypes.func.isRequired,
+  // post: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  post: state.post,
-})
-
-export default connect(mapStateToProps, { getPosts })(HomePage)
+export default HomePage
