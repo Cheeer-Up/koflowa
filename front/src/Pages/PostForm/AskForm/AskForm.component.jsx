@@ -4,8 +4,24 @@ import PropTypes from "prop-types"
 import { addPost } from "../../../redux/posts/posts.actions"
 import MarkdownEditor from "../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
 import { badWordsFilter } from "../../../utils/censorBadWords"
+import { useNavigate } from "react-router-dom"
+import { Modal, Box } from "@mui/material"
 
 import "./AskForm.styles.scss"
+
+const de = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#3c4146",
+  boxShadow: 24,
+  borderRadius: "15px",
+  pt: 2,
+  px: 4,
+  pb: 3,
+}
 
 const AskForm = ({ addPost }) => {
   const [formData, setFormData] = useState({
@@ -13,6 +29,20 @@ const AskForm = ({ addPost }) => {
     body: "",
     name: "",
   })
+
+  const [modalOpen, setmodalOpen] = useState(false)
+  const handleOpen = () => {
+    setmodalOpen(true)
+  }
+  const handleClose = () => {
+    setmodalOpen(false)
+  }
+
+  const navigate = useNavigate()
+
+  const goback = () => {
+    navigate(-1)
+  }
 
   const [formErrors, setFormErrors] = useState({})
 
@@ -147,8 +177,30 @@ const AskForm = ({ addPost }) => {
             {/* Post your question */}
             질문 개시
           </button>
+          <s>`\t`</s>
         </div>
       </form>
+      <button className='s-btn s-btn__danger' onClick={handleOpen}>
+        {/* Post your question */}
+        뒤로 가기
+      </button>
+      <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        aria-labelledby='parent-modal-title'
+        aria-describedby='parent-modal-description'
+      >
+        <Box sx={{ ...de, width: 400 }}>
+          <h2 id='parent-modal-title'>질문 삭제</h2>
+          <p>이 질문을 삭제하시겠습니까? 질문이 삭제되면 취소 할 수 없습니다.</p>
+          <button className='s-btn s-btn__danger' onClick={goback}>
+            뒤로가기
+          </button>
+          <button className='s-btn' onClick={handleClose}>
+            취소
+          </button>
+        </Box>
+      </Modal>
     </Fragment>
   )
 }

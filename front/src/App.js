@@ -71,7 +71,7 @@ const App = () => {
         <Routes>
           {/* 기본틀
           <Route
-          exact
+          
           path='/'
           element={
             <LayoutRoute>
@@ -82,7 +82,6 @@ const App = () => {
 
           {/* 홈 */}
           <Route
-            exact
             path='/'
             element={
               <LayoutRoute>
@@ -92,7 +91,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/questions'
             element={
               <LayoutRoute>
@@ -102,7 +100,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/tags'
             element={
               <LayoutRoute>
@@ -111,7 +108,6 @@ const App = () => {
             }
           />
           <Route
-            exact
             path='/tags/:tagname'
             element={
               <LayoutRoute>
@@ -121,7 +117,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/users'
             element={
               <LayoutRoute>
@@ -131,7 +126,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/login'
             element={
               <BaseRoute>
@@ -141,7 +135,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/register'
             element={
               <BaseRoute>
@@ -151,7 +144,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/add/question'
             element={
               <BaseRoute>
@@ -170,19 +162,20 @@ const App = () => {
           />
 
           <Route path='*' element={<Navigate to='/404' />} />
-          {/* <Route exact path="" element={}/> */}
+
+          {/* <Route  path="" element={}/> */}
 
           {/* 
-          <LayoutRoute exact path='/questions/:id' title='Users - 코플로와'>
+          <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
           <Post />
           </LayoutRoute>
-          <LayoutRoute exact path='/users/:id' title='Users - 코플로와'>
+          <LayoutRoute  path='/users/:id' title='Users - 코플로와'>
           <ProfilePage />
           </LayoutRoute>
-          <LayoutRoute exact path='/tags/:tagname' title='Users - 코플로와'>
+          <LayoutRoute  path='/tags/:tagname' title='Users - 코플로와'>
           <TagPage />
           </LayoutRoute>
-          <BaseRoute exact path='/add/question' title='질문하기 - 코플로와'>
+          <BaseRoute  path='/add/question' title='질문하기 - 코플로와'>
           <PostForm />
         </BaseRoute>*/}
         </Routes>
