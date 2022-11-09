@@ -1,5 +1,7 @@
 package com.d202.koflowa.question.controller;
 
+import com.d202.koflowa.answer.domain.Comment;
+import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.common.response.Response;
 import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.question.dto.QuestionDto;
@@ -66,5 +68,30 @@ public class QuestionController {
         Long user_seq = 0L; // 헤더에서 토큰 분리 후 같이 조회하기
         questionService.setQuestionUpDown(questionUpdownDto);
         return Response.success();
+    }
+
+    /* 질문 코멘트 작성 */
+    @PostMapping("/comment")
+    public Response createComment(@RequestBody CommentDto.Request commentDto) {
+        return Response.success(questionService.createComment(commentDto));
+    }
+
+    /* 질문 코멘트 수정 */
+    @PutMapping("/comment")
+    public Response updateComment(@RequestBody CommentDto.Request commentDto) {
+        return Response.success(questionService.updateComment(commentDto));
+    }
+
+    /* 질문 코멘트 삭제 */
+    @DeleteMapping ("/comment")
+    public Response deleteComment(@RequestBody CommentDto.Request commentDto) {
+        questionService.deleteComment(commentDto);
+        return Response.success();
+    }
+
+    /* 질문 코멘트 조회 */
+    @GetMapping ("/comment/{question_seq}")
+    public Response getQuestionComment(@PathVariable Long question_seq) {
+        return Response.success(questionService.getQuestionComment(question_seq));
     }
 }
