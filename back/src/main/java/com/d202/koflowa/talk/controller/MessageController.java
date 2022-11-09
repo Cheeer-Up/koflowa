@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/message")
+@RequestMapping(value = "/talk/message")
 @RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
