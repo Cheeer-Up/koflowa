@@ -42,7 +42,7 @@ const PostForm = ({ auth: { isAuthenticated, loading } }) => {
 }
 
 PostForm.propTypes = {
-  auth: PropTypes.object.isRequired,
+  // auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({

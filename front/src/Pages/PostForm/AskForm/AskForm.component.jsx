@@ -1,9 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from "react"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { addPost } from "../../../redux/posts/posts.actions"
-import MarkdownEditor from "../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
-import { badWordsFilter } from "../../../utils/censorBadWords"
+import MarkdownEditor from "components/Layouts/MarkdownEditor/MarkdownEditor.component"
+import { badWordsFilter } from "utils/censorBadWords"
 import { useNavigate } from "react-router-dom"
 import { Modal, Box } from "@mui/material"
 
@@ -206,7 +204,7 @@ const AskForm = ({ addPost }) => {
 }
 
 AskForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
+  // addPost: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addPost })(AskForm)
+export default AskForm

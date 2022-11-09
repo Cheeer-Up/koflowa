@@ -1,16 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { getPosts } from "../../redux/posts/posts.actions"
-import handleSorting from "../../utils/handleSorting"
+import handleSorting from "utils/handleSorting"
 
-import LinkButton from "../../components/Components/LinkButton/LinkButton.component"
-import PostItem from "../../components/Components/PostItem/PostItem.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
-import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.component"
-import SearchBox from "../../components/Components/SearchBox/SearchBox.component"
-import Pagination from "../../components/Layouts/Pagination/Pagination.component"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
+import PostItem from "components/Components/PostItem/PostItem.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
+import SearchBox from "components/Components/SearchBox/SearchBox.component"
+import Pagination from "components/Layouts/Pagination/Pagination.component"
 
 import "./QuestionsPage.styles.scss"
 
@@ -79,12 +77,8 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
 }
 
 QuestionsPage.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+  // getPosts: PropTypes.func.isRequired,
+  // post: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  post: state.post,
-})
-
-export default connect(mapStateToProps, { getPosts })(QuestionsPage)
+export default QuestionsPage
