@@ -49,25 +49,25 @@ const MobileSideBar = (props) => {
         </div>
         <div className='content-inner'>
           <div className='side-bar-tabs'>
-            <NavLink exact activeClassName='active' className='home-link' to='/'>
+            <NavLink exact='true' activeclassname='active' className='home-link' to='/'>
               <p>홈</p>
             </NavLink>
 
             <div className='public-tabs'>
               <p className='title fc-light'>PUBLIC</p>
-              <NavLink activeClassName='active' className='icon-link' to='/questions'>
+              <NavLink activeclassname='active' className='icon-link' to='/questions'>
                 <p>
                   <GlobalIcon className='icon' />
                   질문
                 </p>
               </NavLink>
-              <NavLink activeClassName='active' className='link' to='/tags'>
+              <NavLink activeclassname='active' className='link' to='/tags'>
                 <p>태그</p>
               </NavLink>
-              <NavLink activeClassName='active' className='link' to='/users'>
+              <NavLink activeclassname='active' className='link' to='/users'>
                 <p>사용자</p>
               </NavLink>
-              <NavLink activeClassName='active' className='link' to='/jobs'>
+              <NavLink activeclassname='active' className='link' to='/jobs'>
                 <p>코톡</p>
               </NavLink>
             </div>

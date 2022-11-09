@@ -1,12 +1,14 @@
 import React, { Fragment } from "react"
 import { Navigate } from "react-router-dom"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
-import AuthForm from "../../components/Layouts/AuthForm/AuthForm.component"
-import Footer from "../../components/Layouts/Footer/Footer.component"
+import AuthForm from "components/Layouts/AuthForm/AuthForm.component"
+import Footer from "components/Layouts/Footer/Footer.component"
 
-const Login = ({ isAuthenticated }) => {
+import { useSelector } from "react-redux"
+
+const Login = () => {
+  const isAuthenticated = true
   if (isAuthenticated) {
     return <Navigate to='/' />
   }
@@ -26,11 +28,7 @@ const Login = ({ isAuthenticated }) => {
 }
 
 Login.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  // isAuthenticated: PropTypes.bool,
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-})
-
-export default connect(mapStateToProps, null)(Login)
+export default Login
