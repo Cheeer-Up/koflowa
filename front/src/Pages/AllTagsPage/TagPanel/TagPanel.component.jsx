@@ -27,7 +27,7 @@ const TagPanel = ({ tag: { name, description, createdTime } }) => {
 }
 
 TagPanel.propTypes = {
-  tag: PropTypes.object.isRequired,
+  // tag: PropTypes.object.isRequired,
 }
 
 export default connect(null)(TagPanel)

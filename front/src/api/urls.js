@@ -1,31 +1,28 @@
-import config from "../config"
+const USERS = "/users"
+const MYPAGES = "/my-pages"
+const QUESTION = "/question"
+const ANSWER = "/answer"
+const TAGS = "/tags"
+const MEETING = "/meeting"
+const TALK = "/talk"
 
-// Users
-export const usersData = config.BASE_URL + "/api/users"
-export const profileData = config.BASE_URL + "/api/users/{id}"
+// USERS
+export const usersData = "/users"
+export const profileData = "/users/{id}"
 
-// Auth
-export const loadUserData = config.BASE_URL + "/api/auth"
-export const registerUser = config.BASE_URL + "/api/users"
-export const loginUser = config.BASE_URL + "/api/auth"
+// MYPAGES
 
-// Posts
-export const allPostsData = config.BASE_URL + "/api/posts"
-export const singlePostData = config.BASE_URL + "/api/posts/{id}"
-export const allTagPostsData = config.BASE_URL + "/api/posts/tag/{tagName}"
-export const createSinglePost = config.BASE_URL + "/api/posts"
-export const deleteSinglePost = config.BASE_URL + "/api/posts/{id}"
+// QUESTION
 
-// Answers
-export const allAnswersData = config.BASE_URL + "/api/posts/answers/{id}"
-export const createSingleAnswer = config.BASE_URL + "/api/posts/answers/{postId}"
-export const deleteSingleAnswer = config.BASE_URL + "/api/posts/answers/{AnswerId}"
+// ANSWER
 
-// Comments
-export const allCommentsData = config.BASE_URL + "/api/posts/comments/{id}"
-export const createSingleComment = config.BASE_URL + "/api/posts/comments/{postId}"
-export const deleteSingleComment = config.BASE_URL + "/api/posts/comments/{CommentId}"
+// TAGS
+export const allTagsData = TAGS
+export const singleTagData = (tagSeq) => TAGS + `/$(tagSeq)`
+export const registTag = TAGS + "/regist"
+export const watchTag = (tagSeq) => TAGS + `/watch/$(tagSeq)`
+export const ignoreTag = (tagSeq) => TAGS + `/ignore/$(tagSeq)`
 
-// Tags
-export const allTagsData = config.BASE_URL + "/api/tags"
-export const singleTagData = config.BASE_URL + "/api/tags/{tagName}"
+// MEETING
+
+// TALK

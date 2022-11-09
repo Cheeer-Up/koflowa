@@ -1,14 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { getUsers } from "../../redux/users/users.actions"
-import handleSorting from "../../utils/handleSorting"
+import handleSorting from "utils/handleSorting"
 
-import UserPanel from "./UserPanel/UserPanel.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
-import SearchBox from "../../components/Components/SearchBox/SearchBox.component"
-import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.component"
-import Pagination from "../../components/Layouts/Pagination/Pagination.component"
+import UserPanel from "Pages/AllUsersPage/UserPanel/UserPanel.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import SearchBox from "components/Components/SearchBox/SearchBox.component"
+import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
+import Pagination from "components/Layouts/Pagination/Pagination.component"
 
 import "./AllUsersPage.styles.scss"
 
@@ -74,12 +72,8 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
 }
 
 AllUsersPage.propTypes = {
-  getUsers: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  // getUsers: PropTypes.func.isRequired,
+  // user: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-})
-
-export default connect(mapStateToProps, { getUsers })(AllUsersPage)
+export default AllUsersPage
