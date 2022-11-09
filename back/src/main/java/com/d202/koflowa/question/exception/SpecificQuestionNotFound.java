@@ -1,0 +1,4 @@
+package com.d202.koflowa.question.exception;
+
+public class SpecificQuestionNotFound extends RuntimeException{
+}

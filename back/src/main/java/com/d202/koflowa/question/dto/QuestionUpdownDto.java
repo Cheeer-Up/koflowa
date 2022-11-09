@@ -15,18 +15,18 @@ public class QuestionUpdownDto {
     @AllArgsConstructor
     @Builder
     public static class Request{
-        private Long question_updown_seq;
-        private User user_seq;
-        private Question question_seq;
-        private UDType question_updown_type;
+        private Long questionUpdownSeq;
+        private Long userSeq;
+        private Long questionSeq;
+        private UDType questionUpdownType;
 
-        public QuestionUpdown toEntity(){
+        public QuestionUpdown toEntity(User user, Question question){
             return QuestionUpdown
                     .builder()
-                    .seq(question_updown_seq)
-                    .user(user_seq)
-                    .question(question_seq)
-                    .type(question_updown_type)
+                    .seq(questionUpdownSeq)
+                    .user(user)
+                    .question(question)
+                    .type(questionUpdownType)
                     .build();
         }
     }
@@ -35,16 +35,16 @@ public class QuestionUpdownDto {
     @AllArgsConstructor
     @Builder
     public static class Response{
-        private Long question_updown_seq;
-        private User user_seq;
-        private Question question_seq;
-        private UDType question_updown_type;
+        private Long questionUpdownSeq;
+        private User user;
+        private Question question;
+        private UDType questionUpdownType;
 
         public Response(QuestionUpdown questionUpdown){
-            this.question_updown_seq = questionUpdown.getSeq();
-            this.user_seq = questionUpdown.getUser();
-            this.question_seq = questionUpdown.getQuestion();
-            this.question_updown_type = questionUpdown.getType();
+            this.questionUpdownSeq = questionUpdown.getSeq();
+            this.user = questionUpdown.getUser();
+            this.question = questionUpdown.getQuestion();
+            this.questionUpdownType = questionUpdown.getType();
         }
     }
 }
