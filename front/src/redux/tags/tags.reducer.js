@@ -1,4 +1,4 @@
-import {GET_TAG, GET_TAGS, TAG_ERROR} from './tags.types';
+import { GET_TAG, GET_TAGS, TAG_ERROR } from "./tags.types"
 
 const initialState = {
   tags: [],
@@ -6,7 +6,7 @@ const initialState = {
   loading: true,
   redirect: false,
   error: {},
-};
+}
 
 export default function tags(state = initialState, action) {
   switch (action.type) {
@@ -16,22 +16,22 @@ export default function tags(state = initialState, action) {
         tag: action.payload,
         loading: false,
         redirect: false,
-      };
+      }
     case GET_TAGS:
       return {
         ...state,
         tags: action.payload,
         loading: false,
         redirect: false,
-      };
+      }
     case TAG_ERROR:
       return {
         ...state,
         error: action.payload,
         loading: false,
         redirect: true,
-      };
+      }
     default:
-      return state;
+      return state
   }
 }

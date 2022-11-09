@@ -1,29 +1,3 @@
-// //combineReducers = reducer가 여러 개일 때 하나로 묶어줌
-// import { configureStore, combineReducers } from "@reduxjs/toolkit"
-
-// //redux-persist 관련 함수
-// import { persistReducer, persistStore } from "redux-persist"
-
-// //thunk = 실행을 지연시켜줌
-// import thunk from "redux-thunk"
-
-// //storageSession = 세션스토리지에 저장
-// import storage from "redux-persist/lib/storage/session"
-
-// //redux 관리 데이터
-// import CharSlice from "./slice/CharSlice"
-// //persist 설정
-// const persistConfig = {
-//   key: "root",
-//   storage,
-//   debug: true,
-// }
-
-// //rootReducer = 조합된 최종 리듀서
-// const rootReducer = combineReducers({
-//   char: CharSlice,
-// })
-
 // //persistReducer(설정, 최종 리듀서)
 // const persistedReducer = persistReducer(persistConfig, rootReducer)
 
@@ -36,22 +10,41 @@
 //   middleware: [thunk],
 // })
 
+import rootReducer from "./root-reducer"
+//combineReducers = reducer가 여러 개일 때 하나로 묶어줌
+import { configureStore, combineReducers } from "@reduxjs/toolkit"
+
+//redux-persist 관련 함수
+import { persistReducer, persistStore } from "redux-persist"
+
+//thunk = 실행을 지연시켜줌
+import thunk from "redux-thunk"
+
+//storageSession = 세션스토리지에 저장
+import storage from "redux-persist/lib/storage/session"
+
+//redux 관리 데이터
+import CharSlice from "./slice/CharSlice"
+//persist 설정
+const persistConfig = {
+  key: "root",
+  storage,
+  debug: true,
+}
+
+// //rootReducer = 조합된 최종 리듀서
+// const rootReducer = combineReducers({
+//   char: CharSlice,
+// })
+
 // //index.js에 사용함
 // export const persistor = persistStore(store)
 
-import { createStore, applyMiddleware } from "redux"
-import { composeWithDevTools } from "redux-devtools-extension"
-import thunk from "redux-thunk"
-import rootReducer from "./root-reducer"
-
 const initialState = {}
+const middlewares = [thunk]
 
-const middleware = [thunk]
-
-const store = createStore(
-  rootReducer,
+export const store = configureStore({
+  reducer: rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-)
-
-export default store
+  middleware: [...middlewares],
+})
