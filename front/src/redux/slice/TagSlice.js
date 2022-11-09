@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-export const agSlice = createSlice({
+export const TagSlice = createSlice({
   name: "TagSlice",
   initialState: {
     tags: [],
@@ -28,9 +28,9 @@ export const agSlice = createSlice({
   },
 })
 
-export const { getTag, getTags, tagErr } = agSlice.actions
+export const { getTag, getTags, tagErr } = TagSlice.actions
 
 // computed 같은친구
 // export const selectY = (state) => state.char.y
 
-export default agSlice.reducer
+export default TagSlice.reducer

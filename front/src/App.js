@@ -6,10 +6,10 @@ import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 import setAuthToken from "./redux/auth/auth.utils"
 import { loadUser } from "./redux/auth/auth.actions"
 //redux-persist 관련 함수
-// import { PersistGate } from "redux-persist/integration/react"
+
 
 //react-redux 관련 함수
-import { Provider as ReduxProvider } from "react-redux"
+
 import { store } from "./redux/store"
 // import { store, persistor } from "./redux/store"
 
@@ -58,8 +58,6 @@ const App = () => {
   // {/* </PersistGate> */}
   // {/* </ReduxProvider> */}
   return (
-    <ReduxProvider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
       <div className='App'>
         <Header />
         {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
@@ -180,8 +178,6 @@ const App = () => {
         </BaseRoute>*/}
         </Routes>
       </div>
-      {/* </PersistGate> */}
-    </ReduxProvider>
   )
 }
 

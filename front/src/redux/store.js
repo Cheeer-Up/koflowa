@@ -1,17 +1,3 @@
-// //persistReducer(설정, 최종 리듀서)
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
-
-// //store에 유지되는 리듀서 함수를 넣어줌
-// //middleware의 역할 : 리듀서에 도달하기 전에 직렬화할 수 없는 값을 가로채서 중지함
-// //thunk 미들웨어를 사용하지 않고 Redux Persist를 사용하면 브라우저 콘솔에서 직렬화
-// //할 수 없는 값이 상태에서 감지되었음을 읽는 오류가 발생
-// export const store = configureStore({
-//   reducer: persistedReducer,
-//   middleware: [thunk],
-// })
-
-import rootReducer from "./root-reducer"
-//combineReducers = reducer가 여러 개일 때 하나로 묶어줌
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 
 //redux-persist 관련 함수
@@ -25,6 +11,8 @@ import storage from "redux-persist/lib/storage/session"
 
 //redux 관리 데이터
 import CharSlice from "./slice/CharSlice"
+import TagSlice from "./slice/TagSlice"
+
 //persist 설정
 const persistConfig = {
   key: "root",
@@ -32,19 +20,19 @@ const persistConfig = {
   debug: true,
 }
 
-// //rootReducer = 조합된 최종 리듀서
-// const rootReducer = combineReducers({
-//   char: CharSlice,
-// })
+//rootReducer = 조합된 최종 리듀서
+const rootReducer = combineReducers({
+  char: CharSlice,
+  tag: TagSlice,
+})
 
-// //index.js에 사용함
-// export const persistor = persistStore(store)
+//persistReducer(설정, 최종 리듀서)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const initialState = {}
-const middlewares = [thunk]
+//index.js에 사용함
+export const persistor = persistStore(store)
 
 export const store = configureStore({
-  reducer: rootReducer,
-  initialState,
-  middleware: [...middlewares],
+  reducer: persistedReducer,
+  middleware: [thunk],
 })
