@@ -1,12 +1,18 @@
 package com.d202.koflowa.question.service;
 
+import com.d202.koflowa.answer.domain.Comment;
+import com.d202.koflowa.answer.dto.CommentDto;
+import com.d202.koflowa.answer.repository.CommentRepository;
+import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.common.domain.UDType;
+import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.exception.QuestionNotFoundException;
 import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.question.domain.QuestionUpdown;
 import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.dto.QuestionUpdownDto;
+import com.d202.koflowa.question.exception.QuestionCommentNotFoundException;
 import com.d202.koflowa.question.exception.QuestionUpException;
 import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
@@ -21,6 +27,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -30,6 +38,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionUpDownRepository questionUpDownRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
     public Page<Question> getAllQuestion(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return questionRepository.findAll(pageRequest);
@@ -123,4 +132,32 @@ public class QuestionService {
         return new QuestionUpdownDto.Response(questionUpdown);
     }
 
+    public CommentDto.Response createComment(CommentDto.Request commentDto) {
+        return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
+    }
+
+    public CommentDto.Response updateComment(CommentDto.Request commentDto) {
+        Comment comment = commentRepository.findBySeq(commentDto.getCommentSeq())
+                .orElseThrow(() -> new CommentNotFoundException());
+        comment.setContent(commentDto.getContent());
+        return new CommentDto.Response(commentRepository.save(comment));
+    }
+
+    public void deleteComment(CommentDto.Request commentDto) {
+        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), commentDto.getUserSeq())
+                .orElseThrow(() -> new CommentNotFoundException());
+        commentRepository.delete(comment);
+    }
+
+    public List<CommentDto.Response> getQuestionComment(Long question_seq) {
+        List<Comment> commentList = commentRepository.findByBoardSeqAnAndTypeOrderByCreatedTime(question_seq, QAType.QUESTION)
+                .orElseThrow(() -> new QuestionCommentNotFoundException());
+        List<CommentDto.Response> commentResponseList = new ArrayList<>();
+
+        for(int i=0; i<commentList.size(); i++){
+            commentResponseList.add(new CommentDto.Response(commentList.get(i)));
+        }
+
+        return commentResponseList;
+    }
 }

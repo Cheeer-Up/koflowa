@@ -1,6 +1,8 @@
 package com.d202.koflowa.exception;
 
+import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.common.response.Response;
+import com.d202.koflowa.question.exception.QuestionCommentNotFoundException;
 import com.d202.koflowa.question.exception.QuestionUpException;
 import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
@@ -74,4 +76,13 @@ public class ExceptionAdvice {
     @ExceptionHandler(QuestionUpException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response QuestionUpException() { return Response.failure(404, "해당 질문글 추천에 실패했습니다.");}
+
+    /* Comment 기능 Exception */
+    @ExceptionHandler(CommentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response CommentNotFoundException() { return Response.failure(404, "코멘트를 조회하는데 실패했습니다.");}
+
+    @ExceptionHandler(QuestionCommentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response QuestionCommentNotFoundException() { return Response.failure(404, "질문의 코멘트들을 조회하는데 실패했습니다.");}
 }
