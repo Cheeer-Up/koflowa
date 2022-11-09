@@ -1,5 +1,6 @@
 package com.d202.koflowa.meeting.controller;
 
+import com.d202.koflowa.common.response.Response;
 import com.d202.koflowa.meeting.dto.SessionDto;
 import com.d202.koflowa.meeting.dto.TokenDto;
 import com.d202.koflowa.meeting.service.MeetingService;
@@ -21,17 +22,17 @@ public class MeetingController {
     private final MeetingService meetingService;
 
     @PostMapping("")
-    public TokenDto openSession(@RequestBody SessionDto sessionDto) throws OpenViduJavaClientException, OpenViduHttpException, JsonProcessingException {
-        return meetingService.requestToOpenviduCreate(sessionDto.getCustomSessionId());
+    public Response openSession(@RequestBody SessionDto sessionDto) throws OpenViduJavaClientException, OpenViduHttpException, JsonProcessingException {
+        return Response.success(meetingService.requestToOpenviduCreate(sessionDto.getCustomSessionId()));
     }
 
     @DeleteMapping("/{session-id}")
-    public ResponseEntity<Map<String, Object>> deleteSession(@PathVariable("session-id") String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
-        return new ResponseEntity<>(meetingService.requestToOpenViduDelete(sessionId), HttpStatus.OK);
+    public Response deleteSession(@PathVariable("session-id") String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
+        return meetingService.requestToOpenViduDelete(sessionId);
     }
 
     @GetMapping("/{session-id}")
-    public TokenDto joinSession(@PathVariable("session-id") String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
-        return meetingService.requestToOpenviduJoin(sessionId);
+    public Response joinSession(@PathVariable("session-id") String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
+        return Response.success(meetingService.requestToOpenviduJoin(sessionId));
     }
 }
