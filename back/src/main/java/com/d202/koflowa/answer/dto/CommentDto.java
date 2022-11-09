@@ -12,6 +12,8 @@ public class CommentDto {
     @NoArgsConstructor
     @Builder
     public static class Request{
+
+        private Long commentSeq;
         private Long userSeq;
         private Long boardSeq;
         private QAType type;
@@ -20,6 +22,7 @@ public class CommentDto {
         /* Dto -> Entity */
         public Comment toEntity(){
             Comment comment = Comment.builder()
+                    .seq(commentSeq)
                     .userSeq(userSeq)
                     .boardSeq(boardSeq)
                     .type(type)
@@ -40,14 +43,14 @@ public class CommentDto {
         private LocalDateTime modifiedTime;
 
         /* Entity -> Dto*/
-        public Response(Response response){
-            this.seq = response.getSeq();
-            this.userSeq = response.getUserSeq();
-            this.boardSeq = response.getBoardSeq();
-            this.type = response.getType();
-            this.content = response.getContent();
-            this.createdTime = response.getCreatedTime();
-            this.modifiedTime = response.getModifiedTime();
+        public Response(Comment comment){
+            this.seq = comment.getSeq();
+            this.userSeq = comment.getUserSeq();
+            this.boardSeq = comment.getBoardSeq();
+            this.type = comment.getType();
+            this.content = comment.getContent();
+            this.createdTime = comment.getCreatedTime();
+            this.modifiedTime = comment.getModifiedTime();
         }
     }
 }
