@@ -150,7 +150,7 @@ public class QuestionService {
     }
 
     public List<CommentDto.Response> getQuestionComment(Long question_seq) {
-        List<Comment> commentList = commentRepository.findByBoardSeqAnAndTypeOrderByCreatedTime(question_seq, QAType.QUESTION)
+        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTime(question_seq, QAType.QUESTION)
                 .orElseThrow(() -> new QuestionCommentNotFoundException());
         List<CommentDto.Response> commentResponseList = new ArrayList<>();
 
