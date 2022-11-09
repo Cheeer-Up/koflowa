@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
@@ -23,5 +24,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT question FROM Question question")
     Page<Question> findAll(PageRequest pageRequest);
 
-    Page<Question> findAllByUser(User user, PageRequest pageRequest);
+    Page<Question> findAllByUserSeq(Long userSeq, PageRequest pageRequest);
+
+    Optional<Question> findBySeq(Long question_seq);
 }
