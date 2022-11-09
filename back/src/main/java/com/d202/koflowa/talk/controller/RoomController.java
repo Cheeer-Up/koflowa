@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/room")
+@RequestMapping(value = "/talk/room")
 @RequiredArgsConstructor
 public class RoomController {
 
@@ -19,9 +19,9 @@ public class RoomController {
     }
 
     //token 도입시 파라미터를 삭제하고 토큰 값에서 조회할 것
-    @PostMapping("/history")
-    public Response getMyRoomList(@RequestBody RoomDto.Request roomDto) {
-        return Response.success(roomService.getMyRoomList(roomDto.getUser1()));
+    @GetMapping("/{user_id}")
+    public Response getMyRoomList(@PathVariable Long user_id) {
+        return Response.success(roomService.getMyRoomList(user_id));
     }
 
     @DeleteMapping
