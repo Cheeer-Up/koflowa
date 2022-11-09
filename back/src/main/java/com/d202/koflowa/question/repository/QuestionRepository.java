@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    Page<Question> findByUser_Seq(Long userSeq, @PageableDefault(size = 15) Pageable pageable);
+    Page<Question> findByUserSeq(Long userSeq, @PageableDefault(size = 15) Pageable pageable);
 
     @Query(value = "SELECT question FROM Question question " +
             "WHERE (question.content LIKE %:keyword%) OR" +
