@@ -1,10 +1,17 @@
 // 기본패키지들 임포트
 import React, { useEffect } from "react"
-import { Provider } from "react-redux"
+// import { Provider } from "react-redux"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
-import store from "./redux/store"
+// import store from "./redux/store"
 import setAuthToken from "./redux/auth/auth.utils"
 import { loadUser } from "./redux/auth/auth.actions"
+//redux-persist 관련 함수
+// import { PersistGate } from "redux-persist/integration/react"
+
+//react-redux 관련 함수
+import { Provider as ReduxProvider } from "react-redux"
+import { store } from "./redux/store"
+// import { store, persistor } from "./redux/store"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
 import Header from "./components/Layouts/Header/Header.component"
@@ -17,7 +24,7 @@ import Register from "./Pages/Register/Register.component"
 import Login from "./Pages/Login/Login.component"
 // import Post from "./Pages/Post/Post.component"
 import PostForm from "./Pages/PostForm/PostForm.component"
-// import TagPage from "./Pages/TagPage/TagPage.component"
+import TagPage from "./Pages/TagPage/TagPage.component"
 // import ProfilePage from "./Pages/ProfilePage/ProfilePage.component"
 import NotFound from "./Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
@@ -46,31 +53,35 @@ const App = () => {
   const location = useLocation()
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
 
+  //       {/* <ReduxProvider store={store}> */}
+  // {/* <PersistGate loading={null} persistor={persistor}> */}
+  // {/* </PersistGate> */}
+  // {/* </ReduxProvider> */}
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
       <div className='App'>
         <Header />
         {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
             좌, 우 사이드바, 푸터가 필요한 페이지는 LayoutRoute
             아무것도 안넣을 페이지는 BaseRoute 컴포넌트로 만들어주면된다. 
-        */}
+          */}
 
         {/* <Alert /> */}
         <Routes>
           {/* 기본틀
           <Route
-            exact
-            path='/'
-            element={
-              <LayoutRoute>
-                <HomePage />
-              </LayoutRoute>
-            }
-          ></Route> */}
+          
+          path='/'
+          element={
+            <LayoutRoute>
+            <HomePage />
+            </LayoutRoute>
+          }
+        ></Route> */}
 
           {/* 홈 */}
           <Route
-            exact
             path='/'
             element={
               <LayoutRoute>
@@ -80,7 +91,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/questions'
             element={
               <LayoutRoute>
@@ -90,7 +100,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/tags'
             element={
               <LayoutRoute>
@@ -98,9 +107,16 @@ const App = () => {
               </LayoutRoute>
             }
           />
+          <Route
+            path='/tags/:tagname'
+            element={
+              <LayoutRoute>
+                <TagPage />
+              </LayoutRoute>
+            }
+          />
 
           <Route
-            exact
             path='/users'
             element={
               <LayoutRoute>
@@ -110,7 +126,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/login'
             element={
               <BaseRoute>
@@ -120,7 +135,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/register'
             element={
               <BaseRoute>
@@ -130,7 +144,6 @@ const App = () => {
           />
 
           <Route
-            exact
             path='/add/question'
             element={
               <BaseRoute>
@@ -149,24 +162,26 @@ const App = () => {
           />
 
           <Route path='*' element={<Navigate to='/404' />} />
-          {/* <Route exact path="" element={}/> */}
+
+          {/* <Route  path="" element={}/> */}
 
           {/* 
-          <LayoutRoute exact path='/questions/:id' title='Users - 코플로와'>
-            <Post />
+          <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
+          <Post />
           </LayoutRoute>
-          <LayoutRoute exact path='/users/:id' title='Users - 코플로와'>
-            <ProfilePage />
+          <LayoutRoute  path='/users/:id' title='Users - 코플로와'>
+          <ProfilePage />
           </LayoutRoute>
-          <LayoutRoute exact path='/tags/:tagname' title='Users - 코플로와'>
-            <TagPage />
+          <LayoutRoute  path='/tags/:tagname' title='Users - 코플로와'>
+          <TagPage />
           </LayoutRoute>
-          <BaseRoute exact path='/add/question' title='질문하기 - 코플로와'>
-            <PostForm />
-          </BaseRoute>*/}
+          <BaseRoute  path='/add/question' title='질문하기 - 코플로와'>
+          <PostForm />
+        </BaseRoute>*/}
         </Routes>
       </div>
-    </Provider>
+      {/* </PersistGate> */}
+    </ReduxProvider>
   )
 }
 
