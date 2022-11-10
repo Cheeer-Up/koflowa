@@ -15,12 +15,12 @@ public interface QuestionUpDownRepository extends JpaRepository<QuestionUpdown, 
     Optional<QuestionUpdown> findByQuestionSeqAndUserSeq(@Param("qs") Long questionSeq, @Param("us") Long userSeq);
 
     @Query("SELECT COUNT(qd) FROM  QuestionUpdown qd "
-            + "WHERE qd.user.seq = :user_seq AND qd.question.seq = :question_seq " +
-            "AND qd.type = 'UP'")
-    Long getGood(@Param("question_seq") Long questionSeq, @Param("user_seq") Long userSeq);
+            + "WHERE qd.user.seq = :us AND qd.question.seq = :qs " +
+            "AND qd.type = com.d202.koflowa.common.domain.UDType.UP")
+    Long getGood(@Param("qs") Long questionSeq, @Param("us") Long userSeq);
 
     @Query("SELECT COUNT(qd) FROM  QuestionUpdown qd "
-            + "WHERE qd.user.seq = :user_seq AND qd.question.seq = :question_seq " +
-            "AND qd.type = 'DOWN'")
-    Long getBad(@Param("question_seq") Long questionSeq, @Param("user_seq") Long userSeq);
+            + "WHERE qd.user.seq = :us AND qd.question.seq = :qs " +
+            "AND qd.type = com.d202.koflowa.common.domain.UDType.DOWN")
+    Long getBad(@Param("qs") Long questionSeq, @Param("us") Long userSeq);
 }

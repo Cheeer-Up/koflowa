@@ -17,12 +17,12 @@ public class ChatController {
     //"/pub/chat/enter"
     @MessageMapping(value = "/chat/enter")
     public void enter(ChatDto chatDto){
-        template.convertAndSend("/sub/chat/room/" + chatDto.getUser_seq(), chatDto);
+        template.convertAndSend("/sub/chat/room/" + chatDto.getUserSeq(), chatDto);
     }
 
     @MessageMapping(value = "/chat/message")
     public void message(ChatDto chatDto){
-        template.convertAndSend("/sub/chat/room/" + chatDto.getUser_seq(), chatDto);
+        template.convertAndSend("/sub/chat/room/" + chatDto.getUserSeq(), chatDto);
     }
 
 }
