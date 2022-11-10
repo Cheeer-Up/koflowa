@@ -10,8 +10,12 @@ import thunk from "redux-thunk"
 import storage from "redux-persist/lib/storage/session"
 
 //redux 관리 데이터
-import CharSlice from "./slice/CharSlice"
+import AuthSlice from "./slice/AuthSlice"
 import TagSlice from "./slice/TagSlice"
+import MeetingSlice from "./slice/MeetingSlice"
+import TalkSlice from "./slice/TalkSlice"
+import QuestionSlice from "./slice/QuestionSlice"
+import MypageSlice from "./slice/MypageSlice"
 
 //persist 설정
 const persistConfig = {
@@ -22,8 +26,12 @@ const persistConfig = {
 
 //rootReducer = 조합된 최종 리듀서
 const rootReducer = combineReducers({
-  char: CharSlice,
   tag: TagSlice,
+  meeting: MeetingSlice,
+  talk: TalkSlice,
+  question: QuestionSlice,
+  auth: AuthSlice,
+  mypage: MypageSlice,
 })
 
 //persistReducer(설정, 최종 리듀서)

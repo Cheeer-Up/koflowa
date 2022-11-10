@@ -6,11 +6,11 @@ const initialState = {
   error: {},
 }
 
-const AnswerSlice = createSlice({
-  name: "AnswerSlice",
+const MeetingSlice = createSlice({
+  name: "MeetingSlice",
   initialState,
   reducers: {},
 })
 
-export const {} = AnswerSlice.actions
-export default AnswerSlice.reducer
+export const {} = MeetingSlice.actions
+export default MeetingSlice.reducer
