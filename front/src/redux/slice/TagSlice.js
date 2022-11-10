@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-export const TagSlice = createSlice({
+const initialState = {
+  tags: [],
+  tag: null,
+  loading: true,
+  redirect: false,
+  error: {},
+}
+
+const TagSlice = createSlice({
   name: "TagSlice",
-  initialState: {
-    tags: [],
-    tag: null,
-    loading: true,
-    redirect: false,
-    error: {},
-  },
+  initialState,
   reducers: {
     getTag: (state, action) => {
       state.tag = action.payload
@@ -29,8 +31,7 @@ export const TagSlice = createSlice({
 })
 
 export const { getTag, getTags, tagErr } = TagSlice.actions
+export default TagSlice.reducer
 
 // computed 같은친구
 // export const selectY = (state) => state.char.y
-
-export default TagSlice.reducer
