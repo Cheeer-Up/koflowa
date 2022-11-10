@@ -7,17 +7,22 @@ import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import PostItem from "components/Components/PostItem/PostItem.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
-
+import { useSelector, useDispatch } from "react-redux"
 import "./TagPage.styles.scss"
+import { selectLoading, selectTag, setTag } from "redux/slice/TagSlice"
+import { getSingleTagData } from "api/tags"
 
-const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
-  const { name } = useParams()
+const TagPage = () => {
+  let loading = useSelector(selectLoading)
+  let tag = useSelector(selectTag)
+  const dispatch = useDispatch()
+  const { tagName } = useParams()
 
   useEffect(() => {
-    getTagPosts(name)
-    getTag(name)
-    // eslint-disable-next-line
-  }, [getTag, getTagPosts])
+    getSingleTagData(tagName).then((result) => {
+      dispatch(setTag(result.data))
+    })
+  }, [])
 
   const [sortType, setSortType] = useState("Newest")
 
@@ -48,7 +53,7 @@ const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
             setSelected={setSortType}
           />
         </div>
-        <div className='questions'>
+        {/* <div className='questions'>
           {tag.tag.posts_count === 0 ? (
             <h4 style={{ margin: "30px 30px" }}>There are no questions from this tag</h4>
           ) : (
@@ -56,7 +61,7 @@ const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
               ?.sort(handleSorting(sortType))
               .map((post, index) => <PostItem key={index} post={post} />)
           )}
-        </div>
+        </div> */}
       </div>
     </Fragment>
   )
