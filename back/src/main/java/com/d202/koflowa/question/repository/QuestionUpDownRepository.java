@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface QuestionUpDownRepository extends JpaRepository<QuestionUpdown, Long> {
     @Query("SELECT qd FROM QuestionUpdown qd "
             + "WHERE qd.question.seq = :qs AND qd.user.seq = :us")
-    Optional<QuestionUpdown> findByQuestionSeqAndUserSeq(@Param("qs") Long questionSeq, @Param("us") Long userSeq);
+    QuestionUpdown findByQuestionSeqAndUserSeq(@Param("qs") Long questionSeq, @Param("us") Long userSeq);
 
     @Query("SELECT COUNT(qd) FROM  QuestionUpdown qd "
             + "WHERE qd.user.seq = :us AND qd.question.seq = :qs " +

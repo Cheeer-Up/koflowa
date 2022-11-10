@@ -5,8 +5,11 @@ import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Builder
 //모든 필드값을 파라미터로 받는 생성자 자동 생성
@@ -27,18 +30,13 @@ public class Question extends BaseTimeEntity {
     @Column(name = "question_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @ManyToOne
-    @JoinColumn(name = "question_updown")
-    @JsonBackReference
-    private QuestionUpdown questionUpdown;
-
     @Column(name = "user_seq", columnDefinition = "bigint unsigned")
     private Long userSeq;
 
-    @Column(name = "question_title", columnDefinition = "varchar(100)")
+    @Column(name = "question_title", columnDefinition = "varchar(100)", nullable = false)
     private String title;
 
-    @Column(name = "question_content", columnDefinition = "LONGTEXT")
+    @Column(name = "question_content", columnDefinition = "LONGTEXT", nullable = false)
     private String content;
 
     @Column(name = "up", columnDefinition = "bigint unsigned")
