@@ -1,16 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react"
-import { connect } from "react-redux"
 // useSelector, useDispatch - redux
 import PropTypes from "prop-types"
 
-import { getPosts } from "../../redux/posts/posts.actions"
-import LinkButton from "../../components/Components/LinkButton/LinkButton.component"
-import PostItem from "../../components/Components/PostItem/PostItem.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
-import handleSorting from "../../utils/handleSorting"
-import Pagination from "../../components/Layouts/Pagination/Pagination.component"
-import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.component"
-import handleFilter from "../../utils/handleFilter"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
+import PostItem from "components/Components/PostItem/PostItem.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import handleSorting from "utils/handleSorting"
+import Pagination from "components/Layouts/Pagination/Pagination.component"
+import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
+import handleFilter from "utils/handleFilter"
 
 import "./HomePage.styles.scss"
 
@@ -20,16 +18,30 @@ import "./HomePage.styles.scss"
 
 const itemsPerPage = 10
 
-const HomePage = ({ getPosts, post: { posts, loading } }) => {
-  // const dispatcher = useDispatch()
+const HomePage = () => {
+  const loading = false // test
+  const posts = [
+    {
+      index: 1,
+      post: {
+        id: 1,
+        title: "이거 어케하냐",
+        body: {},
+        username: "나다",
+        gravatar: "",
+        user_id: "나다",
+        answer_count: 0,
+        comment_count: 0,
+        views: 32,
+        created_at: "2022-11-07T15:24:55.105625",
+        tags: "",
+      },
+    },
+  ]
 
-  // const [charX, setCharX] = useState(useSelector(selectY))
-  // setCharX(400)
-  // dispatcher(setY(charX))
-
-  useEffect(() => {
-    getPosts()
-  }, [getPosts])
+  // useEffect(() => {
+  //   getPosts()
+  // }, [getPosts])
 
   const [page, setPage] = useState(1)
   const [sortType, setSortType] = useState("Month")
@@ -81,12 +93,8 @@ const HomePage = ({ getPosts, post: { posts, loading } }) => {
 }
 
 HomePage.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+  // getPosts: PropTypes.func.isRequired,
+  // post: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  post: state.post,
-})
-
-export default connect(mapStateToProps, { getPosts })(HomePage)
+export default HomePage

@@ -1,24 +1,21 @@
 import React, { useEffect, Fragment, useState } from "react"
-import { connect } from "react-redux"
 import { Navigate, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
-import { getTagPosts } from "../../redux/posts/posts.actions"
-import { getTag } from "../../redux/tags/tags.actions"
-import handleSorting from "../../utils/handleSorting"
+import handleSorting from "utils/handleSorting"
 
-import LinkButton from "../../components/Components/LinkButton/LinkButton.component"
-import PostItem from "../../components/Components/PostItem/PostItem.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
-import ButtonGroup from "../../components/Components/ButtonGroup/ButtonGroup.component"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
+import PostItem from "components/Components/PostItem/PostItem.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 
 import "./TagPage.styles.scss"
 
 const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
-  const { tagname } = useParams()
+  const { name } = useParams()
 
   useEffect(() => {
-    getTagPosts(tagname)
-    getTag(tagname)
+    getTagPosts(name)
+    getTag(name)
     // eslint-disable-next-line
   }, [getTag, getTagPosts])
 
@@ -34,7 +31,7 @@ const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
     <Fragment>
       <div id='mainbar' className='questions-page fc-black-800'>
         <div className='questions-grid'>
-          <h3 className='questions-headline'>Questions tagged [{tag.tag.tagname}]</h3>
+          <h3 className='questions-headline'>Questions tagged [{tag.tag.name}]</h3>
           <div className='questions-btn'>
             <LinkButton text={"Ask Question"} link={"/add/question"} type={"s-btn__primary"} />
           </div>
@@ -66,15 +63,10 @@ const TagPage = ({ getTag, getTagPosts, tag, post: { posts, loading } }) => {
 }
 
 TagPage.propTypes = {
-  getTag: PropTypes.func.isRequired,
-  getTagPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
-  tag: PropTypes.func.isRequired,
+  // getTag: PropTypes.func.isRequired,
+  // getTagPosts: PropTypes.func.isRequired,
+  // post: PropTypes.object.isRequired,
+  // tag: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  post: state.post,
-  tag: state.tag,
-})
-
-export default connect(mapStateToProps, { getTagPosts, getTag })(TagPage)
+export default TagPage

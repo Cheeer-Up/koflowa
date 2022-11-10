@@ -1,12 +1,9 @@
 import React, { Fragment, useState } from "react"
 import { Link } from "react-router-dom"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { login } from "../../../redux/auth/auth.actions"
-import { register } from "../../../redux/auth/auth.actions"
 
 import { ReactComponent as Logo } from "../../../assets/LogoGlyphMd.svg"
-import { ReactComponent as ExternalLink } from "../../../assets/ExternalLink.svg"
+// import { ReactComponent as ExternalLink } from "../../../assets/ExternalLink.svg"
 
 import "./AuthForm.styles.scss"
 
@@ -83,6 +80,26 @@ const AuthForm = ({ register, login, action }) => {
               <button className='s-btn s-btn__primary' id='submit-button' name='submit-button'>
                 {action}
               </button>
+              {/*  */}
+              {/* <div style={{ width: "300px", height: "100px" }}> */}
+              <div>
+                <div
+                  id='g_id_onload'
+                  data-client_id='1002048860758-t0jrbroq6opqj23a92aajh4eolm5jl2f.apps.googleusercontent.com'
+                  data-login_uri='http://localhost:8081'
+                  data-auto_prompt='false'
+                ></div>
+                <div
+                  className='g_id_signin'
+                  data-type='standard'
+                  data-size='large'
+                  data-theme='outline'
+                  data-text='sign_in_with'
+                  data-shape='rectangular'
+                  data-logo_alignment='left'
+                ></div>
+              </div>
+              {/*  */}
             </div>
           </form>
           {/* <div className='fs-caption license fc-black-500'>
@@ -120,13 +137,9 @@ const AuthForm = ({ register, login, action }) => {
 }
 
 AuthForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  // register: PropTypes.func.isRequired,
+  // login: PropTypes.func.isRequired,
+  // isAuthenticated: PropTypes.bool,
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-})
-
-export default connect(mapStateToProps, { login, register })(AuthForm)
+export default AuthForm

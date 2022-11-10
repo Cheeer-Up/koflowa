@@ -1,21 +1,24 @@
 import React, { Fragment, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { logout } from "../../../redux/auth/auth.actions"
 
-import { ReactComponent as Search } from "../../../assets/Search.svg"
-// import { ReactComponent as Logo } from "../../../assets/LogoMd.svg";
-import { ReactComponent as Logo } from "../../../assets/KoflowaHeaderMdDark.svg"
-// import { ReactComponent as SmallLogo } from "../../../assets/LogoGlyphMd.svg"
-import { ReactComponent as SmallLogo } from "../../../assets/KoflowaHeaderTextDark.svg"
-import Spinner from "../../Components/Spinner/Spinner.component"
-import LinkButton from "../../Components/LinkButton/LinkButton.component"
-import MobileSideBar from "../MobileSideBar/MobileSideBar.component"
+import { ReactComponent as Search } from "assets/Search.svg"
+import { ReactComponent as Logo } from "assets/KoflowaHeaderMdDark.svg"
+import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderTextDark.svg"
+import Spinner from "components/Components/Spinner/Spinner.component"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
+import MobileSideBar from "components/Layouts/MobileSideBar/MobileSideBar.component"
 
 import "./Header.styles.scss"
 
-const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+const Header = () => {
+  const loading = false // test
+  const user = {
+    // test
+    id: "aaa",
+    username: "aaa",
+  }
+  const isAuthenticated = true // test
   let history = useNavigate()
   const [searchState, setSearchState] = useState(false)
 
@@ -28,7 +31,8 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           <img alt='user-logo' className='logo' src={user.gravatar} />
         </Link>
       )}
-      <LinkButton text={"로그 아웃"} link={"/login"} type={"s-btn__filled"} handleClick={logout} />
+      {/* <LinkButton text={"로그 아웃"} link={"/login"} type={"s-btn__filled"} handleClick={logout} /> */}
+      <LinkButton text={"로그 아웃"} link={"/login"} type={"s-btn__filled"} />
     </div>
   )
 
@@ -107,12 +111,8 @@ const Header = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 }
 
 Header.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  // logout: PropTypes.func.isRequired,
+  // auth: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-})
-
-export default connect(mapStateToProps, { logout })(Header)
+export default Header

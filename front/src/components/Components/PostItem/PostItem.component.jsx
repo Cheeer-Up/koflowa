@@ -89,7 +89,7 @@ const PostItem = ({
 }
 
 PostItem.propTypes = {
-  post: PropTypes.object.isRequired,
+  // post: PropTypes.object.isRequired,
 }
 
 export default connect(null)(PostItem)

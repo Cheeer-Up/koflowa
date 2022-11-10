@@ -11,9 +11,9 @@ import Footer from "../../components/Layouts/Footer/Footer.component"
 import "./PostForm.styles.scss"
 
 const PostForm = ({ auth: { isAuthenticated, loading } }) => {
-  if (!isAuthenticated) {
-    return <Navigate to='/login' />
-  }
+  // if (!isAuthenticated) {
+  //   return <Navigate to='/login' />
+  // }
 
   return loading === null ? (
     <Spinner type='page' width='75px' height='200px' />
@@ -22,7 +22,7 @@ const PostForm = ({ auth: { isAuthenticated, loading } }) => {
       <div className='post-form-container'>
         <div className='post-form-content'>
           <div className='post-form-header'>
-            <div className='post-form-headline fc-black-800'>Ask a public question</div>
+            <div className='post-form-headline fc-black-800'>공개 질문하기</div>
           </div>
           <div className='post-form-section'>
             <div className='postform' style={{ width: "100%" }}>
@@ -42,7 +42,7 @@ const PostForm = ({ auth: { isAuthenticated, loading } }) => {
 }
 
 PostForm.propTypes = {
-  auth: PropTypes.object.isRequired,
+  // auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
