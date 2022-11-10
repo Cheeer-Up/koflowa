@@ -15,7 +15,6 @@ public class QuestionUpdownDto {
     @AllArgsConstructor
     @Builder
     public static class Request{
-        private Long questionUpdownSeq;
         private Long userSeq;
         private Long questionSeq;
         private UDType questionUpdownType;
@@ -23,7 +22,6 @@ public class QuestionUpdownDto {
         public QuestionUpdown toEntity(User user, Question question){
             return QuestionUpdown
                     .builder()
-                    .seq(questionUpdownSeq)
                     .user(user)
                     .question(question)
                     .type(questionUpdownType)
