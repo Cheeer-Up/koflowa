@@ -17,9 +17,12 @@ const itemsPerPage = 10
 
 const QuestionsPage = () => {
   const [page, setPage] = useState(1)
-  console.log(page)
-  console.log(getQuestionsData(page - 1, itemsPerPage))
+  // console.log(page)
   const [posts, setPosts] = useState(null)
+
+  getQuestionsData(page - 1, itemsPerPage).then((res) => {
+    setPosts(res.data.result.data.content)
+  })
 
   const [sortType, setSortType] = useState("Newest")
 
