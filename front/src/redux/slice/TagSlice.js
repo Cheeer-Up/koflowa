@@ -32,6 +32,3 @@ const TagSlice = createSlice({
 
 export const { getTag, getTags, tagErr } = TagSlice.actions
 export default TagSlice.reducer
-
-// computed 같은친구
-// export const selectY = (state) => state.char.y

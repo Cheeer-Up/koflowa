@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { loadUserData, registerUser, loginUser } from "../../api/authApi"
 // import axios from "axios"
 
 export const AuthSlice = createSlice({
