@@ -1,8 +1,8 @@
 import api from "api/api"
 import { allTagsData, singleTagData, registTag, watchTag, ignoreTag } from "api/urls"
 
-export const getAllTagsData = () => {
-  return api.get(allTagsData)
+export const getAllTagsData = (params) => {
+  return api.get(allTagsData, params)
 }
 
 export const postRegistTag = (data) => {
