@@ -80,7 +80,7 @@ const App = () => {
         />
         {/* 태그 상세 페이지 */}
         <Route
-          path='/tags/:tagname'
+          path='/tags/:tagName'
           element={
             <LayoutRoute>
               <TagPage />
