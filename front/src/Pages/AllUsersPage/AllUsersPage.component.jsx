@@ -1,32 +1,36 @@
 import React, { Fragment, useEffect, useState } from "react"
-import PropTypes from "prop-types"
-import handleSorting from "utils/handleSorting"
 
 import UserPanel from "Pages/AllUsersPage/UserPanel/UserPanel.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import SearchBox from "components/Components/SearchBox/SearchBox.component"
-import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
+
+import { getAllProfile } from "api/mypages"
 
 import "./AllUsersPage.styles.scss"
 
-const itemsPerPage = 18
-
-const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
-  useEffect(() => {
-    getUsers()
-  }, [getUsers])
-
+const AllUsersPage = () => {
+  const [loading, setLoading] = useState(true)
+  const [users, setUsers] = useState([])
   const [page, setPage] = useState(1)
-  const [fetchSearch, setSearch] = useState("")
-  const [sortType, setSortType] = useState("Popular")
+  const [totalPage, setTotalPage] = useState(1)
+  const size = 10
+  const sort = "reputationScore,desc"
 
-  const handlePaginationChange = (e, value) => setPage(value)
+  useEffect(() => {
+    getAllProfile(page - 1, size, sort).then((data) => {
+      const payload = data.data.result.data
+      setUsers(payload.content)
+      setTotalPage(payload.totalPages)
+      setLoading(false)
+    })
+  }, [page])
+  const handlePaginationChange = (e, value) => {
+    setPage(value)
+  }
 
   const handleChange = (e) => {
     e.preventDefault()
-    setSearch(e.target.value)
-    setPage(1)
   }
 
   return loading || users === null ? (
@@ -40,40 +44,18 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
         </div>
         <div className='users-box pl16 pr16 pb16'>
           <SearchBox placeholder={"사용자 검색"} handleChange={handleChange} width={"200px"} />
-          <ButtonGroup
-            buttons={["인기순", "이름순", "활동순", "신규 사용자"]}
-            // buttons={["Popular", "Name", "Active", "New Users"]}
-            selected={sortType}
-            setSelected={setSortType}
-          />
         </div>
         <div className='user-browser'>
           <div className='grid-layout'>
-            {users
-              .filter((user) => user.username.toLowerCase().includes(fetchSearch.toLowerCase()))
-              ?.sort(handleSorting(sortType, "사용자"))
-              .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-              .map((user, index) => (
-                <UserPanel key={index} user={user} />
-              ))}
+            {users.map((user, index) => (
+              <UserPanel key={index} user={user} />
+            ))}
           </div>
         </div>
-        <Pagination
-          page={page}
-          itemList={users.filter((user) =>
-            user.username.toLowerCase().includes(fetchSearch.toLowerCase())
-          )}
-          itemsPerPage={itemsPerPage}
-          handlePaginationChange={handlePaginationChange}
-        />
+        <Pagination page={page} count={totalPage} handlePaginationChange={handlePaginationChange} />
       </div>
     </Fragment>
   )
-}
-
-AllUsersPage.propTypes = {
-  // getUsers: PropTypes.func.isRequired,
-  // user: PropTypes.object.isRequired,
 }
 
 export default AllUsersPage

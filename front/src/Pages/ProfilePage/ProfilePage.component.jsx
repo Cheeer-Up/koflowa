@@ -1,23 +1,26 @@
-import React, { useEffect, Fragment } from "react"
-import { connect } from "react-redux"
-import { Link, useParams } from "react-router-dom"
-import PropTypes from "prop-types"
-import { getProfile } from "../../redux/users/users.actions"
+import React, { useEffect, Fragment, useState } from "react"
+import { Link, useLocation, useParams } from "react-router-dom"
+import { getUserProfile } from "api/mypages"
 
 import UserSection from "./UserSection/UserSection.component"
-import Spinner from "../../components/Components/Spinner/Spinner.component"
+import Spinner from "components/Components/Spinner/Spinner.component"
 import ExternalUserDetails from "./ExternalUserDetails/ExternalUserDetails.component"
 import UserActivity from "./UserActivity/UserActivity.component"
 
 import "./ProfilePage.styles.scss"
 
-const ProfilePage = ({ getProfile, user: { user, loading } }) => {
-  const { id } = useParams()
+const ProfilePage = () => {
+  const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
+  const userSeq = useLocation().pathname.split("/")[2]
 
   useEffect(() => {
-    getProfile(id)
-    // eslint-disable-next-line
-  }, [getProfile])
+    getUserProfile(userSeq).then((data) => {
+      const payload = data.data.result.data
+      setUser(payload)
+      setLoading(false)
+    })
+  }, [])
 
   return loading || user === null ? (
     <Spinner type='page' width='75px' height='200px' />
@@ -36,7 +39,7 @@ const ProfilePage = ({ getProfile, user: { user, loading } }) => {
           <UserSection user={user} />
         </div>
         <div className='row-grid'>
-          <ExternalUserDetails />
+          {/* <ExternalUserDetails /> */}
           <UserActivity />
         </div>
       </div>
@@ -44,13 +47,4 @@ const ProfilePage = ({ getProfile, user: { user, loading } }) => {
   )
 }
 
-ProfilePage.propTypes = {
-  // getProfile: PropTypes.func.isRequired,
-  // user: PropTypes.object.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  user: state.user,
-})
-
-export default connect(mapStateToProps, { getProfile })(ProfilePage)
+export default ProfilePage

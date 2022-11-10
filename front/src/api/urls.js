@@ -11,6 +11,18 @@ export const usersData = "/users"
 export const profileData = "/users/{id}"
 
 // MYPAGES
+export const allProfile = (page, size, sort) =>
+  MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
+export const userProfile = (userSeq) => MYPAGES + `/profile/${userSeq}`
+export const myProfile = `MYPAGES + /profile`
+export const myImage = MYPAGES + "/profile/image"
+export const userTags = (userSeq) => MYPAGES + `/tags/${userSeq}`
+export const userReputation = (page, size, sort, userSeq) =>
+  MYPAGES + `/reputation/${userSeq}?page=${page}&size=${size}&sort=${sort}`
+export const userQuestion = (page, size, sort, userSeq) =>
+  MYPAGES + `/question/${userSeq}?page=${page}&size=${size}&sort=${sort}`
+export const userAnswer = (page, size, sort, userSeq) =>
+  MYPAGES + `/answer/${userSeq}?page=${page}&size=${size}&sort=${sort}`
 
 // QUESTION
 export const createQuestion = QUESTION // 질문 생성
