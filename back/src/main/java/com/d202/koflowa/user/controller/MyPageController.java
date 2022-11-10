@@ -57,27 +57,27 @@ public class MyPageController {
        return Response.success(uploadImgService.upload(multipartFile, "static",1));
     }
 
-    @GetMapping("/tags")
+    @GetMapping("/tags/{seq}")
     @Operation(summary = "사용자 관심, 무시 태그 조회", description = "")
-    public Response getTags(){
-        return Response.success(myPageService.getTags(1));
+    public Response getTags(@PathVariable long seq){
+        return Response.success(myPageService.getTags(seq));
     }
 
-    @GetMapping("/reputation")
+    @GetMapping("/reputation/{seq}")
     @Operation(summary = "사용자 명성 로그 조회", description = "")
-    public Response getReputation(Pageable pageable){
-        return Response.success(myPageService.getReputation(1, pageable));
+    public Response getReputation(@PathVariable long seq, Pageable pageable){
+        return Response.success(myPageService.getReputation(seq, pageable));
     }
 
     @GetMapping("/question")
     @Operation(summary = "사용자 작성 질문 조회", description = "")
-    public Response getQuestion(Pageable pageable){
-        return Response.success(myPageService.getQuestion(1, pageable));
+    public Response getQuestion(@PathVariable long seq, Pageable pageable){
+        return Response.success(myPageService.getQuestion(seq, pageable));
     }
 
     @GetMapping("/answer")
     @Operation(summary = "사용자 작성 답변 조회", description = "")
-    public Response getAnswer(Pageable pageable){
-        return Response.success(myPageService.getAnswer(1, pageable));
+    public Response getAnswer(@PathVariable long seq, Pageable pageable){
+        return Response.success(myPageService.getAnswer(seq, pageable));
     }
 }
