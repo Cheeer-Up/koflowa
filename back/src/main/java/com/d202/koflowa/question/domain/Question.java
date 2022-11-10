@@ -38,7 +38,7 @@ public class Question extends BaseTimeEntity {
     @Column(name = "question_title", columnDefinition = "varchar(100)")
     private String title;
 
-    @Column(name = "question_content", columnDefinition = "")
+    @Column(name = "question_content", columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(name = "up", columnDefinition = "bigint unsigned")
