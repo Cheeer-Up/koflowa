@@ -26,7 +26,7 @@ public class QuestionDto {
                     .seq(questionSeq)
                     .userSeq(userSeq)
                     .title(questionTitle)
-                    .content(questionTitle)
+                    .content(questionContent)
                     .build();
         }
     }
@@ -44,7 +44,7 @@ public class QuestionDto {
             return Question.builder()
                     .userSeq(userSeq)
                     .title(questionTitle)
-                    .content(questionTitle)
+                    .content(questionContent)
                     .build();
         }
     }
