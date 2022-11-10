@@ -43,6 +43,8 @@ public class QuestionDto {
                     .userSeq(userSeq)
                     .title(questionTitle)
                     .content(questionContent)
+                    .up(0L)
+                    .down(0L)
                     .build();
         }
     }
