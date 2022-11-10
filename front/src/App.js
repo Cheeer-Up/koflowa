@@ -11,6 +11,7 @@ import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "Pages/AllUsersPage/AllUsersPage.component"
 import Register from "Pages/Register/Register.component"
 import Login from "Pages/Login/Login.component"
+import MeetingCallPage from "./Pages/MeetingCallPage/components/VideoRoomComponent"
 // import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
@@ -33,6 +34,7 @@ const titles = {
   "/register": "회원가입 - 코플로와",
   "/404": "이런! 페이지를 찾을수가 없어요 - 코플로와",
   "/add/question": "질문하기 - 코플로와",
+  "/meeting": "화상미팅 - 코플로와",
 }
 
 const App = () => {
@@ -120,6 +122,15 @@ const App = () => {
           element={
             <BaseRoute>
               <Register />
+            </BaseRoute>
+          }
+        />
+
+        <Route
+          path='/meeting'
+          element={
+            <BaseRoute>
+              <MeetingCallPage />
             </BaseRoute>
           }
         />
