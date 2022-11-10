@@ -79,35 +79,44 @@ public class QuestionService {
     }
 
     //질문 테이블에 숫자 기록하는거 하기
-    public QuestionUpdownDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
+    public QuestionDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
         System.out.println(questionUpdownDto);
         /* 중복 검색 방지를 위한 객체 생성 */
-
+        Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
         //User user = userRepository.findBySeq(questionUpdownDto.getUserSeq()).get();
 
         /* QuestionUpdown 조회 */
         QuestionUpdown questionUpdown = questionUpDownRepository
-                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq() )
-                .orElseThrow(() -> new QuestionUpException());
+                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq() );
+                //.orElseThrow(() -> new QuestionUpException());
 
         if(questionUpdown == null){ // 비어있다면 생성
-            questionUpdown = questionUpDownRepository.save(
+             questionUpDownRepository.save(
                     questionUpdownDto.toEntity(
                             userRepository.findBySeq(questionUpdownDto.getUserSeq()).get(),
-                            questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get())
+                            question)
             );
+
+            // 생성 완료 후 변경
+            if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
+                question.setUp(question.getUp() + 1);
+            }else if(questionUpdownDto.getQuestionUpdownType() == UDType.DOWN){
+                question.setDown(question.getDown() + 1);
+            }
+
+            // 변경 내역 저장
+            questionRepository.save(question);
+
         } else if(questionUpdown.getType() == questionUpdownDto.getQuestionUpdownType()) { // 타입이 같으면 삭제
 
             // 삭제
             questionUpDownRepository.delete(questionUpdown);
 
-            Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
-
             // 삭제 완료 후 변경
             if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
                 question.setUp(question.getUp() -1);
             }else if(questionUpdownDto.getQuestionUpdownType() == UDType.DOWN){
-                question.setUp(question.getDown() -1);
+                question.setDown(question.getDown() -1);
             }
 
             // 변경 내역 저장
@@ -118,8 +127,6 @@ public class QuestionService {
 
             // 저장
             questionUpDownRepository.save(questionUpdown);
-
-            Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
 
             if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
                 question.setUp(question.getUp() + 1);
@@ -132,7 +139,7 @@ public class QuestionService {
             questionRepository.save(question);
         }
 
-        return new QuestionUpdownDto.Response(questionUpdown);
+        return new QuestionDto.Response(question);
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {

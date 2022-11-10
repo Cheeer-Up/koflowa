@@ -75,8 +75,7 @@ public class QuestionController {
     @PostMapping("/updown")
     public Response upDownQuestion(@RequestBody QuestionUpdownDto.Request questionUpdownDto) {
         Long user_seq = 0L; // 헤더에서 토큰 분리 후 같이 조회하기
-        questionService.setQuestionUpDown(questionUpdownDto);
-        return Response.success();
+        return Response.success(questionService.setQuestionUpDown(questionUpdownDto));
     }
 
     /* 질문 코멘트 작성 */
