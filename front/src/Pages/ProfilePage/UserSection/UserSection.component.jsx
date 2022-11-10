@@ -1,26 +1,22 @@
-import React from "react";
+import React from "react"
 
-import AvatarCard from "./AvatarCard/AvatarCard.component";
-import ContentCard from "./ContentCard/ContentCard.component";
+import AvatarCard from "./AvatarCard/AvatarCard.component"
+import ContentCard from "./ContentCard/ContentCard.component"
 
-import './UserSection.styles.scss';
+import "./UserSection.styles.scss"
 
 const UserSection = ({ user }) => (
   <div className='grid'>
-    <AvatarCard
-      id={user.id}
-      gravatar={user.gravatar}
-      views={user.views}
-    />
+    <AvatarCard id={user.seq} profile={user.profile} />
     <ContentCard
-      username={user.username}
+      username={user.nickname}
       answers_count={user.answers_count}
       posts_count={user.posts_count}
       comments_count={user.comments_count}
       tags_count={user.tags_count}
-      created_at={user.created_at}
+      created_at={user.createdTime}
     />
   </div>
 )
 
-export default UserSection;
+export default UserSection

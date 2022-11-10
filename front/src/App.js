@@ -14,7 +14,7 @@ import Login from "Pages/Login/Login.component"
 // import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
-// import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
@@ -106,6 +106,15 @@ const App = () => {
             </LayoutRoute>
           }
         />
+
+        <Route
+          path='/users/:userSeq'
+          element={
+            <LayoutRoute>
+              <ProfilePage />
+            </LayoutRoute>
+          }
+        />
         <Route
           path='/login'
           element={
@@ -150,9 +159,7 @@ const App = () => {
           <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
           <Post />
           </LayoutRoute>
-          <LayoutRoute  path='/users/:id' title='Users - 코플로와'>
-          <ProfilePage />
-          </LayoutRoute>
+      
           <LayoutRoute  path='/tags/:tagname' title='Users - 코플로와'>
           <TagPage />
           </LayoutRoute>
