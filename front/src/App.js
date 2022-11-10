@@ -14,7 +14,7 @@ import Login from "Pages/Login/Login.component"
 // import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
-// import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
@@ -97,6 +97,15 @@ const App = () => {
             </LayoutRoute>
           }
         />
+
+        <Route
+          path='/users/:userSeq'
+          element={
+            <LayoutRoute>
+              <ProfilePage />
+            </LayoutRoute>
+          }
+        />
         {/* 로그인 페이지 */}
         <Route
           path='/login'
@@ -151,15 +160,6 @@ const App = () => {
           }
         /> */}
 
-        {/* 사용자 상세 정보 페이지 */}
-        {/* <Route
-          path='/uesrs/:userSeq'
-          element={
-            <LayoutRoute>
-              <ProfilePage />
-            </LayoutRoute>
-          }
-        /> */}
       </Routes>
     </div>
   )

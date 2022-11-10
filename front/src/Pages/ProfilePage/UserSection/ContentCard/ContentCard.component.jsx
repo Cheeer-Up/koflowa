@@ -1,21 +1,28 @@
-import React from "react";
-import moment from "moment";
+import React, { useEffect } from "react"
+import "moment/locale/ko"
+import moment from "moment"
 
-import './ContentCard.styles.scss';
+import "./ContentCard.styles.scss"
 
-const ContentCard = ({ username, answers_count, posts_count, comments_count, tags_count, created_at }) => (
+const ContentCard = ({
+  username,
+  answers_count,
+  posts_count,
+  comments_count,
+  tags_count,
+  created_at,
+}) => (
   <div className='content-card'>
     <div className='content-grid'>
       <div className='info-cell'>
         <div className='info'>
           <div className='details'>
-            <h2>{username}</h2>
-          </div>
-          <div className='date'>
-            <p>
-              user created &nbsp;-&nbsp;
-              {moment(created_at).fromNow(false)}
-            </p>
+            <h2>
+              {username}
+              <div className='date'>
+                <p>{moment(created_at).startOf("hour").fromNow()}</p>
+              </div>
+            </h2>
           </div>
         </div>
       </div>
@@ -24,33 +31,25 @@ const ContentCard = ({ username, answers_count, posts_count, comments_count, tag
           <div className='counts'>
             <div className='cells'>
               <div className='column-grid'>
-                <div className='head fc-black-700'>
-                  {answers_count}
-                </div>
+                <div className='head fc-black-700'>{answers_count}</div>
                 <div className='foot fc-black-500'>answers</div>
               </div>
             </div>
             <div className='cells'>
               <div className='column-grid'>
-                <div className='head fc-black-700'>
-                  {posts_count}
-                </div>
+                <div className='head fc-black-700'>{posts_count}</div>
                 <div className='foot fc-black-500'>questions</div>
               </div>
             </div>
             <div className='cells'>
               <div className='column-grid'>
-                <div className='head fc-black-700'>
-                  {comments_count}
-                </div>
+                <div className='head fc-black-700'>{comments_count}</div>
                 <div className='foot fc-black-500'>comments</div>
               </div>
             </div>
             <div className='cells'>
               <div className='column-grid'>
-                <div className='head fc-black-700'>
-                  {tags_count}
-                </div>
+                <div className='head fc-black-700'>{tags_count}</div>
                 <div className='foot fc-black-500'>tags</div>
               </div>
             </div>
@@ -61,4 +60,4 @@ const ContentCard = ({ username, answers_count, posts_count, comments_count, tag
   </div>
 )
 
-export default ContentCard;
+export default ContentCard
