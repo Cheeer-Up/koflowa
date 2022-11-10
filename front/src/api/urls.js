@@ -13,6 +13,8 @@ export const profileData = "/users/{id}"
 // MYPAGES
 
 // QUESTION
+export const createQuestion = QUESTION // 질문 생성
+export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회
 
 // ANSWER
 

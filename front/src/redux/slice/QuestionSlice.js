@@ -9,8 +9,16 @@ const initialState = {
 const QuestionSlice = createSlice({
   name: "QuestionSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    getQuestions: (state, action) => {
+      state.loading = false
+      state.redirect = false
+      return action.payload
+    },
+    getQuestion: () => {},
+    postQuestion: () => {},
+  },
 })
 
-export const {} = QuestionSlice.actions
+export const { getQuestions } = QuestionSlice.actions
 export default QuestionSlice.reducer

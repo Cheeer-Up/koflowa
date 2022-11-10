@@ -20,33 +20,16 @@ const itemsPerPage = 10
 
 const HomePage = () => {
   const loading = false // test
-  const posts = [
-    {
-      index: 1,
-      post: {
-        id: 1,
-        title: "이거 어케하냐",
-        body: {},
-        username: "나다",
-        gravatar: "",
-        user_id: "나다",
-        answer_count: 0,
-        comment_count: 0,
-        views: 32,
-        created_at: "2022-11-07T15:24:55.105625",
-        tags: "",
-      },
-    },
-  ]
-
-  // useEffect(() => {
-  //   getPosts()
-  // }, [getPosts])
+  const [posts, setposts] = useState(null)
 
   const [page, setPage] = useState(1)
   const [sortType, setSortType] = useState("Month")
 
   const handlePaginationChange = (e, value) => setPage(value)
+
+  // useEffect(() => {
+  //   setposts()
+  // }, [third])
 
   return loading || posts === null ? (
     <Spinner type='page' width='75px' height='200px' />
