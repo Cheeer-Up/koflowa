@@ -32,6 +32,28 @@ public class CommentDto {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class RequestCreate{
+        private Long userSeq;
+        private Long boardSeq;
+        private QAType type;
+        private String content;
+
+        public Comment toEntity(){
+            Comment comment = Comment.builder()
+                    .userSeq(userSeq)
+                    .boardSeq(boardSeq)
+                    .type(type)
+                    .content(content)
+                    .build();
+            return comment;
+        }
+    }
+
+
     @Getter
     public static class Response{
         private Long seq;
