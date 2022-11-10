@@ -37,13 +37,13 @@ public class MyPageService {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
-    public List<UserDto.Response> getAllProfile(Pageable pageable){
-        List<User> userList = userRepository.findAll(pageable).getContent();
-        List<UserDto.Response> res = new ArrayList<>(userList.size());
+    public Page<UserDto.Response> getAllProfile(Pageable pageable){
+        Page<User> userList = userRepository.findAll(pageable);
+        List<UserDto.Response> dtoList = new ArrayList<>();
         for (User user :userList){
-            res.add(new UserDto.Response(user));
+            dtoList.add(new UserDto.Response(user));
         }
-        return res;
+        return new PageImpl<>(dtoList, pageable, userList.getTotalElements());
     }
 
     public UserDto.Response getProfile(long id){
@@ -70,30 +70,30 @@ public class MyPageService {
         return res;
     }
 
-    public List<ReputationLogDto.Response> getReputation(long id, Pageable pageable){
-        List<ReputationLog> reputationLogList = reputationLogRepository.findByUser_Seq(id, pageable).getContent();
-        List<ReputationLogDto.Response> res = new ArrayList<>(reputationLogList.size());
+    public Page<ReputationLogDto.Response> getReputation(long id, Pageable pageable){
+        Page<ReputationLog> reputationLogList = reputationLogRepository.findByUser_Seq(id, pageable);
+        List<ReputationLogDto.Response> dtoList = new ArrayList<>();
         for (ReputationLog reputationLog : reputationLogList) {
-            res.add(new ReputationLogDto.Response(reputationLog));
+            dtoList.add(new ReputationLogDto.Response(reputationLog));
         }
-        return res;
+        return new PageImpl<>(dtoList, pageable, reputationLogList.getTotalElements());
     }
 
-    public List<QuestionDto.Response> getQuestion(long id, Pageable pageable){
-        List<Question> questionList = questionRepository.findByUserSeq(id, pageable).getContent();
-        List<QuestionDto.Response> res = new ArrayList<>(questionList.size());
+    public Page<QuestionDto.Response> getQuestion(long id, Pageable pageable){
+        Page<Question> questionList = questionRepository.findByUserSeq(id, pageable);
+        List<QuestionDto.Response> dtoList = new ArrayList<>();
         for (Question question : questionList) {
-            res.add(new QuestionDto.Response(question));
+            dtoList.add(new QuestionDto.Response(question));
         }
-        return res;
+        return new PageImpl<>(dtoList, pageable, questionList.getTotalElements());
     }
 
-    public List<AnswerDto.Response> getAnswer(long id, Pageable pageable){
-        List<Answer> answerList = answerRepository.findByUserSeq(id, pageable).getContent();
-        List<AnswerDto.Response> res = new ArrayList<>(answerList.size());
+    public Page<AnswerDto.Response> getAnswer(long id, Pageable pageable){
+        Page<Answer> answerList = answerRepository.findByUserSeq(id, pageable);
+        List<AnswerDto.Response> dtoList = new ArrayList<>();
         for (Answer answer : answerList) {
-            res.add(new AnswerDto.Response(answer));
+            dtoList.add(new AnswerDto.Response(answer));
         }
-        return res;
+        return new PageImpl<AnswerDto.Response>(dtoList, pageable, answerList.getTotalElements());
     }
 }
