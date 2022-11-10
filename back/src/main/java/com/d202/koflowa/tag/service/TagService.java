@@ -12,6 +12,9 @@ import com.d202.koflowa.user.repository.UserRepository;
 import com.d202.koflowa.user.repository.UserTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -29,14 +32,14 @@ public class TagService {
     private final UserTagRepository userTagRepository;
 
     @Transactional(readOnly = true)
-    public List<TagDto.Response> getTagList() {
-        List<Tag> tags = tagRepository.findAll();
+    public Page<TagDto.Response> getTagList(Pageable pageable) {
+        Page<Tag> tags = tagRepository.findAll(pageable);
         List<TagDto.Response> tagDtoList = new ArrayList<>();
         for(Tag tag:tags) {
             TagDto.Response tagResponse = new TagDto.Response(tag);
             tagDtoList.add(tagResponse);
         }
-        return tagDtoList;
+        return new PageImpl<TagDto.Response>(tagDtoList, pageable, tags.getTotalElements());
     }
 
 
@@ -110,17 +113,6 @@ public class TagService {
 
 
     public ResponseDto deleteUserTag(Long tagSeq, Long userSeq, TagStatus tagStatus) {
-//        Optional<Tag> tag = tagRepository.findBySeq(tagSeq);
-//        if (tag.isEmpty()) {
-//            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
-//        }
-//
-//        Optional<User> user = userRepository.findBySeq(userSeq);
-//        if (user.isEmpty()) {
-//            throw new UserNotFoundException("존재하지 않는 유저 seq 입니다.");
-//        }
-
-//        Optional<UserTag> userTag = userTagRepository.findByUserAndTagAndTagStatus(user.get(), tag.get(), tagStatus);
         Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagSeqAndTagStatus(userSeq, tagSeq, tagStatus);
         if (userTag.isEmpty()) {
             throw new UserTagNotFoundException("태그가 존재하지 않습니다.");

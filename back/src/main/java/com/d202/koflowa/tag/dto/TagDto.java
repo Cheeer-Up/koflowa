@@ -4,6 +4,7 @@ import com.d202.koflowa.tag.domain.Tag;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class TagDto {
@@ -30,14 +31,14 @@ public class TagDto {
         private Long seq;
         private String name;
         private String description;
-        private LocalDateTime createdTime, modifiedTime;
+        private String createdTime, modifiedTime;
 
         public Response(Tag tag) {
             this.seq = tag.getSeq();
             this.name = tag.getName();
             this.description = tag.getDescription();
-            this.createdTime = tag.getCreatedTime();
-            this.modifiedTime = tag.getModifiedTime();
+            this.createdTime = tag.getCreatedTime().format(DateTimeFormatter.ofPattern("a KK:mm:ss"));
+            this.modifiedTime = tag.getModifiedTime().format(DateTimeFormatter.ofPattern("a KK:mm:ss"));
         }
     }
 }
