@@ -2,10 +2,11 @@ import React from "react"
 import moment from "moment"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import TagBadge from "../../../components/Components/TagBadge/TagBadge.component"
+import TagBadge from "components/Components/TagBadge/TagBadge.component"
 
 // const TagPanel = ({ tag: { name, description, createdTime, posts_count } }) => {
 const TagPanel = ({ tag: { name, description, createdTime } }) => {
+  console.log("createdTime", createdTime)
   return (
     <div className='grid--item s-card js-tag-cell d-flex fd-column'>
       <div className='d-flex jc-space-between ai-center mb12'>

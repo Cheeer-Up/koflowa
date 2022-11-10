@@ -45,23 +45,11 @@ const App = () => {
     <div className='App'>
       <Header />
       {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
-            좌, 우 사이드바, 푸터가 필요한 페이지는 LayoutRoute
+            좌, 우 사이드바가 필요한 페이지는 LayoutRoute
             아무것도 안넣을 페이지는 BaseRoute 컴포넌트로 만들어주면된다. 
+            푸터는 해당 페이지 컴포넌트를 불러올때 추가로 작성해 줘야한다.
           */}
-
-      {/* <Alert /> */}
       <Routes>
-        {/* 기본틀
-          <Route
-          
-          path='/'
-          element={
-            <LayoutRoute>
-            <HomePage />
-            </LayoutRoute>
-          }
-        ></Route> */}
-
         {/* 홈 */}
         <Route
           path='/'
@@ -71,7 +59,7 @@ const App = () => {
             </LayoutRoute>
           }
         />
-
+        {/* 질문 페이지 */}
         <Route
           path='/questions'
           element={
@@ -81,6 +69,7 @@ const App = () => {
           }
         />
 
+        {/* 태그 페이지 */}
         <Route
           path='/tags'
           element={
@@ -89,8 +78,9 @@ const App = () => {
             </LayoutRoute>
           }
         />
+        {/* 태그 상세 페이지 */}
         <Route
-          path='/tags/:tagname'
+          path='/tags/:tagName'
           element={
             <LayoutRoute>
               <TagPage />
@@ -98,6 +88,7 @@ const App = () => {
           }
         />
 
+        {/* 사용자 페이지 */}
         <Route
           path='/users'
           element={
@@ -115,6 +106,7 @@ const App = () => {
             </LayoutRoute>
           }
         />
+        {/* 로그인 페이지 */}
         <Route
           path='/login'
           element={
@@ -124,6 +116,7 @@ const App = () => {
           }
         />
 
+        {/* 회원가입 페이지 */}
         <Route
           path='/register'
           element={
@@ -133,6 +126,7 @@ const App = () => {
           }
         />
 
+        {/* 질문 생성 페이지 */}
         <Route
           path='/add/question'
           element={
@@ -142,6 +136,7 @@ const App = () => {
           }
         />
 
+        {/* 404 not found */}
         <Route
           path='/404'
           element={
@@ -151,21 +146,20 @@ const App = () => {
           }
         />
 
+        {/* 못찾는 경로 404로 리다이렉트 */}
         <Route path='*' element={<Navigate to='/404' />} />
 
-        {/* <Route  path="" element={}/> */}
+        {/* 추가가 되어야할 페이지들 */}
+        {/* 질문 상세 페이지 */}
+        {/* <Route
+          path='/questions/:postSeq'
+          element={
+            <LayoutRoute>
+              <Post />
+            </LayoutRoute>
+          }
+        /> */}
 
-        {/* 
-          <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
-          <Post />
-          </LayoutRoute>
-      
-          <LayoutRoute  path='/tags/:tagname' title='Users - 코플로와'>
-          <TagPage />
-          </LayoutRoute>
-          <BaseRoute  path='/add/question' title='질문하기 - 코플로와'>
-          <PostForm />
-        </BaseRoute>*/}
       </Routes>
     </div>
   )

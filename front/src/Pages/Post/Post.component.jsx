@@ -49,13 +49,14 @@ const Post = ({ getPost, post: { post, loading } }) => {
   )
 }
 
-Post.propTypes = {
-  // getPost: PropTypes.func.isRequired,
-  // post: PropTypes.object.isRequired,
-}
+// Post.propTypes = {
+//   // getPost: PropTypes.func.isRequired,
+//   // post: PropTypes.object.isRequired,
+// }
 
-const mapStateToProps = (state) => ({
-  post: state.post,
-})
+// const mapStateToProps = (state) => ({
+//   post: state.post,
+// })
 
-export default connect(mapStateToProps, { getPost })(Post)
+// export default connect(mapStateToProps, { getPost })(Post)
+export default Post

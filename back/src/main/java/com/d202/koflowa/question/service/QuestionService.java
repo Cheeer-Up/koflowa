@@ -19,6 +19,7 @@ import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
+import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -79,25 +80,28 @@ public class QuestionService {
 
     //질문 테이블에 숫자 기록하는거 하기
     public QuestionUpdownDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
+        System.out.println(questionUpdownDto);
+        /* 중복 검색 방지를 위한 객체 생성 */
+
+        //User user = userRepository.findBySeq(questionUpdownDto.getUserSeq()).get();
+
         /* QuestionUpdown 조회 */
         QuestionUpdown questionUpdown = questionUpDownRepository
-                .findBySeqAndUserSeq(questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq())
+                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq() )
                 .orElseThrow(() -> new QuestionUpException());
 
         if(questionUpdown == null){ // 비어있다면 생성
             questionUpdown = questionUpDownRepository.save(
                     questionUpdownDto.toEntity(
                             userRepository.findBySeq(questionUpdownDto.getUserSeq()).get(),
-                            questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get()
-                    )
+                            questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get())
             );
         } else if(questionUpdown.getType() == questionUpdownDto.getQuestionUpdownType()) { // 타입이 같으면 삭제
 
             // 삭제
             questionUpDownRepository.delete(questionUpdown);
 
-            Question question = questionRepository.findBySeq(questionUpdownDto.getQuestionSeq())
-                    .orElseThrow(() -> new SpecificQuestionNotFound());
+            Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
 
             // 삭제 완료 후 변경
             if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
@@ -112,11 +116,10 @@ public class QuestionService {
         } else { // 타입이 다르면 수정
             questionUpdown.setType(questionUpdownDto.getQuestionUpdownType());
 
-            Question question = questionRepository.findBySeq(questionUpdownDto.getQuestionSeq())
-                    .orElseThrow(() -> new SpecificQuestionNotFound());
-
             // 저장
             questionUpDownRepository.save(questionUpdown);
+
+            Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
 
             if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
                 question.setUp(question.getUp() + 1);
@@ -132,7 +135,7 @@ public class QuestionService {
         return new QuestionUpdownDto.Response(questionUpdown);
     }
 
-    public CommentDto.Response createComment(CommentDto.Request commentDto) {
+    public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
     }
 

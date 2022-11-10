@@ -18,8 +18,6 @@ public class QuestionDto {
         private Long userSeq;
         private String questionTitle;
         private String questionContent;
-        private LocalDateTime createdTime;
-        private LocalDateTime updatedTime;
 
         public Question toEntity(){
             return Question.builder()

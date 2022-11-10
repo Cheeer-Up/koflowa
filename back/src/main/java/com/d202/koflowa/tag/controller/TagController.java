@@ -7,6 +7,8 @@ import com.d202.koflowa.tag.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,8 @@ public class TagController {
 
     @Operation(summary = "전체 태그 조회", description = "전체 태그 조회 api 입니다.")
     @GetMapping("")
-    public ResponseEntity<List<TagDto.Response>> getTagList() {
-        return new ResponseEntity<>(tagService.getTagList(), HttpStatus.OK);
+    public ResponseEntity<Page<TagDto.Response>> getTagList(Pageable pageable) {
+        return new ResponseEntity<>(tagService.getTagList(pageable), HttpStatus.OK);
     }
 
     @Operation(summary = "태그 생성", description = "태그 생성 api 입니다.")
