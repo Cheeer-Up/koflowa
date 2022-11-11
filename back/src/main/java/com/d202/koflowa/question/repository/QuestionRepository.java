@@ -27,5 +27,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Page<Question> findAllByUserSeq(Long userSeq, PageRequest pageRequest);
 
+    List<Question> findAllByUserSeq(Long userSeq);
+
     Optional<Question> findBySeq(Long question_seq);
 }

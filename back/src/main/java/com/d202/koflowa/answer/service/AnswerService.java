@@ -15,12 +15,15 @@ import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.exception.AnswerNotFoundException;
 import com.d202.koflowa.exception.AnswerUpdownExistException;
 import com.d202.koflowa.exception.QuestionNotFoundException;
+import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.exception.QuestionCommentNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.user.domain.User;
+import com.d202.koflowa.user.repository.UserRepository;
+import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -41,6 +44,8 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerUpDownRepository answerUpDownRepository;
     private final CommentRepository commentRepository;
+    private final ReputationService reputationService;
+    private final UserRepository userRepository;
 
     public AnswerDto.Response createAnswer(Long questionSeq, AnswerDto.Request request) {
         Optional<Question> question = questionRepository.findById(questionSeq);
@@ -51,13 +56,10 @@ public class AnswerService {
         // TODO: 유저 정보 저장 필요
         // TODO: 유저 명성 +1, 명성 log 등록
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
         Answer answer = request.toEntity(question.get());
-//        answer.setUserSeq( user.getSeq());
-
-//        answerRepository.save(answer);
-//
-//        //return
-//        return new AnswerDto.Response(answer);
+        answer.setUserSeq( user.getSeq());
+        reputationService.saveLog(user,"답변 작성", 10, questionSeq);
         return new AnswerDto.Response(answerRepository.save(answer));
     }
 
@@ -86,42 +88,47 @@ public class AnswerService {
         answerRepository.delete(answer.get());
     }
 
-//    public void upDownAnswer(Long answerSeq, AnswerUpdownDto.Request request){
-//        Optional<Answer> answer = answerRepository.findById(answerSeq);
-//        if (answer.isEmpty()) {
-//            // throw new
-//            throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
-//        }
+    public void upDownAnswer(Long answerSeq, AnswerUpdownDto.Request request){
+        Optional<Answer> answer = answerRepository.findById(answerSeq);
+        if (answer.isEmpty()) {
+            // throw new
+            throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
+        }
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Long seq = user.getSeq();
-//        Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
-//        if (answerUpdown.isEmpty()){
-//            // 비어있다면 생성
-//            AnswerUpdown response = answerUpDownRepository.save(request.toEntity(user, answer.get()));
-//        } else if (answerUpdown.get().getType() == request.getType()) {
-//            // 타입이 같으면 삭제
-//            answerUpDownRepository.delete(answerUpdown.get());
-//            if(request.getType()== UDType.UP){
-//                answer.get().updateAnswerUp(-1);
-//            } else if (request.getType()== UDType.DOWN) {
-//                answer.get().updateAnswerDown(-1);
-//            }
-//        }else {
-//            // 타입이 다르면 수정
-//            answerUpdown.get().updateUPType(request.getType());
-//            if(request.getType()== UDType.UP){
-//                answer.get().updateAnswerUp(1);
-//                answer.get().updateAnswerDown(-1);
-//            } else if (request.getType()== UDType.DOWN) {
-//                answer.get().updateAnswerUp(-1);
-//                answer.get().updateAnswerDown(1);
-//            }
-//        }
-//
-//        // answerUpDown에 있는지 보고 있으면 패스 없으면 save
-//        // 그후 answer에 up을 1 올려주고
-//
-//    }
+        User user = userRepository.findBySeq(1l).get();
+        Long seq = user.getSeq();
+        Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
+        if (answerUpdown.isEmpty()){
+            // 비어있다면 생성
+            AnswerUpdown response = answerUpDownRepository.save(request.toEntity(user, answer.get()));
+        } else if (answerUpdown.get().getType() == request.getType()) {
+            // 타입이 같으면 삭제
+            answerUpDownRepository.delete(answerUpdown.get());
+            if(request.getType()== UDType.UP){
+                answer.get().updateAnswerUp(-1);
+            } else if (request.getType()== UDType.DOWN) {
+                answer.get().updateAnswerDown(-1);
+            }
+        }else {
+            // 타입이 다르면 수정
+            answerUpdown.get().updateUPType(request.getType());
+            if(request.getType()== UDType.UP){
+                answer.get().updateAnswerUp(1);
+                answer.get().updateAnswerDown(-1);
+            } else if (request.getType()== UDType.DOWN) {
+                answer.get().updateAnswerUp(-1);
+                answer.get().updateAnswerDown(1);
+            }
+        }
+
+        // 명성 및 로그 추가
+        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
+        if (answerUserOptional.isEmpty()){
+            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
+        reputationService.saveLog(answerUserOptional.get(),"답변 추천", 3, answer.get().getQuestion().getSeq());
+
+    }
 
     public void postBestAnswer(Long answerSeq){
         Optional<Answer> answer = answerRepository.findById(answerSeq);
@@ -146,9 +153,27 @@ public class AnswerService {
         // entity에 setter? setter로 수정하면 db에 update되나? 따로 save?
         question.get().setAcceptAnswerSeq(answerSeq);
         answer.get().updateAnswerAccept(true);
+
+        // 명성 및 로그 추가
+        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
+        if (answerUserOptional.isEmpty()){
+            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
+        reputationService.saveLog(answerUserOptional.get(),"답변 채택", 20, question.get().getSeq());
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
+
+        Optional<Answer> answer = answerRepository.findById(commentDto.getBoardSeq());
+        if (answer.isEmpty()) {
+            // throw new
+            throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
+        }
+        reputationService.saveLog(user,"댓글 작성", 5, answer.get().getQuestion().getSeq());
+
+
         commentDto.setType(QAType.ANSWER);
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
     }

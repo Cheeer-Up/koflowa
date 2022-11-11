@@ -33,10 +33,10 @@ export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
 
 // TAGS
 export const allTagsData = TAGS
-export const singleTagData = (tagSeq) => TAGS + `/$(tagSeq)`
+export const singleTagData = (tagName) => TAGS + `/${tagName}`
 export const registTag = TAGS + "/regist"
-export const watchTag = (tagSeq) => TAGS + `/watch/$(tagSeq)`
-export const ignoreTag = (tagSeq) => TAGS + `/ignore/$(tagSeq)`
+export const watchTag = (tagSeq) => TAGS + `/watch/${tagSeq}`
+export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
 
 // MEETING
 
