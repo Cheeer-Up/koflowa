@@ -26,6 +26,9 @@ public class ReputationLog extends BaseTimeEntity {
     @Column(name = "reputation_log_score")
     private int score;
 
-    @Column(name = "reputation_log_situation", length = 15)
-    private String situation;
+    @Column(name = "reputation_log_message", length = 100)
+    private String message;
+
+    @Column(name = "question_seq", columnDefinition = "bigint unsigned")
+    private Long questionSeq;
 }
