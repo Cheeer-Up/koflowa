@@ -1,5 +1,6 @@
 package com.d202.koflowa.question.service;
 
+import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.domain.Comment;
 import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.answer.repository.CommentRepository;
@@ -21,6 +22,7 @@ import com.d202.koflowa.question.repository.QuestionUpDownRepository;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
+import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,6 +43,7 @@ public class QuestionService {
     private final QuestionUpDownRepository questionUpDownRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final ReputationService reputationService;
     public Page<Question> getAllQuestion(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return questionRepository.findAll(pageRequest);
@@ -56,7 +60,11 @@ public class QuestionService {
     }
 
     public QuestionDto.Response createQuestion(QuestionDto.RequestCreate questionDto) {
-        return new QuestionDto.Response(questionRepository.save(questionDto.toEntity()));
+        Question question = questionRepository.save(questionDto.toEntity());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
+        reputationService.saveLog(user,"질문 작성", 15, question.getSeq());
+        return new QuestionDto.Response(question);
     }
 
     public QuestionDto.Response getQuestionDetail(Long question_seq) {
@@ -139,10 +147,22 @@ public class QuestionService {
             questionRepository.save(question);
         }
 
+        // 명성 로그 등록
+        Optional<User> questionUserOptional = userRepository.findBySeq(question.getUserSeq());
+        if (questionUserOptional.isEmpty()){
+            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
+        reputationService.saveLog(questionUserOptional.get(),"질문 추천", 3, question.getSeq());
+
         return new QuestionDto.Response(question);
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
+        Question question = questionRepository.findBySeq(commentDto.getBoardSeq())
+                .orElseThrow(() -> new SpecificQuestionNotFound());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
+        reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
     }
 
