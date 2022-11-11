@@ -13,7 +13,6 @@ public class ReputationLogDto {
     @NoArgsConstructor
     @Builder
     public static class Request{
-        private Long seq;
         private User user;
         private int score;
         private String message;
