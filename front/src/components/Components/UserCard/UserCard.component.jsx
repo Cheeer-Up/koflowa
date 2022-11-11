@@ -18,8 +18,9 @@ const UserCard = ({
       <div className='owner' style={{ float: float, backgroundColor: backgroundColor }}>
         <div className='user-block fc-black-500'>
           <div className='action-time'>
-            {dateType ? dateType : "게시된지"}{" "}
-            {moment(created_at.slice(0, 4), "YYYYMMDDHH").fromNow(true)} 지났습니다
+            {/* {dateType ? dateType : ""} {moment(created_at.slice(0, 4), "YYYYMMDDHH").fromNow(false)} */}
+            {/* 복구용*/}
+            {moment(created_at).fromNow(false)} {/* 실제로 들어갈 코드*/}
           </div>
           <div className='user-logo'>
             <Link className='user-link' to={`/users/${user_id}`}>
