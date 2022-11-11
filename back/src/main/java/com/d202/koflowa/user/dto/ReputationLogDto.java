@@ -16,14 +16,16 @@ public class ReputationLogDto {
         private Long seq;
         private User user;
         private int score;
-        private String situation;
+        private String message;
         private String createdTime, modifiedTime;
+        private Long questionSeq;
 
         public ReputationLog toEntity(){
             return ReputationLog.builder()
                     .user(user)
                     .score(score)
-                    .situation(situation)
+                    .message(message)
+                    .questionSeq(questionSeq)
                     .build();
         }
     }
@@ -32,14 +34,16 @@ public class ReputationLogDto {
         private Long seq;
         private User user;
         private int score;
-        private String situation;
+        private String message;
+        private Long questionSeq;
         private LocalDateTime createdTime, modifiedTime;
 
         public Response(ReputationLog reputationLog){
             this.seq = reputationLog.getSeq();
             this.user = reputationLog.getUser();
             this.score = reputationLog.getScore();
-            this.situation = reputationLog.getSituation();
+            this.message = reputationLog.getMessage();
+            this.questionSeq = reputationLog.getQuestionSeq();
             this.createdTime = reputationLog.getCreatedTime();
             this.modifiedTime = reputationLog.getModifiedTime();
         }
