@@ -11,7 +11,7 @@ import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "Pages/AllUsersPage/AllUsersPage.component"
 import Register from "Pages/Register/Register.component"
 import Login from "Pages/Login/Login.component"
-// import Post from "Pages/Post/Post.component"
+import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
@@ -106,6 +106,7 @@ const App = () => {
             </LayoutRoute>
           }
         />
+
         {/* 로그인 페이지 */}
         <Route
           path='/login'
@@ -146,19 +147,20 @@ const App = () => {
           }
         />
 
-        {/* 못찾는 경로 404로 리다이렉트 */}
-        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
-
-        {/* 추가가 되어야할 페이지들 */}
         {/* 질문 상세 페이지 */}
-        {/* <Route
+        <Route
           path='/questions/:postSeq'
           element={
             <LayoutRoute>
               <Post />
             </LayoutRoute>
           }
-        /> */}
+        />
+
+        {/* 못찾는 경로 404로 리다이렉트 */}
+        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
+
+        {/* 추가가 되어야할 페이지들 */}
       </Routes>
     </div>
   )

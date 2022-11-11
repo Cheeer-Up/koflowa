@@ -25,8 +25,9 @@ export const userAnswer = (page, size, sort, userSeq) =>
   MYPAGES + `/answer/${userSeq}?page=${page}&size=${size}&sort=${sort}`
 
 // QUESTION
-export const createQuestion = QUESTION // 질문 생성
-export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회
+export const createQuestion = QUESTION // 질문 생성 POST 요청
+export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회 GET 요청
+export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
 
 // ANSWER
 
