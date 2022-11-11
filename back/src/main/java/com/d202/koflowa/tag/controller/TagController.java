@@ -37,16 +37,16 @@ public class TagController {
     }
 
     @Operation(summary = "태그 상세 조회", description = "태그 상세 조회 api 입니다.")
-    @GetMapping("/{tagSeq}")
-    public ResponseEntity<TagDto.Response> getDetailTag(@PathVariable Long tagSeq) {
-        return new ResponseEntity<>(tagService.getDetailTag(tagSeq), HttpStatus.OK);
+    @GetMapping("/{tagName}")
+    public ResponseEntity<TagDto.Response> getDetailTag(@PathVariable String tagName) {
+        return new ResponseEntity<>(tagService.getDetailTag(tagName), HttpStatus.OK);
     }
 
     @Operation(summary = "태그 수정", description = "태그 수정 api 입니다.")
-    @PutMapping("/{tagSeq}")
-    public ResponseEntity<Tag> putTag(@PathVariable Long tagSeq,
+    @PutMapping("/{tagName}")
+    public ResponseEntity<Tag> putTag(@PathVariable String tagName,
                                     @RequestBody TagDto.Request request) {
-        return new ResponseEntity<>(tagService.putTag(tagSeq, request), HttpStatus.OK);
+        return new ResponseEntity<>(tagService.putTag(tagName, request), HttpStatus.OK);
     }
 
     @Operation(summary = "주시 태그 추가", description = "주시 태그 추가 api 입니다.")
