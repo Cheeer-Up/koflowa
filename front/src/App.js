@@ -147,7 +147,7 @@ const App = () => {
         />
 
         {/* 못찾는 경로 404로 리다이렉트 */}
-        <Route path='*' element={<Navigate to='/404' />} />
+        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
 
         {/* 추가가 되어야할 페이지들 */}
         {/* 질문 상세 페이지 */}
@@ -159,7 +159,6 @@ const App = () => {
             </LayoutRoute>
           }
         /> */}
-
       </Routes>
     </div>
   )
