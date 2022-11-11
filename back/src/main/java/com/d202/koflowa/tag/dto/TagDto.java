@@ -1,8 +1,11 @@
 package com.d202.koflowa.tag.dto;
 
+import com.d202.koflowa.question.dto.QuestionTagDto;
 import com.d202.koflowa.tag.domain.Tag;
 import lombok.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TagDto {
@@ -21,7 +24,6 @@ public class TagDto {
         }
     }
 
-    @Getter
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,5 +41,18 @@ public class TagDto {
             this.createdTime = tag.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.modifiedTime = tag.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
         }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class DetailResponse {
+        private Long seq;
+        private String name;
+        private String description;
+        private String createdTime;
+        private String modifiedTime;
+        private Long questionCount;
+        private List<QuestionTagDto> questions = new ArrayList();
     }
 }
