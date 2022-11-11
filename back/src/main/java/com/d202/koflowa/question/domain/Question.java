@@ -44,4 +44,7 @@ public class Question extends BaseTimeEntity {
 
     @Column(name = "down", columnDefinition = "bigint unsigned")
     private Long down;
+
+    @Column(name = "accept_answer_seq", columnDefinition = "bigint unsigned")
+    private Long acceptAnswerSeq;
 }

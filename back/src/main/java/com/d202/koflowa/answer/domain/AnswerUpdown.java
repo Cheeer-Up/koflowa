@@ -1,5 +1,6 @@
 package com.d202.koflowa.answer.domain;
 
+import com.d202.koflowa.answer.dto.AnswerDto;
 import com.d202.koflowa.common.domain.UDType;
 import com.d202.koflowa.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -33,5 +34,9 @@ public class AnswerUpdown {
     @Column(name = "answer_updown_type")
     @Enumerated(EnumType.STRING)
     private UDType type;
+
+    public void updateUPType(UDType type){
+        this.type = type;
+    }
 
 }
