@@ -38,7 +38,7 @@ public class TagController {
 
     @Operation(summary = "태그 상세 조회", description = "태그 상세 조회 api 입니다.")
     @GetMapping("/{tagName}")
-    public ResponseEntity<TagDto.Response> getDetailTag(@PathVariable String tagName) {
+    public ResponseEntity<TagDto.DetailResponse> getDetailTag(@PathVariable String tagName) {
         return new ResponseEntity<>(tagService.getDetailTag(tagName), HttpStatus.OK);
     }
 
