@@ -1,46 +1,24 @@
 import React from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 
 import censorBadWords from "../../../utils/censorBadWords"
 
-import htmlSubstring from "../../../utils/htmlSubstring"
-import injectEllipsis from "../../../utils/injectEllipsis"
+// import htmlSubstring from "../../../utils/htmlSubstring"
+// import injectEllipsis from "../../../utils/injectEllipsis"
 
 import UserCard from "../UserCard/UserCard.component"
-import TagBadge from "../TagBadge/TagBadge.component"
+// import TagBadge from "../TagBadge/TagBadge.component"
 
 import "./PostItem.styles.scss"
 
-const PostItem = ({
-  post: {
-    id,
-    title,
-    body,
-    username,
-    gravatar,
-    user_id,
-    answer_count,
-    comment_count,
-    views,
-    created_at,
-    tags,
-  },
-}) => {
-  const answerVoteUp = (
-    <div className='vote answer'>
-      <span className='vote-count'>{answer_count}</span>
-      <div className='count-text'>답변</div>
-    </div>
-  )
-
-  const answerVoteDown = (
-    <div className='vote'>
-      <span className='vote-count'>{answer_count}</span>
-      <div className='count-text'>답변</div>
-    </div>
-  )
+function PostItem(question) {
+  // 여기서 부터
+  const views = 10
+  const tags = ["python", "java"]
+  const comment_count = 10
+  const username = "test"
+  const gravatar = "https://cdn-icons-png.flaticon.com/512/5435/5435719.png"
+  // 여기까지는 테스트용 데이터 입니다
 
   return (
     <div className='posts'>
@@ -50,7 +28,7 @@ const PostItem = ({
             <span className='vote-count'>{comment_count}</span>
             <div className='count-text'>코멘트</div>
           </div>
-          {answer_count > 0 ? answerVoteUp : answerVoteDown}
+          {/* {answer_count > 0 ? answerVoteUp : answerVoteDown} */}
           <div className='vote'>
             <span className='vote-count'>{tags.length}</span>
             <div className='count-text'>태그</div>
@@ -62,22 +40,19 @@ const PostItem = ({
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${id}`}>{censorBadWords(title)}</Link>
+          <Link to={`/questions/${question.question.seq}`}>{question.question.title}</Link>
         </h3>
-        <div
-          className='brief'
-          dangerouslySetInnerHTML={{
-            __html: injectEllipsis(censorBadWords(htmlSubstring(body, 200))),
-          }}
-        ></div>
-        <div className='profile-tags'>
+
+        {/* 컬럼값 추가가 되면 수정될 예정 */}
+        {/* <div className='profile-tags'>
           {tags.map((tag, index) => (
             <TagBadge key={index} tag_name={tag.tagname} size={"s-tag"} />
           ))}
-        </div>
+        </div> */}
+
         <UserCard
-          created_at={created_at}
-          user_id={user_id}
+          created_at={question.question.createdTime}
+          user_id={question.question.userSeq}
           gravatar={gravatar}
           username={username}
           float={"right"}
@@ -88,8 +63,4 @@ const PostItem = ({
   )
 }
 
-PostItem.propTypes = {
-  // post: PropTypes.object.isRequired,
-}
-
-export default connect(null)(PostItem)
+export default PostItem
