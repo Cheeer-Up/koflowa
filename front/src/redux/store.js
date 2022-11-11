@@ -14,7 +14,6 @@ import AuthSlice from "./slice/AuthSlice"
 import TagSlice from "./slice/TagSlice"
 import MeetingSlice from "./slice/MeetingSlice"
 import TalkSlice from "./slice/TalkSlice"
-import QuestionSlice from "./slice/QuestionSlice"
 import MypageSlice from "./slice/MypageSlice"
 
 //persist 설정
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   tag: TagSlice,
   meeting: MeetingSlice,
   talk: TalkSlice,
-  question: QuestionSlice,
   auth: AuthSlice,
   mypage: MypageSlice,
 })
