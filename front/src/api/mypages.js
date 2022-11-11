@@ -11,7 +11,6 @@ import {
 } from "api/urls"
 
 export const getAllProfile = (page, size, sort) => {
-  console.log(allProfile(page, size, sort))
   return api.get(allProfile(page, size, sort))
 }
 
