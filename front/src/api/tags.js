@@ -9,12 +9,12 @@ export const postRegistTag = (data) => {
   return api.post(registTag, data)
 }
 
-export const getSingleTagData = (tagSeq) => {
-  return api.get(singleTagData(tagSeq))
+export const getSingleTagData = (tagName) => {
+  return api.get(singleTagData(tagName))
 }
 
-export const putSingleTagData = (tagSeq, data) => {
-  return api.put(singleTagData(tagSeq), data)
+export const putSingleTagData = (tagName, data) => {
+  return api.put(singleTagData(tagName), data)
 }
 
 export const postWatchTag = (tagSeq, data) => {

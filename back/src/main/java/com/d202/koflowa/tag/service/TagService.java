@@ -1,6 +1,7 @@
 package com.d202.koflowa.tag.service;
 
 import com.d202.koflowa.question.domain.QuestionTag;
+import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.repository.QuestionTagRepository;
 import com.d202.koflowa.tag.domain.Tag;
 import com.d202.koflowa.common.domain.TagStatus;
@@ -57,15 +58,20 @@ public class TagService {
     }
 
     @Transactional(readOnly = true)
-    public TagDto.Response getDetailTag(String tagName) {
+    public TagDto.DetailResponse getDetailTag(String tagName) {
         Optional<Tag> tag = tagRepository.findByName(tagName);
         if (tag.isEmpty()) {
-            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
+            throw new TagNotFoundException("존재하지 않는 태그 입니다.");
         }
 
-        // TODO: 관련 게시글 정보 추가 필요
-//        Optional<List<QuestionTag>> qList = questionTagRepository.findByTag(tag.get());
-        return new TagDto.Response(tag.get());
+        // 관련 게시글 정보 추가
+        Optional<List<QuestionTag>> qList = questionTagRepository.findByTag(tag.get());
+        List<QuestionDto.Response> questions = new ArrayList<>();
+        for (QuestionTag q : qList.get()) {
+            questions.add(new QuestionDto.Response(q.getQuestion()));
+        }
+
+        return new TagDto.DetailResponse(tag.get(), questions.size(), questions);
     }
 
 
@@ -73,7 +79,7 @@ public class TagService {
         Tag req = request.toEntity();
         Optional<Tag> tag = tagRepository.findByName(tagName);
         if (tag.isEmpty()) {
-            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
+            throw new TagNotFoundException("존재하지 않는 태그 입니다.");
         }
 
         // 태그 정보 수정
