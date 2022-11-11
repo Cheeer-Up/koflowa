@@ -58,7 +58,7 @@ public class MyPageController {
     }
 
     @GetMapping("/tags/{seq}")
-    @Operation(summary = "사용자 관심, 무시 태그 조회", description = "")
+    @Operation(summary = "사용자가 지금까지 포스트한 태그수 가져오기", description = "")
     public Response getTags(@PathVariable long seq){
         return Response.success(myPageService.getTags(seq));
     }
