@@ -1,7 +1,10 @@
 package com.d202.koflowa.answer.dto;
 
+import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.common.domain.UDType;
 import com.d202.koflowa.answer.domain.AnswerUpdown;
+import com.d202.koflowa.user.domain.User;
+import com.d202.koflowa.user.repository.UserRepository;
 import lombok.*;
 
 public class AnswerUpdownDto {
@@ -16,10 +19,10 @@ public class AnswerUpdownDto {
         private UDType type;
 
         /* Dto -> Entity */
-        public AnswerUpdown toEntity(){
+        public AnswerUpdown toEntity(User user, Answer answer){
             AnswerUpdown answerUpdown = AnswerUpdown.builder()
-//                    .user()
-//                    .answer()
+                    .user(user)
+                    .answer(answer)
                     .type(type)
                     .build();
             return answerUpdown;
