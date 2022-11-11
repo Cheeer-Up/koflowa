@@ -51,7 +51,7 @@ const AllTagsPage = () => {
           올바른 태그를 사용하면 다른 사람들이 당신의 질문을 더 쉽게 찾고 답변할 수 있습니다.
         </p>
         <div className='headline-count'>
-          <span>{new Intl.NumberFormat("en-IN").format(tags.length)} 개의 태그들</span>
+          <span>{new Intl.NumberFormat("en-IN").format(totalPages)} 개의 태그들</span>
         </div>
         <div className='tags-box pl16 pr16 pb16'>
           {/* <SearchBox placeholder={"태그 명으로 검색"} handleChange={handleChange} width={"200px"} /> */}
