@@ -1,6 +1,6 @@
 package com.d202.koflowa.tag.dto;
 
-import com.d202.koflowa.question.dto.QuestionTagDto;
+import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.tag.domain.Tag;
 import lombok.*;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ public class TagDto {
     @Getter
     @Builder
     @AllArgsConstructor
-    @NoArgsConstructor()
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Request {
         private String name;
         private String description;
@@ -24,6 +24,7 @@ public class TagDto {
         }
     }
 
+    @Getter
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,6 +44,7 @@ public class TagDto {
         }
     }
 
+    @Getter
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -52,7 +54,18 @@ public class TagDto {
         private String description;
         private String createdTime;
         private String modifiedTime;
-        private Long questionCount;
-        private List<QuestionTagDto> questions = new ArrayList();
+        private int questionCount;
+        private List<QuestionDto.Response> questions = new ArrayList<>();
+
+        public DetailResponse(Tag tag, int questionCount, List<QuestionDto.Response> questionTagDtos) {
+            this.seq = tag.getSeq();
+            this.seq = tag.getSeq();
+            this.name = tag.getName();
+            this.description = tag.getDescription();
+            this.createdTime = tag.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.modifiedTime = tag.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.questionCount = questionCount;
+            this.questions = questionTagDtos;
+        }
     }
 }

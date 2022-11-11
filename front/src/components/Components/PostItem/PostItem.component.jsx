@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import UserCard from "../UserCard/UserCard.component"
-// import TagBadge from "../TagBadge/TagBadge.component"
+import TagBadge from "../TagBadge/TagBadge.component"
 
 import "./PostItem.styles.scss"
 
@@ -14,7 +14,7 @@ function PostItem(question) {
   const gravatar = "https://cdn-icons-png.flaticon.com/512/5435/5435719.png"
   const answer = 3
   // 여기까지는 테스트용 데이터 입니다
-
+  console.log(question)
   return (
     <div className='posts'>
       <div className='stats-container fc-black-500'>
@@ -37,16 +37,16 @@ function PostItem(question) {
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${question.question.seq}`}>{question.question.title}</Link>
+          <Link to={`/questions/${question.question.questionSeq}`}>
+            {question.question.questionTitle}
+          </Link>
         </h3>
-
-        {/* 컬럼값 추가가 되면 수정될 예정 */}
-        {/* <div className='profile-tags'>
+        {/* 컬럼값 추가가 되면 수정될 예정
+        <div className='profile-tags'>
           {tags.map((tag, index) => (
             <TagBadge key={index} tag_name={tag.tagname} size={"s-tag"} />
           ))}
         </div> */}
-
         <UserCard
           created_at={question.question.createdTime}
           user_id={question.question.userSeq}
