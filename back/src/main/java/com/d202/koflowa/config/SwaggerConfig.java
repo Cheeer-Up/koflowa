@@ -25,15 +25,16 @@ public class SwaggerConfig {
                 .pathsToMatch("/**")
                 .build();
     }
+
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 .addServersItem(new Server().url("http://localhost:8081/api"))
                 .addServersItem(new Server().url("https://k7d202.p.ssafy.io/api"))
-//                .components(new Components().addSecuritySchemes("bearerAuth",
-//                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
-//                                .in(SecurityScheme.In.HEADER).name("Authorization")))
-//                .security(Arrays.asList(new SecurityRequirement().addList("bearerAuth")))
+                .components(new Components().addSecuritySchemes("bearerAuth",
+                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
+                                .in(SecurityScheme.In.HEADER).name("Authorization")))
+                .security(Arrays.asList(new SecurityRequirement().addList("bearerAuth")))
                 .info(new Info().title("Koflowa API")
                         .description("Koflowa 프로젝트 API 명세서입니다.")
                         .version("v0.0.1")
