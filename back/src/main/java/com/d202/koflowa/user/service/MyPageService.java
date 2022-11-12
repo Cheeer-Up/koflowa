@@ -1,5 +1,8 @@
 package com.d202.koflowa.user.service;
 
+import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
+import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
+import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.dto.AnswerDto;
 import com.d202.koflowa.question.domain.Question;
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +52,9 @@ public class MyPageService {
 
     public UserDto.Response getProfile(long id){
         return new UserDto.Response(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+    }
+    public User getProfileByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(()->new IllegalStateException("not found user"));
     }
 
     @Transactional
@@ -111,5 +118,12 @@ public class MyPageService {
             dtoList.add(new AnswerDto.Response(answer));
         }
         return new PageImpl<AnswerDto.Response>(dtoList, pageable, answerList.getTotalElements());
+    }
+
+    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
+        Optional<User> user = userRepository.findById(userPrincipal.getId());
+        DefaultAssert.isOptionalPresent(user);
+        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
+        return ResponseEntity.ok(apiResponse);
     }
 }
