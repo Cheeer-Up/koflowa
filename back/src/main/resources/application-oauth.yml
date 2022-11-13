@@ -17,12 +17,6 @@ app:
     token-secret: f8QaynSRc2apSImn3b1O7vGYzj8oCDmJSSxHfgAsc4xFUZAzVRLX+clPywVBV/b9N9LBz2aUbZZQmBmmEkBZBA==
     access-token-expiration-msec: 1800000
     refresh-token-expiration-msec: 604800000
-  oauth2:
-    authorized-redirect-uris: "http://localhost:3000/oauth2/redirect"
-  cors:
-    allowed-origins:
-      - "http://localhost:3000"
-      - "http://localhost:3001"
-      - "http://localhost:8448"
-      - "https://k7d202.p.ssafy.io"
+
+
 

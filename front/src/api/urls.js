@@ -5,14 +5,23 @@ const ANSWER = "/answer"
 const TAGS = "/tags"
 const MEETING = "/meeting"
 const TALK = "/talk"
-
+const AUTH = "/auth"
+const GOOGLE = "google"
 // USERS
 export const usersData = "/users"
 export const profileData = "/users/{id}"
+export const slash = "/"
+
+export const GOOGLE_AUTH_URL =
+  process.env.REACT_APP_API_URL +
+  "/oauth2/authorize/" +
+  GOOGLE +
+  "?redirect_uri=" +
+  process.env.REACT_APP_PUBLIC_URL +
+  "/"
 
 // MYPAGES
-export const allProfile = (page, size, sort) =>
-  MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
+export const allProfile = (page, size, sort) => MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
 export const userProfile = (userSeq) => MYPAGES + `/profile/${userSeq}`
 export const myProfile = `MYPAGES + /profile`
 export const myImage = MYPAGES + "/profile/image"
@@ -41,3 +50,6 @@ export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
 // MEETING
 
 // TALK
+
+//SIGN
+export const auth = AUTH

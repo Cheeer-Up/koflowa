@@ -30,4 +30,13 @@ const api = axios.create({
   headers,
 })
 
+export const auth_api = (accessToken) => {
+  return axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    headers: {
+      ...headers,
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+}
 export default api
