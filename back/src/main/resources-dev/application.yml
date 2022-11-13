@@ -48,3 +48,14 @@ logging:
     org.springframework.web: debug
     #    org.hibernate.type: trace
     com.d202.koflowa: debug
+
+app:
+  auth:
+  oauth2:
+    authorized-redirect-uris: "http://localhost:3000/"
+  cors:
+    allowed-origins:
+      - "http://localhost:3000"
+      - "http://localhost:3001"
+      - "http://localhost:8448"
+      - "https://k7d202.p.ssafy.io"

@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import PropTypes from "prop-types"
+import { Link, useNavigate, location } from "react-router-dom"
 
 import { ReactComponent as Search } from "assets/Search.svg"
 import { ReactComponent as Logo } from "assets/KoflowaHeaderMdDark.svg"
@@ -8,48 +7,55 @@ import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderTextDark.svg"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import MobileSideBar from "components/Layouts/MobileSideBar/MobileSideBar.component"
+import { selectToken, selectUser, setToken, setUser } from "../../../redux/slice/AuthSlice"
+import { useSelector, useDispatch } from "react-redux"
 
 import "./Header.styles.scss"
 
 const Header = () => {
-  const loading = false // test
-  const user = {
-    // test
-    id: "aaa",
-    username: "aaa",
-  }
-  const isAuthenticated = true // test
   let history = useNavigate()
+  const dispatch = useDispatch()
+  const isAuthenticated = true
+  const [userState] = useState(useSelector(selectUser))
   const [searchState, setSearchState] = useState(false)
 
-  const authLinks = (
-    <div className='btns'>
-      {loading || user === null ? (
-        <Spinner width='50px' height='50px' />
-      ) : (
-        <Link to={`/users/${user.id}`} title={user.username}>
-          <img alt='user-logo' className='logo' src={user.gravatar} />
-        </Link>
-      )}
-      {/* <LinkButton text={"로그 아웃"} link={"/login"} type={"s-btn__filled"} handleClick={logout} /> */}
-      <LinkButton text={"로그 아웃"} link={"/login"} type={"s-btn__filled"} />
-    </div>
-  )
+  const AuthLinks = () => {
+    /** localStorage의 Token들과 redux의 user를 삭제하여 로그아웃을 합니다. */
+    const removeTokens = () => {
+      dispatch(setUser(null))
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
+      history.push("/")
+    }
+    return (
+      <div className='btns'>
+        {userState === null ? (
+          <Spinner width='50px' height='50px' />
+        ) : (
+          <Link to={`/users/${userState.email}`}>
+            <img alt='user-logo' className='logo' src={userState.profile} />
+          </Link>
+        )}
+        <LinkButton text='로그아웃' link='/' type='s-btn__filled' handleClick={removeTokens} />
+      </div>
+    )
+  }
 
-  const guestLinks = (
-    <div className='btns'>
-      <LinkButton text={"로그인"} link={"/login"} type={"s-btn__primary"} />
-      <LinkButton text={"회원 가입"} link={"/register"} type={"s-btn__filled"} />
-    </div>
-  )
-
+  const GuestLinks = () => {
+    return (
+      <div className='btns'>
+        <LinkButton text={"로그인"} link={"/login"} type={"s-btn__primary"} />
+        <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} />
+      </div>
+    )
+  }
+  const IsAuth = () => {
+    if (userState !== null) return <AuthLinks />
+    else return <GuestLinks />
+  }
   const SearchBar = () => {
     return (
-      <form
-        onSubmit={() => history.push("/questions")}
-        className='small-search-form'
-        autoComplete='off'
-      >
+      <form onSubmit={() => history.push("/questions")} className='small-search-form' autoComplete='off'>
         <input
           className='small-search'
           autoComplete='off'
@@ -63,9 +69,7 @@ const Header = () => {
     )
   }
 
-  return loading ? (
-    ""
-  ) : (
+  return (
     <Fragment>
       <nav className='navbar fixed-top navbar-expand-lg navbar-light bs-md'>
         <div className='hamburger'>
@@ -98,11 +102,10 @@ const Header = () => {
           </div>
         </form>
         <div className='header-search-div'>
-          <Search className='search-icon' onClick={() => setSearchState(!searchState)} />
-          {!loading && (
-            // <Fragment>{isAuthenticated ? guestLinks : authLinks}</Fragment>
-            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-          )}
+          {/* 로그인 시 AuthLinks 아닐 시 guest */}
+          <IsAuth />
+          {/* <Search className='search-icon' onClick={() => setSearchState(!searchState)} /> */}
+          {/* {!user && <Fragment>{isAuthenticated ? <AuthLinks /> : <GuestLinks />}</Fragment>} */}
         </div>
       </nav>
       {searchState && <SearchBar />}

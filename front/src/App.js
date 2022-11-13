@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -8,8 +8,8 @@ import Header from "components/Layouts/Header/Header.component"
 import HomePage from "Pages/HomePage/HomePage.component"
 import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
-import AllUsersPage from "Pages/AllUsersPage/AllUsersPage.component"
-import Register from "Pages/Register/Register.component"
+import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
+import Register from "./Pages/Register/Register.component"
 import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
@@ -36,10 +36,8 @@ const titles = {
 }
 
 const App = () => {
-  // useEffect(() => {
-  //   store.dispatch(loadUser())
-  // }, [])
   const location = useLocation()
+
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
   return (
     <div className='App'>
