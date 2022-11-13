@@ -8,31 +8,26 @@ import Caption from "./Caption/Caption.component"
 import AuthForm from "../../components/Layouts/AuthForm/AuthForm.component"
 import Footer from "../../components/Layouts/Footer/Footer.component"
 
+import googleLogo from "../../assets/google-logo.png"
+import { GOOGLE_AUTH_URL } from "../../api/urls"
 import "./Register.styles.scss"
 
-const Register = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Navigate to='/' />
-  }
-
+const Register = () => {
   return (
     <Fragment>
       <div className='auth-page'>
         <div className='register-content'>
           <div className='register-grid'>
             <Caption />
-            <AuthForm action={"Sign up"} />
+            <a className='btn btn-block social-btn google' href={GOOGLE_AUTH_URL}>
+              <img src={googleLogo} alt='Google' /> Sign up with Google
+            </a>
           </div>
         </div>
       </div>
       <Footer />
     </Fragment>
   )
-}
-
-Register.propTypes = {
-  // setAlert: PropTypes.func.isRequired,
-  // isAuthenticated: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({

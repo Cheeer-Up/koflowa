@@ -5,6 +5,7 @@ import com.d202.koflowa.question.domain.QuestionUpdown;
 import com.d202.koflowa.user.domain.User;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class QuestionDto {
@@ -18,8 +19,6 @@ public class QuestionDto {
         private Long userSeq;
         private String questionTitle;
         private String questionContent;
-        private LocalDateTime createdTime;
-        private LocalDateTime updatedTime;
 
         public Question toEntity(){
             return Question.builder()
@@ -45,6 +44,8 @@ public class QuestionDto {
                     .userSeq(userSeq)
                     .title(questionTitle)
                     .content(questionContent)
+                    .up(0L)
+                    .down(0L)
                     .build();
         }
     }
@@ -58,8 +59,8 @@ public class QuestionDto {
 
         private Long up;
         private Long down;
-        private LocalDateTime createdTime;
-        private LocalDateTime updatedTime;
+        private String createdTime;
+        private String updatedTime;
 
         public Response(Question question){
             this.questionSeq = question.getSeq();
@@ -68,8 +69,8 @@ public class QuestionDto {
             this.questionContent = question.getContent();
             this.up = question.getUp();
             this.down = question.getDown();
-            this.createdTime = question.getCreatedTime();
-            this.updatedTime = question.getModifiedTime();
+            this.createdTime = question.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.updatedTime = question.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
         }
     }
 }

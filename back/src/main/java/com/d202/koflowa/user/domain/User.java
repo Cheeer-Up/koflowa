@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@ToString
 @Entity
 @Getter
 @Builder
@@ -59,7 +60,16 @@ public class User extends BaseTimeEntity {
         this.profile = profile;
     }
 
+    public void putUpdateToken(String updateToken){this.refreshToken = updateToken;}
+
     public void putReputationScore(int reputationScore){
         this.reputationScore = reputationScore;
     }
+
+    public void updateName(String updateName){this.name = updateName;}
+    public void updateImageUrl(String profile){this.profile = profile;}
+    public void putName(String name){
+        this.name = name;
+    }
+
 }

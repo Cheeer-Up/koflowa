@@ -1,0 +1,22 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1002048860758-t0jrbroq6opqj23a92aajh4eolm5jl2f.apps.googleusercontent.com
+            client-secret: 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
+#           baseUrl에는 context-path인 api가 포함
+            redirect-uri: "http://localhost:8081/api/oauth2/callback/google"
+            scope:
+              - profile
+              - email
+
+app:
+  auth:
+    token-secret: f8QaynSRc2apSImn3b1O7vGYzj8oCDmJSSxHfgAsc4xFUZAzVRLX+clPywVBV/b9N9LBz2aUbZZQmBmmEkBZBA==
+    access-token-expiration-msec: 1800000
+    refresh-token-expiration-msec: 604800000
+
+
+

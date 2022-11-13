@@ -1,9 +1,9 @@
-import { ReactComponent as GlobalIcon } from "../../../../assets/Globe.svg";
+import { ReactComponent as GlobalIcon } from "../../../../assets/Globe.svg"
 
 export const SideBarData = [
   {
     link: "/questions",
-    icon: <GlobalIcon className="icon" />,
+    icon: <GlobalIcon className='icon' />,
     text: "질문",
   },
   {
@@ -18,4 +18,8 @@ export const SideBarData = [
     link: "/jobs",
     text: "코톡",
   },
-];
+  {
+    link: "/meeting",
+    text: "화상회의",
+  },
+]

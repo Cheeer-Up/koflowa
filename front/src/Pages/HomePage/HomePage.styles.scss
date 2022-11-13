@@ -3,7 +3,7 @@
   background: none;
   display: flex;
   justify-content: space-between;
-  margin: 64px auto 0 auto;
+  // margin: 64px auto 0 auto;
 }
 
 .postQues .brief {
@@ -75,7 +75,7 @@
   #mainbar {
     width: calc(100vw - 220px);
     margin: 0;
-  
+
     .questions-grid {
       width: 100%;
     }
@@ -97,15 +97,15 @@
   #mainbar {
     width: 99%;
     margin: 0;
-  
+
     .questions-grid {
       width: 100%;
     }
   }
 
   .homepage .questions-tabs span {
-      font-size: 13px;
-    }
+    font-size: 13px;
+  }
 }
 
 @media (min-width: 1350px) {

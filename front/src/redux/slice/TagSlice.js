@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   tags: [],
-  tag: null,
+  tag: {},
   loading: true,
   redirect: false,
   error: {},
@@ -12,12 +12,12 @@ const TagSlice = createSlice({
   name: "TagSlice",
   initialState,
   reducers: {
-    getTag: (state, action) => {
+    setTag: (state, action) => {
       state.tag = action.payload
       state.loading = false
       state.redirect = false
     },
-    getTags: (state, action) => {
+    setTags: (state, action) => {
       state.tags = action.payload
       state.loading = false
       state.redirect = false
@@ -30,5 +30,9 @@ const TagSlice = createSlice({
   },
 })
 
-export const { getTag, getTags, tagErr } = TagSlice.actions
+export const selectTags = (state) => state.tag.tags
+export const selectTag = (state) => state.tag.tag
+export const selectLoading = (state) => state.tag.loading
+
+export const { setTag, setTags, tagErr } = TagSlice.actions
 export default TagSlice.reducer

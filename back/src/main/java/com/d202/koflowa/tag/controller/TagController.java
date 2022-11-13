@@ -7,6 +7,8 @@ import com.d202.koflowa.tag.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,8 @@ public class TagController {
 
     @Operation(summary = "전체 태그 조회", description = "전체 태그 조회 api 입니다.")
     @GetMapping("")
-    public ResponseEntity<List<TagDto.Response>> getTagList() {
-        return new ResponseEntity<>(tagService.getTagList(), HttpStatus.OK);
+    public ResponseEntity<Page<TagDto.Response>> getTagList(Pageable pageable) {
+        return new ResponseEntity<>(tagService.getTagList(pageable), HttpStatus.OK);
     }
 
     @Operation(summary = "태그 생성", description = "태그 생성 api 입니다.")
@@ -35,16 +37,16 @@ public class TagController {
     }
 
     @Operation(summary = "태그 상세 조회", description = "태그 상세 조회 api 입니다.")
-    @GetMapping("/{tagSeq}")
-    public ResponseEntity<TagDto.Response> getDetailTag(@PathVariable Long tagSeq) {
-        return new ResponseEntity<>(tagService.getDetailTag(tagSeq), HttpStatus.OK);
+    @GetMapping("/{tagName}")
+    public ResponseEntity<TagDto.DetailResponse> getDetailTag(@PathVariable String tagName) {
+        return new ResponseEntity<>(tagService.getDetailTag(tagName), HttpStatus.OK);
     }
 
     @Operation(summary = "태그 수정", description = "태그 수정 api 입니다.")
-    @PutMapping("/{tagSeq}")
-    public ResponseEntity<Tag> putTag(@PathVariable Long tagSeq,
+    @PutMapping("/{tagName}")
+    public ResponseEntity<Tag> putTag(@PathVariable String tagName,
                                     @RequestBody TagDto.Request request) {
-        return new ResponseEntity<>(tagService.putTag(tagSeq, request), HttpStatus.OK);
+        return new ResponseEntity<>(tagService.putTag(tagName, request), HttpStatus.OK);
     }
 
     @Operation(summary = "주시 태그 추가", description = "주시 태그 추가 api 입니다.")

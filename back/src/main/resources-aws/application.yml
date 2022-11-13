@@ -42,3 +42,14 @@ logging:
     #    org.hibernate.type: trace
     com.d202.koflowa: debug
 
+app:
+  auth:
+  oauth2:
+    authorized-redirect-uris: "https://k7d202.p.ssafy.io/"
+  cors:
+    allowed-origins:
+      - "http://localhost"
+      - "http://localhost:3000"
+      - "http://localhost:3001"
+      - "http://localhost:8448"
+      - "https://k7d202.p.ssafy.io"

@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -8,13 +8,13 @@ import Header from "components/Layouts/Header/Header.component"
 import HomePage from "Pages/HomePage/HomePage.component"
 import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
-import AllUsersPage from "Pages/AllUsersPage/AllUsersPage.component"
-import Register from "Pages/Register/Register.component"
+import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
+import Register from "./Pages/Register/Register.component"
 import Login from "Pages/Login/Login.component"
-// import Post from "Pages/Post/Post.component"
+import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
-// import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
@@ -36,32 +36,18 @@ const titles = {
 }
 
 const App = () => {
-  // useEffect(() => {
-  //   store.dispatch(loadUser())
-  // }, [])
   const location = useLocation()
+
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
   return (
     <div className='App'>
       <Header />
       {/* App에 헤더만 있고 사이드, 푸터가 안보이는데
-            좌, 우 사이드바, 푸터가 필요한 페이지는 LayoutRoute
+            좌, 우 사이드바가 필요한 페이지는 LayoutRoute
             아무것도 안넣을 페이지는 BaseRoute 컴포넌트로 만들어주면된다. 
+            푸터는 해당 페이지 컴포넌트를 불러올때 추가로 작성해 줘야한다.
           */}
-
-      {/* <Alert /> */}
       <Routes>
-        {/* 기본틀
-          <Route
-          
-          path='/'
-          element={
-            <LayoutRoute>
-            <HomePage />
-            </LayoutRoute>
-          }
-        ></Route> */}
-
         {/* 홈 */}
         <Route
           path='/'
@@ -71,7 +57,7 @@ const App = () => {
             </LayoutRoute>
           }
         />
-
+        {/* 질문 페이지 */}
         <Route
           path='/questions'
           element={
@@ -81,6 +67,7 @@ const App = () => {
           }
         />
 
+        {/* 태그 페이지 */}
         <Route
           path='/tags'
           element={
@@ -89,8 +76,9 @@ const App = () => {
             </LayoutRoute>
           }
         />
+        {/* 태그 상세 페이지 */}
         <Route
-          path='/tags/:tagname'
+          path='/tags/:tagName'
           element={
             <LayoutRoute>
               <TagPage />
@@ -98,6 +86,7 @@ const App = () => {
           }
         />
 
+        {/* 사용자 페이지 */}
         <Route
           path='/users'
           element={
@@ -106,6 +95,17 @@ const App = () => {
             </LayoutRoute>
           }
         />
+
+        <Route
+          path='/users/:userSeq'
+          element={
+            <LayoutRoute>
+              <ProfilePage />
+            </LayoutRoute>
+          }
+        />
+
+        {/* 로그인 페이지 */}
         <Route
           path='/login'
           element={
@@ -115,6 +115,7 @@ const App = () => {
           }
         />
 
+        {/* 회원가입 페이지 */}
         <Route
           path='/register'
           element={
@@ -124,6 +125,7 @@ const App = () => {
           }
         />
 
+        {/* 질문 생성 페이지 */}
         <Route
           path='/add/question'
           element={
@@ -133,6 +135,7 @@ const App = () => {
           }
         />
 
+        {/* 404 not found */}
         <Route
           path='/404'
           element={
@@ -142,23 +145,20 @@ const App = () => {
           }
         />
 
-        <Route path='*' element={<Navigate to='/404' />} />
+        {/* 질문 상세 페이지 */}
+        <Route
+          path='/questions/:postSeq'
+          element={
+            <LayoutRoute>
+              <Post />
+            </LayoutRoute>
+          }
+        />
 
-        {/* <Route  path="" element={}/> */}
+        {/* 못찾는 경로 404로 리다이렉트 */}
+        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
 
-        {/* 
-          <LayoutRoute  path='/questions/:id' title='Users - 코플로와'>
-          <Post />
-          </LayoutRoute>
-          <LayoutRoute  path='/users/:id' title='Users - 코플로와'>
-          <ProfilePage />
-          </LayoutRoute>
-          <LayoutRoute  path='/tags/:tagname' title='Users - 코플로와'>
-          <TagPage />
-          </LayoutRoute>
-          <BaseRoute  path='/add/question' title='질문하기 - 코플로와'>
-          <PostForm />
-        </BaseRoute>*/}
+        {/* 추가가 되어야할 페이지들 */}
       </Routes>
     </div>
   )

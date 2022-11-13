@@ -5,9 +5,9 @@ const config = {
   BASE_URL: "https://k7d202.p.ssafy.io/api",
 }
 
-// if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-//   config.BASE_URL = process.env.REACT_APP_API_URL
-// }
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  config.BASE_URL = process.env.REACT_APP_API_URL
+}
 
 // headers 설정
 const headers = {
@@ -30,4 +30,13 @@ const api = axios.create({
   headers,
 })
 
+export const auth_api = (accessToken) => {
+  return axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    headers: {
+      ...headers,
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+}
 export default api

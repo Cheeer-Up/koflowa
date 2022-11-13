@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react"
-// useSelector, useDispatch - redux
-import PropTypes from "prop-types"
 
+import { redirect } from "react-router-dom"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import PostItem from "components/Components/PostItem/PostItem.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
@@ -12,6 +11,11 @@ import handleFilter from "utils/handleFilter"
 
 import "./HomePage.styles.scss"
 
+import { signIn_Out } from "../../api/sign"
+import { useDispatch, useSelector } from "react-redux"
+import { setUser, selectUser } from "../../redux/slice/AuthSlice"
+import axios from "axios"
+
 //redux 사용하기 위한 함수
 
 // import { setY, selectY } from "../../redux/slice/CharSlice"
@@ -19,36 +23,67 @@ import "./HomePage.styles.scss"
 const itemsPerPage = 10
 
 const HomePage = () => {
-  const loading = false // test
-  const posts = [
-    {
-      index: 1,
-      post: {
-        id: 1,
-        title: "이거 어케하냐",
-        body: {},
-        username: "나다",
-        gravatar: "",
-        user_id: "나다",
-        answer_count: 0,
-        comment_count: 0,
-        views: 32,
-        created_at: "2022-11-07T15:24:55.105625",
-        tags: "",
-      },
-    },
-  ]
-
-  // useEffect(() => {
-  //   getPosts()
-  // }, [getPosts])
+  const [posts, setposts] = useState(null)
 
   const [page, setPage] = useState(1)
   const [sortType, setSortType] = useState("Month")
+  const dispatcher = useDispatch()
+  const [userState, setUserState] = useState(useSelector(selectUser))
+
+  useEffect(() => {
+    const token = getUrlParameter("token")
+    const error = getUrlParameter("error")
+
+    // token
+    if (token) {
+      localStorage.setItem("accessToken", token)
+      localStorage.setItem("refreshToken", null)
+
+      if (!localStorage.getItem("accessToken")) {
+        return Promise.reject("No access token set.")
+      }
+      signIn_Out(token)
+        .then(({ data }) => {
+          console.log(data)
+          let information = data.information
+          let user = {
+            authProvider: information.authProvider,
+            email: information.email,
+            name: information.name,
+            profile: information.profile,
+            role: information.role,
+            seq: information.seq,
+          }
+          dispatcher(setUser(user))
+          setUserState(user)
+          // 로그인 데이터만 받아온 상황.
+          // 헤더에 적용시켜주기 위해 리로드
+          // window.location.href 같은 즉시 이동은 redux 저장이나 state 저장 전에 실행
+          // setTimeOut으로 조절
+          setTimeout(() => {
+            window.location.href = "/"
+          }, 50)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
+
+  /**token을 받아올 수 있는 주소를 parsing */
+  const getUrlParameter = (name) => {
+    name = name.replace(/[\\[]/, "\\[").replace(/[\]]/, "\\]")
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+    console.log("regex: ", regex)
+    var results = regex.exec(window.location.search)
+    console.log("results : ", results)
+
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
+  }
 
   const handlePaginationChange = (e, value) => setPage(value)
 
-  return loading || posts === null ? (
+  return posts === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>

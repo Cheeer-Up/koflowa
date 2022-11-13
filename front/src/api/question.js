@@ -1,2 +1,14 @@
 import api from "api/api"
-import {} from "api/urls"
+import { createQuestion, getQuestions, getQuestion } from "api/urls"
+
+export const postQuestion = (data) => {
+  return api.post(createQuestion, data)
+}
+
+export const getQuestionsData = (page, size) => {
+  return api.get(getQuestions(page, size))
+}
+
+export const getQuestionData = (questionSeq) => {
+  return api.get(getQuestion(questionSeq))
+}

@@ -1,32 +1,42 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import PropTypes from "prop-types"
-import handleSorting from "utils/handleSorting"
 
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import PostItem from "components/Components/PostItem/PostItem.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
-import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 import SearchBox from "components/Components/SearchBox/SearchBox.component"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
+import { getQuestionsData } from "api/question"
 
 import "./QuestionsPage.styles.scss"
 
 const itemsPerPage = 10
 
-const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
-  useEffect(() => {
-    getPosts()
-  }, [getPosts])
-
+const QuestionsPage = () => {
+  const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
-  const [sortType, setSortType] = useState("Newest")
+  const [totalPage, setTotalPage] = useState(1)
+  const [questions, setQuestions] = useState(null)
+
+  useEffect(() => {
+    getQuestionsData(page - 1, itemsPerPage).then((res) => {
+      setTotalPage(res.data.result.data.totalPages)
+      // setQuestions(res.data.result.data.content)
+      setQuestions(res.data.result.data)
+      setLoading(false)
+    })
+  }, [page])
 
   let searchQuery = new URLSearchParams(useLocation().search).get("search")
 
-  const handlePaginationChange = (e, value) => setPage(value)
+  const handlePaginationChange = (e, value) => {
+    if (value !== page) {
+      setPage(value)
+      setLoading(true)
+    }
+  }
 
-  return loading || posts === null ? (
+  return loading === true || questions === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
@@ -46,39 +56,17 @@ const QuestionsPage = ({ getPosts, post: { posts, loading } }) => {
           ""
         )}
         <div className='questions-tabs'>
-          <span>{new Intl.NumberFormat("en-IN").format(posts.length)} 질문글</span>
-          <ButtonGroup
-            buttons={["최신순", "인기순", "조회순", "오래된순"]}
-            // buttons={["Newest", "Top", "Views", "Oldest"]}
-            selected={sortType}
-            setSelected={setSortType}
-          />
+          <span>{new Intl.NumberFormat("en-IN").format(questions.content.length)} 질문글</span>
         </div>
         <div className='questions'>
-          {posts
-            .filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ""))
-            ?.sort(handleSorting(sortType))
-            .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-            .map((post, index) => (
-              <PostItem key={index} post={post} />
-            ))}
+          {questions.content.map((question, index) => (
+            <PostItem key={index} question={question} />
+          ))}
         </div>
-        <Pagination
-          page={page}
-          itemList={posts.filter((post) =>
-            post.title.toLowerCase().includes(searchQuery ? searchQuery : "")
-          )}
-          itemsPerPage={itemsPerPage}
-          handlePaginationChange={handlePaginationChange}
-        />
+        <Pagination page={page} count={totalPage} handlePaginationChange={handlePaginationChange} />
       </div>
     </Fragment>
   )
-}
-
-QuestionsPage.propTypes = {
-  // getPosts: PropTypes.func.isRequired,
-  // post: PropTypes.object.isRequired,
 }
 
 export default QuestionsPage

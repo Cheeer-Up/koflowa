@@ -1,5 +1,6 @@
 package com.d202.koflowa.question.service;
 
+import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.domain.Comment;
 import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.answer.repository.CommentRepository;
@@ -19,7 +20,9 @@ import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
+import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
+import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,6 +43,7 @@ public class QuestionService {
     private final QuestionUpDownRepository questionUpDownRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final ReputationService reputationService;
     public Page<Question> getAllQuestion(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return questionRepository.findAll(pageRequest);
@@ -55,7 +60,11 @@ public class QuestionService {
     }
 
     public QuestionDto.Response createQuestion(QuestionDto.RequestCreate questionDto) {
-        return new QuestionDto.Response(questionRepository.save(questionDto.toEntity()));
+        Question question = questionRepository.save(questionDto.toEntity());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
+        reputationService.saveLog(user,"질문 작성", 15, question.getSeq());
+        return new QuestionDto.Response(question);
     }
 
     public QuestionDto.Response getQuestionDetail(Long question_seq) {
@@ -78,32 +87,44 @@ public class QuestionService {
     }
 
     //질문 테이블에 숫자 기록하는거 하기
-    public QuestionUpdownDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
+    public QuestionDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
+        System.out.println(questionUpdownDto);
+        /* 중복 검색 방지를 위한 객체 생성 */
+        Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
+        //User user = userRepository.findBySeq(questionUpdownDto.getUserSeq()).get();
+
         /* QuestionUpdown 조회 */
         QuestionUpdown questionUpdown = questionUpDownRepository
-                .findBySeqAndUserSeq(questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq())
-                .orElseThrow(() -> new QuestionUpException());
+                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq() );
+                //.orElseThrow(() -> new QuestionUpException());
 
         if(questionUpdown == null){ // 비어있다면 생성
-            questionUpdown = questionUpDownRepository.save(
+             questionUpDownRepository.save(
                     questionUpdownDto.toEntity(
                             userRepository.findBySeq(questionUpdownDto.getUserSeq()).get(),
-                            questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get()
-                    )
+                            question)
             );
+
+            // 생성 완료 후 변경
+            if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
+                question.setUp(question.getUp() + 1);
+            }else if(questionUpdownDto.getQuestionUpdownType() == UDType.DOWN){
+                question.setDown(question.getDown() + 1);
+            }
+
+            // 변경 내역 저장
+            questionRepository.save(question);
+
         } else if(questionUpdown.getType() == questionUpdownDto.getQuestionUpdownType()) { // 타입이 같으면 삭제
 
             // 삭제
             questionUpDownRepository.delete(questionUpdown);
 
-            Question question = questionRepository.findBySeq(questionUpdownDto.getQuestionSeq())
-                    .orElseThrow(() -> new SpecificQuestionNotFound());
-
             // 삭제 완료 후 변경
             if(questionUpdownDto.getQuestionUpdownType() == UDType.UP){
                 question.setUp(question.getUp() -1);
             }else if(questionUpdownDto.getQuestionUpdownType() == UDType.DOWN){
-                question.setUp(question.getDown() -1);
+                question.setDown(question.getDown() -1);
             }
 
             // 변경 내역 저장
@@ -111,9 +132,6 @@ public class QuestionService {
 
         } else { // 타입이 다르면 수정
             questionUpdown.setType(questionUpdownDto.getQuestionUpdownType());
-
-            Question question = questionRepository.findBySeq(questionUpdownDto.getQuestionSeq())
-                    .orElseThrow(() -> new SpecificQuestionNotFound());
 
             // 저장
             questionUpDownRepository.save(questionUpdown);
@@ -129,10 +147,22 @@ public class QuestionService {
             questionRepository.save(question);
         }
 
-        return new QuestionUpdownDto.Response(questionUpdown);
+        // 명성 로그 등록
+        Optional<User> questionUserOptional = userRepository.findBySeq(question.getUserSeq());
+        if (questionUserOptional.isEmpty()){
+            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
+        reputationService.saveLog(questionUserOptional.get(),"질문 추천", 3, question.getSeq());
+
+        return new QuestionDto.Response(question);
     }
 
-    public CommentDto.Response createComment(CommentDto.Request commentDto) {
+    public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
+        Question question = questionRepository.findBySeq(commentDto.getBoardSeq())
+                .orElseThrow(() -> new SpecificQuestionNotFound());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findBySeq(1l).get();
+        reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
     }
 
