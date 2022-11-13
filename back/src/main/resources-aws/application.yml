@@ -16,7 +16,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
-
+      
 springdoc:
   use-fqn: true
   api-docs:
