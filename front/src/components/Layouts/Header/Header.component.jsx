@@ -68,7 +68,7 @@ const Header = () => {
       </form>
     )
   }
-
+  if (window.location.pathname === '/meeting') return null;
   return (
     <Fragment>
       {/* 모바일 사이즈 시 햄버거 노출 */}
