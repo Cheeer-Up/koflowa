@@ -134,7 +134,7 @@ const AskForm = ({ addPost }) => {
   const updateConvertedContent = (htmlConvertedContent) => {
     setFormData({ ...formData, body: htmlConvertedContent })
   }
-
+  const postThread = () => {}
   return (
     <Fragment>
       <form onSubmit={(e) => onSubmit(e)}>
