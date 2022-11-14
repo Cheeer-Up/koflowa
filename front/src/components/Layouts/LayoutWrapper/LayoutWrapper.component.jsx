@@ -1,8 +1,8 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from "react"
 
-import SideBar from './SideBar/SideBar.component';
-import RightSideBar from './RightSideBar/RightSideBar.component';
-import Footer from "../Footer/Footer.component";
+import SideBar from "./SideBar/SideBar.component"
+import RightSideBar from "./RightSideBar/RightSideBar.component"
+import Footer from "../Footer/Footer.component"
 
 const LayoutWrapper = ({ children }) => {
   return (
@@ -11,12 +11,12 @@ const LayoutWrapper = ({ children }) => {
         <SideBar />
         <div id='content'>
           {children}
-          <RightSideBar />
+          {/* <RightSideBar /> */}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </Fragment>
-  );
-};
+  )
+}
 
-export default LayoutWrapper;
+export default LayoutWrapper

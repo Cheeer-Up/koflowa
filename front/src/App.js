@@ -14,6 +14,7 @@ import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
+import TagForm from "Pages/TagForm/TagForm.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
@@ -142,6 +143,16 @@ const App = () => {
           element={
             <BaseRoute>
               <MeetingCallPage />
+            </BaseRoute>
+          }
+        />
+
+        {/* 태그 생성 페이지 */}
+        <Route
+          path='/add/tag'
+          element={
+            <BaseRoute>
+              <TagForm />
             </BaseRoute>
           }
         />
