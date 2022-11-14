@@ -2,6 +2,7 @@ package com.d202.koflowa.answer.dto;
 
 import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.answer.domain.Comment;
+import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import lombok.*;
@@ -43,8 +44,6 @@ public class CommentDto {
         private Long boardSeq;
         private QAType type;
         private String content;
-        private Long userSeq;
-        private String userNickname;
 
         public Comment toEntity(User user){
             Comment comment = Comment.builder()
@@ -57,6 +56,23 @@ public class CommentDto {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class RequestUpdate{
+
+        private Long commentSeq;
+        private String content;
+
+        public Comment toEntity(User user){
+            Comment comment = Comment.builder()
+                    .user(user)
+                    .content(content)
+                    .build();
+            return comment;
+        }
+    }
 
     @Getter
     public static class Response{

@@ -24,7 +24,6 @@ public class QuestionDto {
                     .seq(questionSeq)
                     .title(questionTitle)
                     .content(questionContent)
-                    .answerCount(0L)
                     .user(user)
                     .build();
         }

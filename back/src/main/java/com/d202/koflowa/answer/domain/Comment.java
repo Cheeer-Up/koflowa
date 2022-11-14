@@ -22,7 +22,7 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "comment_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_seq")
     @JsonBackReference
     private User user;
