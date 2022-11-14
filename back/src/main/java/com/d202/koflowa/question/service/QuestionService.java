@@ -75,7 +75,7 @@ public class QuestionService {
     }
 
     public Page<QuestionDto.Response> searchQuestionByUserSeq(Long userSeq, Pageable pageable) {
-        Page<Question> questions = questionRepository.findAllByUserSeq(userSeq, pageable);
+        Page<Question> questions = questionRepository.findAllByUserSeqOrderByCreatedTimeDesc(userSeq, pageable);
 
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
@@ -214,7 +214,7 @@ public class QuestionService {
     }
 
     public List<CommentDto.Response> getQuestionComment(Long question_seq) {
-        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTimeDesc(question_seq, QAType.QUESTION)
+        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTime(question_seq, QAType.QUESTION)
                 .orElseThrow(() -> new QuestionCommentNotFoundException());
         List<CommentDto.Response> commentResponseList = new ArrayList<>();
 
