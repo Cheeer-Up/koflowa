@@ -5,8 +5,7 @@ export const AuthSlice = createSlice({
   name: "AuthSlice",
   initialState: {
     token: localStorage.getItem("token"),
-    // isAuthenticated: null,
-    isAuthenticated: true,
+    isAuthenticated: false,
     loading: true,
     user: null,
   },
@@ -17,10 +16,13 @@ export const AuthSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
     },
+    setIsAuthenticated: (state) => {
+      state.isAuthenticated = !state.isAuthenticated
+    },
   },
 })
 
-export const { setToken, setUser } = AuthSlice.actions
+export const { setToken, setUser, setIsAuthenticated } = AuthSlice.actions
 
 export const selectToken = (state) => state.auth.token
 export const selectUser = (state) => state.auth.user

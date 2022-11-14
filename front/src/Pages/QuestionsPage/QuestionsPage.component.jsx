@@ -18,16 +18,18 @@ const QuestionsPage = () => {
   const [totalPage, setTotalPage] = useState(1)
   const [questions, setQuestions] = useState(null)
 
+  let searchQuery = new URLSearchParams(useLocation().search).get("search")
+
   useEffect(() => {
-    getQuestionsData(page - 1, itemsPerPage).then((res) => {
+    console.log("searchQuery: ", searchQuery)
+    getQuestionsData(localStorage.getItem("accessToken"), page - 1, itemsPerPage).then((res) => {
+      console.log("getQuestionsData: ", res)
       setTotalPage(res.data.result.data.totalPages)
       // setQuestions(res.data.result.data.content)
       setQuestions(res.data.result.data)
       setLoading(false)
     })
   }, [page])
-
-  let searchQuery = new URLSearchParams(useLocation().search).get("search")
 
   const handlePaginationChange = (e, value) => {
     if (value !== page) {
