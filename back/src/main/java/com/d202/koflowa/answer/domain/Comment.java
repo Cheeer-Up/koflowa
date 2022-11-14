@@ -23,6 +23,9 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "user_seq", columnDefinition = "bigint unsigned")
     private Long userSeq;
 
+    @Column(name = "user_nickname", columnDefinition = "varchar(100)", nullable = false)
+    private String userNickname;
+
     @Column(name = "board_seq", columnDefinition = "bigint unsigned")
     private Long boardSeq;
 
