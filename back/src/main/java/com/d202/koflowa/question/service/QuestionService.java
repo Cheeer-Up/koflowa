@@ -20,6 +20,8 @@ import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
+import com.d202.koflowa.tag.domain.Tag;
+import com.d202.koflowa.tag.dto.TagDto;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
@@ -46,22 +48,47 @@ public class QuestionService {
     private final CommentRepository commentRepository;
     private final ReputationService reputationService;
 
-    private final CustomUserDetailsService customUserDetailsService;
-    public Page<Question> getAllQuestion(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return questionRepository.findAll(pageRequest);
+    public Page<QuestionDto.Response> getAllQuestion(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+
+        Page<Question> questions = questionRepository.findAll(pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
-    public Page<Question> searchQuestionByKeyword(String keyword, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        Map<String, Object> result = new HashMap<>();
-        return questionRepository.findAllByKeyword(keyword, pageRequest);
+    public Page<QuestionDto.Response> searchQuestionByKeyword(String keyword, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Question> questions = questionRepository.findAllByKeyword(keyword, pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
-    public Page<Question> searchQuestionByUserSeq(Long userSeq, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        Page<Question> res = questionRepository.findAllByUserSeq(userSeq, pageRequest);
-        return questionRepository.findAllByUserSeq(userSeq, pageRequest);
+    public Page<QuestionDto.Response> searchQuestionByUserSeq(Long userSeq, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Question> questions = questionRepository.findAllByUserSeq(userSeq, pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
     public QuestionDto.Response createQuestion(QuestionDto.RequestCreate questionDto) {
