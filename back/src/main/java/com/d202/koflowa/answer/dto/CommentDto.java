@@ -2,6 +2,8 @@ package com.d202.koflowa.answer.dto;
 
 import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.answer.domain.Comment;
+import com.d202.koflowa.user.domain.User;
+import com.d202.koflowa.user.repository.UserRepository;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,10 +22,10 @@ public class CommentDto {
         private String content;
 
         /* Dto -> Entity */
-        public Comment toEntity(){
+        public Comment toEntity(User user){
             Comment comment = Comment.builder()
                     .seq(commentSeq)
-                    .userSeq(userSeq)
+                    .user(user)
                     .boardSeq(boardSeq)
                     .type(type)
                     .content(content)
@@ -44,12 +46,12 @@ public class CommentDto {
         private Long userSeq;
         private String userNickname;
 
-        public Comment toEntity(){
+        public Comment toEntity(User user){
             Comment comment = Comment.builder()
+                    .user(user)
                     .boardSeq(boardSeq)
                     .type(type)
                     .content(content)
-                    .userSeq(userSeq)
                     .userNickname(userNickname)
                     .build();
             return comment;
@@ -71,8 +73,8 @@ public class CommentDto {
         /* Entity -> Dto*/
         public Response(Comment comment){
             this.seq = comment.getSeq();
-            this.userSeq = comment.getUserSeq();
-            this.userNickname = comment.getUserNickname();
+            this.userSeq = comment.getUser().getSeq();
+            this.userNickname = comment.getUser().getNickname();
             this.boardSeq = comment.getBoardSeq();
             this.type = comment.getType();
             this.content = comment.getContent();
