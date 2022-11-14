@@ -1,7 +1,7 @@
 package com.d202.koflowa.S_J_O.service.auth;
 
 import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService{
                         new UsernameNotFoundException("유저 정보를 찾을 수 없습니다.")
         );
 
-        return UserPrincipal.create(user);
+        return user;
     }
 
     @Transactional
@@ -35,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         Optional<User> user = userRepository.findById(id);
         DefaultAssert.isOptionalPresent(user);
 
-        return UserPrincipal.create(user.get());
+        return user.get();
     }
     
 }

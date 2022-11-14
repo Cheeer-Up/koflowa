@@ -1,7 +1,5 @@
 import React from "react"
-
 import SideBarItem from "./SideBarItem.component"
-import { SideBarData } from "./SideBarData"
 
 import "./SideBar.styles.scss"
 
@@ -10,14 +8,13 @@ const SideBar = () => (
     <div className='side-bar-tabs'>
       <SideBarItem isHome={true} link='/' text='홈' />
 
-      <div className='public-tabs'>
-        <p className='title fc-light'>공통</p>
-        {SideBarData.map(({ link, icon, text }, index) => (
-          <SideBarItem key={index} link={link} icon={icon} text={text} />
-        ))}
-      </div>
+      <SideBarItem isHome={true} link='/questions' text='질문' />
+      <SideBarItem isHome={true} link='/tags' text='태그' />
+      <SideBarItem isHome={true} link='/users' text='사용자' />
+      <SideBarItem isHome={true} link='/jobs' text='코톡' />
+      <SideBarItem isHome={true} link='/meeting' text='화상회의' />
       <div className='teams-tabs'>
-        <p className='title fc-light'>팀</p>
+        <a href="http://localhost:3000/meeting" className='title fc-light'  target='_blank' rel='noreferrer'>화상 회의</a>
       </div>
     </div>
   </div>

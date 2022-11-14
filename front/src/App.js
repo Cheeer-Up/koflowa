@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -14,7 +14,9 @@ import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
+import TagForm from "Pages/TagForm/TagForm.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
@@ -109,9 +111,9 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <LayoutRoute>
+            <BaseRoute>
               <Login />
-            </LayoutRoute>
+            </BaseRoute>
           }
         />
 
@@ -131,6 +133,26 @@ const App = () => {
           element={
             <BaseRoute>
               <PostForm />
+            </BaseRoute>
+          }
+        />
+
+        {/* 화상 회의 페이지 */}
+        <Route
+          path='/meeting'
+          element={
+            <BaseRoute>
+              <MeetingCallPage />
+            </BaseRoute>
+          }
+        />
+
+        {/* 태그 생성 페이지 */}
+        <Route
+          path='/add/tag'
+          element={
+            <BaseRoute>
+              <TagForm />
             </BaseRoute>
           }
         />
@@ -156,7 +178,7 @@ const App = () => {
         />
 
         {/* 못찾는 경로 404로 리다이렉트 */}
-        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
+        <Route path='*' element={<Navigate to='/404' />} />
 
         {/* 추가가 되어야할 페이지들 */}
       </Routes>
