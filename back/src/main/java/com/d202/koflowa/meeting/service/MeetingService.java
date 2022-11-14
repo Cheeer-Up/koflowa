@@ -1,5 +1,6 @@
 package com.d202.koflowa.meeting.service;
 
+import com.d202.koflowa.S_J_O.service.auth.CustomUserDetailsService;
 import com.d202.koflowa.common.response.Response;
 import com.d202.koflowa.common.response.Result;
 import com.d202.koflowa.meeting.dto.TokenDto;
@@ -26,7 +27,6 @@ public class MeetingService {
 
 
     public TokenDto requestToOpenviduCreate(String sessionId) throws JsonProcessingException, OpenViduJavaClientException, OpenViduHttpException {
-
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        Long seq = user.getSeq();
 
