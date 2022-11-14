@@ -176,12 +176,12 @@ public class AnswerService {
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
-    public CommentDto.Response updateComment(CommentDto.Request commentDto) {
+    public CommentDto.Response updateComment(CommentDto.RequestUpdate commentDto) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         comment.setContent(commentDto.getContent());
-        return new CommentDto.Response(commentRepository.save(comment));
+        return new CommentDto.Response(comment);
     }
 
     public void deleteComment(CommentDto.Request commentDto) {
@@ -192,7 +192,7 @@ public class AnswerService {
     }
 
     public List<CommentDto.Response> getAnswerComment(Long answerSeq) {
-        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTime(answerSeq, QAType.ANSWER)
+        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTimeDesc(answerSeq, QAType.ANSWER)
                 .orElseThrow(() -> new QuestionCommentNotFoundException());
         List<CommentDto.Response> commentResponseList = new ArrayList<>();
 

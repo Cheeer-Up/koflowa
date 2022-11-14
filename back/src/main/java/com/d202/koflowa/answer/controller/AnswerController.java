@@ -66,7 +66,7 @@ public class AnswerController {
     /* 답변 코멘트 수정 */
     @PutMapping("/comment")
     @Operation(summary = "코멘트 수정", description = "특정 코멘트를 수정하는 api 입니다.")
-    public Response updateComment(@RequestBody CommentDto.Request commentDto) {
+    public Response updateComment(@RequestBody CommentDto.RequestUpdate commentDto) {
         return Response.success(answerService.updateComment(commentDto));
     }
 
