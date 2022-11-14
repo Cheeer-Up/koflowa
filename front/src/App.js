@@ -15,6 +15,7 @@ import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
 import TagPage from "Pages/TagPage/TagPage.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
+import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute } from "./Router"
 
@@ -131,6 +132,16 @@ const App = () => {
           element={
             <BaseRoute>
               <PostForm />
+            </BaseRoute>
+          }
+        />
+
+        {/* 화상 회의 페이지 */}
+        <Route
+          path='/meeting'
+          element={
+            <BaseRoute>
+              <MeetingCallPage />
             </BaseRoute>
           }
         />
