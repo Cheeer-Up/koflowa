@@ -177,14 +177,16 @@ public class AnswerService {
     }
 
     public CommentDto.Response updateComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeq(commentDto.getCommentSeq())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         comment.setContent(commentDto.getContent());
         return new CommentDto.Response(commentRepository.save(comment));
     }
 
     public void deleteComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), commentDto.getUserSeq())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         commentRepository.delete(comment);
     }

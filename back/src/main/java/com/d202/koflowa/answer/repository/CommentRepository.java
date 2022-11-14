@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    Optional<Comment> findBySeq(Long commentSeq);
+    Optional<Comment> findBySeqAndUser_Seq(Long commentSeq, Long userSeq);
     Optional<Comment> findBySeqAndUserSeq(Long seq, Long userSeq);
     Optional<List<Comment>> findAllByBoardSeqAndTypeOrderByCreatedTime(Long boardSeq, QAType qaType);
 }
