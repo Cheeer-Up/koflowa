@@ -71,18 +71,20 @@ const Header = () => {
 
   return (
     <Fragment>
+      {/* 모바일 사이즈 시 햄버거 노출 */}
       <nav className='navbar fixed-top navbar-expand-lg navbar-light bs-md'>
         <div className='hamburger'>
           <MobileSideBar hasOverlay />
         </div>
+        {/* 로고 이미지 */}
         <div className='header-brand-div'>
           <Link className='navbar-brand' to='/'>
             <Logo className='full-logo' />
             <SmallLogo className='glyph-logo' />
-            {/* 로고 부분 보여주고 싶은 로고 고르면됨 */}
           </Link>
         </div>
 
+        {/* 검색 창 */}
         <form
           id='search'
           onSubmit={() => history.push("/questions")}
@@ -101,9 +103,11 @@ const Header = () => {
             <Search />
           </div>
         </form>
+
         <div className='header-search-div'>
           {/* 로그인 시 AuthLinks 아닐 시 guest */}
           <IsAuth />
+          {/* 돋보기 이미지 */}
           <Search className='search-icon' onClick={() => setSearchState(!searchState)} />
           {/* {!user && <Fragment>{isAuthenticated ? <AuthLinks /> : <GuestLinks />}</Fragment>} */}
         </div>
