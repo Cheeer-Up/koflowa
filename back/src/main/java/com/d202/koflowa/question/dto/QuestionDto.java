@@ -46,6 +46,7 @@ public class QuestionDto {
                     .content(questionContent)
                     .up(0L)
                     .down(0L)
+                    .answerCount(0L)
                     .build();
         }
     }
@@ -62,6 +63,10 @@ public class QuestionDto {
         private String createdTime;
         private String updatedTime;
 
+        private Long answerCount;
+
+        private Long acceptAnswerSeq;
+
         public Response(Question question){
             this.questionSeq = question.getSeq();
             this.userSeq = question.getUserSeq();
@@ -69,6 +74,8 @@ public class QuestionDto {
             this.questionContent = question.getContent();
             this.up = question.getUp();
             this.down = question.getDown();
+            this.answerCount = question.getAnswerCount();
+            this.acceptAnswerSeq = question.getAcceptAnswerSeq();
             this.createdTime = question.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.updatedTime = question.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
         }
