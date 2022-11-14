@@ -58,7 +58,7 @@ public class AnswerService {
         // TODO: 유저 명성 +1, 명성 log 등록
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Answer answer = request.toEntity(question.get());
-        answer.setUserSeq( user.getSeq());
+        answer.setUser(user);
         reputationService.saveLog(user,"답변 작성", 10, questionSeq);
 
         // question에 answerCnt +1
@@ -129,11 +129,7 @@ public class AnswerService {
         }
 
         // 명성 및 로그 추가
-        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
-        if (answerUserOptional.isEmpty()){
-            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
-        }
-        reputationService.saveLog(answerUserOptional.get(),"답변 추천", 3, answer.get().getQuestion().getSeq());
+        reputationService.saveLog(answer.get().getUser(),"답변 추천", 3, answer.get().getQuestion().getSeq());
 
     }
 
@@ -162,11 +158,7 @@ public class AnswerService {
         answer.get().updateAnswerAccept(true);
 
         // 명성 및 로그 추가
-        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
-        if (answerUserOptional.isEmpty()){
-            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
-        }
-        reputationService.saveLog(answerUserOptional.get(),"답변 채택", 20, question.get().getSeq());
+        reputationService.saveLog(answer.get().getUser(),"답변 채택", 20, question.get().getSeq());
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
@@ -181,7 +173,7 @@ public class AnswerService {
 
 
         commentDto.setType(QAType.ANSWER);
-        return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
+        return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
     public CommentDto.Response updateComment(CommentDto.Request commentDto) {
