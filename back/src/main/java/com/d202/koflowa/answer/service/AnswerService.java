@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,8 +56,7 @@ public class AnswerService {
 
         // TODO: 유저 정보 저장 필요
         // TODO: 유저 명성 +1, 명성 log 등록
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Answer answer = request.toEntity(question.get());
         answer.setUserSeq( user.getSeq());
         reputationService.saveLog(user,"답변 작성", 10, questionSeq);
@@ -94,9 +94,7 @@ public class AnswerService {
             // throw new
             throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
         }
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
-        Long seq = user.getSeq();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
         if (answerUpdown.isEmpty()){
             // 비어있다면 생성
@@ -163,8 +161,7 @@ public class AnswerService {
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Optional<Answer> answer = answerRepository.findById(commentDto.getBoardSeq());
         if (answer.isEmpty()) {
