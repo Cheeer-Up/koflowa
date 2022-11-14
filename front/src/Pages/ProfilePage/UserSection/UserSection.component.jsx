@@ -10,6 +10,7 @@ const UserSection = ({ user }) => (
     <AvatarCard id={user.seq} profile={user.profile} />
     <ContentCard
       username={user.nickname}
+      user_about={user.about}
       answers_count={user.answers_count}
       posts_count={user.posts_count}
       comments_count={user.comments_count}

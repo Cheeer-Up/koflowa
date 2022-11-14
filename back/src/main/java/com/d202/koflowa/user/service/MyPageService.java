@@ -99,23 +99,23 @@ public class MyPageService {
         for (ReputationLog reputationLog : reputationLogList) {
             dtoList.add(new ReputationLogDto.Response(reputationLog));
         }
-        return new PageImpl<>(dtoList, pageable, reputationLogList.getTotalElements());
+        return new PageImpl<ReputationLogDto.Response>(dtoList, pageable, reputationLogList.getTotalElements());
     }
 
     public Page<QuestionDto.Response> getQuestion(long id, Pageable pageable){
         Page<Question> questionList = questionRepository.findByUserSeq(id, pageable);
         List<QuestionDto.Response> dtoList = new ArrayList<>();
         for (Question question : questionList) {
-            dtoList.add(new QuestionDto.Response(question));
+            dtoList.add(new QuestionDto.Response(question.getTitle(), question.getSeq(), question.getCreatedTime()));
         }
-        return new PageImpl<>(dtoList, pageable, questionList.getTotalElements());
+        return new PageImpl<QuestionDto.Response>(dtoList, pageable, questionList.getTotalElements());
     }
 
     public Page<AnswerDto.Response> getAnswer(long id, Pageable pageable){
         Page<Answer> answerList = answerRepository.findByUserSeq(id, pageable);
         List<AnswerDto.Response> dtoList = new ArrayList<>();
         for (Answer answer : answerList) {
-            dtoList.add(new AnswerDto.Response(answer));
+            dtoList.add(new AnswerDto.Response(answer.getSeq(), answer.getQuestion().getSeq(), answer.getContent(), answer.getCreatedTime()));
         }
         return new PageImpl<AnswerDto.Response>(dtoList, pageable, answerList.getTotalElements());
     }
