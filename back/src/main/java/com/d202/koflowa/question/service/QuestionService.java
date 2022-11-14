@@ -160,23 +160,25 @@ public class QuestionService {
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Question question = questionRepository.findBySeq(commentDto.getBoardSeq())
                 .orElseThrow(() -> new SpecificQuestionNotFound());
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
     public CommentDto.Response updateComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeq(commentDto.getCommentSeq())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         comment.setContent(commentDto.getContent());
         return new CommentDto.Response(commentRepository.save(comment));
     }
 
     public void deleteComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), commentDto.getUserSeq())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), commentDto.getUserSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         commentRepository.delete(comment);
     }
