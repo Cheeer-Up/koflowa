@@ -41,12 +41,12 @@ public class AnswerController {
         return Response.success();
     }
 
-//    @Operation(summary = "답글 추천,비추천", description = "")
-//    @PostMapping("/updown/{answer-seq}")
-//    public Response postAnswerUp(@PathVariable("answer-seq") Long answerSeq, @RequestBody AnswerUpdownDto.Request request) {
-//        answerService.upDownAnswer(answerSeq, request);
-//        return Response.success();
-//    }
+    @Operation(summary = "답글 추천,비추천", description = "")
+    @PostMapping("/updown/{answer-seq}")
+    public Response postAnswerUp(@PathVariable("answer-seq") Long answerSeq, @RequestBody AnswerUpdownDto.Request request) {
+        answerService.upDownAnswer(answerSeq, request);
+        return Response.success();
+    }
 
     @Operation(summary = "답글 채택", description = "")
     @PostMapping("/accept/{answer-seq}")
@@ -66,7 +66,7 @@ public class AnswerController {
     /* 답변 코멘트 수정 */
     @PutMapping("/comment")
     @Operation(summary = "코멘트 수정", description = "특정 코멘트를 수정하는 api 입니다.")
-    public Response updateComment(@RequestBody CommentDto.Request commentDto) {
+    public Response updateComment(@RequestBody CommentDto.RequestUpdate commentDto) {
         return Response.success(answerService.updateComment(commentDto));
     }
 

@@ -8,7 +8,7 @@ import com.d202.koflowa.S_J_O.payload.request.auth.SignInRequest;
 import com.d202.koflowa.S_J_O.payload.response.AuthResponse;
 import com.d202.koflowa.S_J_O.payload.response.Message;
 import com.d202.koflowa.S_J_O.security.token.CurrentUser;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.S_J_O.service.auth.AuthService;
 import com.d202.koflowa.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +39,7 @@ public class AuthController {
     })
     @GetMapping(value = "/")
     public ResponseEntity<?> whoAmI(
-        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser UserPrincipal userPrincipal
+        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser User userPrincipal
     ) {
         return authService.whoAmI(userPrincipal);
     }
@@ -51,7 +51,7 @@ public class AuthController {
     })
     @DeleteMapping(value = "/")
     public ResponseEntity<?> delete(
-        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser UserPrincipal userPrincipal
+        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser User userPrincipal
     ){
         return authService.delete(userPrincipal);
     }
@@ -113,7 +113,7 @@ public class AuthController {
     })
     @PostMapping(value="/signout")
     public ResponseEntity<?> signout(
-        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser UserPrincipal userPrincipal, 
+        @Parameter(description = "Accesstoken을 입력해주세요.", required = true) @CurrentUser User userPrincipal,
         @Parameter(description = "Schemas의 RefreshTokenRequest를 참고해주세요.", required = true) @Valid @RequestBody RefreshTokenRequest tokenRefreshRequest
     ) {
         return authService.signout(tokenRefreshRequest);

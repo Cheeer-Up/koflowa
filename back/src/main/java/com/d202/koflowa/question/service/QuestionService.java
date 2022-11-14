@@ -1,5 +1,6 @@
 package com.d202.koflowa.question.service;
 
+import com.d202.koflowa.S_J_O.service.auth.CustomUserDetailsService;
 import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.domain.Comment;
 import com.d202.koflowa.answer.dto.CommentDto;
@@ -19,20 +20,22 @@ import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
+import com.d202.koflowa.tag.domain.Tag;
+import com.d202.koflowa.tag.dto.TagDto;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -44,25 +47,54 @@ public class QuestionService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ReputationService reputationService;
-    public Page<Question> getAllQuestion(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return questionRepository.findAll(pageRequest);
+
+    public Page<QuestionDto.Response> getAllQuestion(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+
+        Page<Question> questions = questionRepository.findAll(pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
-    public Page<Question> searchQuestionByKeyword(String keyword, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return questionRepository.findAllByKeyword(keyword, pageRequest);
+    public Page<QuestionDto.Response> searchQuestionByKeyword(String keyword, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Question> questions = questionRepository.findAllByKeyword(keyword, pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
-    public Page<Question> searchQuestionByUserSeq(Long userSeq, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return questionRepository.findAllByUserSeq(userSeq, pageRequest);
+    public Page<QuestionDto.Response> searchQuestionByUserSeq(Long userSeq, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Question> questions = questionRepository.findAllByUserSeq(userSeq, pageRequest);
+
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
     }
 
     public QuestionDto.Response createQuestion(QuestionDto.RequestCreate questionDto) {
-        Question question = questionRepository.save(questionDto.toEntity());
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("질문생성 "+user);
+        Question question = questionRepository.save(questionDto.toEntity(user));
         reputationService.saveLog(user,"질문 작성", 15, question.getSeq());
         return new QuestionDto.Response(question);
     }
@@ -73,35 +105,42 @@ public class QuestionService {
         return  new QuestionDto.Response(question);
     }
     public QuestionDto.Response updateQuestion(QuestionDto.Request questionDto) {
-        Question question = questionRepository.findBySeq(questionDto.getQuestionSeq())
+        System.out.println(questionDto);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(user);
+        Question question = questionRepository.findBySeqAndUser(questionDto.getQuestionSeq(), user.getSeq())
                 .orElseThrow(() -> new SpecificQuestionNotFound());
+        System.out.println(question);
         question.setTitle(questionDto.getQuestionTitle());
         question.setContent(questionDto.getQuestionContent());
+        System.out.println(question);
 
-        return  new QuestionDto.Response(questionRepository.save(question));
+        return new QuestionDto.Response(questionRepository.save(question));
     }
 
     public void deleteQuestion(Long question_seq) {
-        questionRepository.delete(questionRepository.findBySeq(question_seq)
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        questionRepository.delete(questionRepository.findBySeqAndUser(question_seq, user.getSeq())
                 .orElseThrow(() -> new SpecificQuestionNotFound()));
     }
 
     //질문 테이블에 숫자 기록하는거 하기
     public QuestionDto.Response setQuestionUpDown(QuestionUpdownDto.Request questionUpdownDto) {
         System.out.println(questionUpdownDto);
+
         /* 중복 검색 방지를 위한 객체 생성 */
         Question question =  questionRepository.findBySeq(questionUpdownDto.getQuestionSeq()).get();
-        //User user = userRepository.findBySeq(questionUpdownDto.getUserSeq()).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         /* QuestionUpdown 조회 */
         QuestionUpdown questionUpdown = questionUpDownRepository
-                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), questionUpdownDto.getUserSeq() );
+                .findByQuestionSeqAndUserSeq( questionUpdownDto.getQuestionSeq(), user.getSeq() );
                 //.orElseThrow(() -> new QuestionUpException());
 
         if(questionUpdown == null){ // 비어있다면 생성
              questionUpDownRepository.save(
                     questionUpdownDto.toEntity(
-                            userRepository.findBySeq(questionUpdownDto.getUserSeq()).get(),
+                            user,
                             question)
             );
 
@@ -113,7 +152,7 @@ public class QuestionService {
             }
 
             // 변경 내역 저장
-            questionRepository.save(question);
+            //questionRepository.save(question);
 
         } else if(questionUpdown.getType() == questionUpdownDto.getQuestionUpdownType()) { // 타입이 같으면 삭제
 
@@ -128,7 +167,7 @@ public class QuestionService {
             }
 
             // 변경 내역 저장
-            questionRepository.save(question);
+            //questionRepository.save(question);
 
         } else { // 타입이 다르면 수정
             questionUpdown.setType(questionUpdownDto.getQuestionUpdownType());
@@ -144,43 +183,42 @@ public class QuestionService {
                 question.setDown(question.getDown() + 1);
             }
 
-            questionRepository.save(question);
+            //questionRepository.save(question);
         }
 
         // 명성 로그 등록
-        Optional<User> questionUserOptional = userRepository.findBySeq(question.getUserSeq());
-        if (questionUserOptional.isEmpty()){
-            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
-        }
-        reputationService.saveLog(questionUserOptional.get(),"질문 추천", 3, question.getSeq());
+        reputationService.saveLog(question.getUser(),"질문 추천", 3, question.getSeq());
 
         return new QuestionDto.Response(question);
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(user);
         Question question = questionRepository.findBySeq(commentDto.getBoardSeq())
                 .orElseThrow(() -> new SpecificQuestionNotFound());
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+
         reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
-        return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
+        return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
-    public CommentDto.Response updateComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeq(commentDto.getCommentSeq())
+    public CommentDto.Response updateComment(CommentDto.RequestUpdate commentDto) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         comment.setContent(commentDto.getContent());
-        return new CommentDto.Response(commentRepository.save(comment));
+        return new CommentDto.Response(comment);
     }
 
-    public void deleteComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), commentDto.getUserSeq())
+    public void deleteComment(Long commentSeq) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentSeq, user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         commentRepository.delete(comment);
     }
 
     public List<CommentDto.Response> getQuestionComment(Long question_seq) {
-        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTime(question_seq, QAType.QUESTION)
+        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTimeDesc(question_seq, QAType.QUESTION)
                 .orElseThrow(() -> new QuestionCommentNotFoundException());
         List<CommentDto.Response> commentResponseList = new ArrayList<>();
 

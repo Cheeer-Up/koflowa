@@ -2,7 +2,7 @@ package com.d202.koflowa.user.service;
 
 import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
 import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.dto.AnswerDto;
 import com.d202.koflowa.question.domain.Question;
@@ -99,31 +99,31 @@ public class MyPageService {
         for (ReputationLog reputationLog : reputationLogList) {
             dtoList.add(new ReputationLogDto.Response(reputationLog));
         }
-        return new PageImpl<>(dtoList, pageable, reputationLogList.getTotalElements());
+        return new PageImpl<ReputationLogDto.Response>(dtoList, pageable, reputationLogList.getTotalElements());
     }
 
     public Page<QuestionDto.Response> getQuestion(long id, Pageable pageable){
         Page<Question> questionList = questionRepository.findByUserSeq(id, pageable);
         List<QuestionDto.Response> dtoList = new ArrayList<>();
         for (Question question : questionList) {
-            dtoList.add(new QuestionDto.Response(question));
+            dtoList.add(new QuestionDto.Response(question.getTitle(), question.getSeq(), question.getCreatedTime()));
         }
-        return new PageImpl<>(dtoList, pageable, questionList.getTotalElements());
+        return new PageImpl<QuestionDto.Response>(dtoList, pageable, questionList.getTotalElements());
     }
 
     public Page<AnswerDto.Response> getAnswer(long id, Pageable pageable){
         Page<Answer> answerList = answerRepository.findByUserSeq(id, pageable);
         List<AnswerDto.Response> dtoList = new ArrayList<>();
         for (Answer answer : answerList) {
-            dtoList.add(new AnswerDto.Response(answer));
+            dtoList.add(new AnswerDto.Response(answer.getSeq(), answer.getQuestion().getSeq(), answer.getContent(), answer.getCreatedTime()));
         }
         return new PageImpl<AnswerDto.Response>(dtoList, pageable, answerList.getTotalElements());
     }
 
-    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
-        Optional<User> user = userRepository.findById(userPrincipal.getId());
-        DefaultAssert.isOptionalPresent(user);
-        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
-        return ResponseEntity.ok(apiResponse);
-    }
+//    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
+//        Optional<User> user = userRepository.findById(userPrincipal.getId());
+//        DefaultAssert.isOptionalPresent(user);
+//        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
+//        return ResponseEntity.ok(apiResponse);
+//    }
 }

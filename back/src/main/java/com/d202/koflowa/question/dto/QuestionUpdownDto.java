@@ -15,7 +15,6 @@ public class QuestionUpdownDto {
     @AllArgsConstructor
     @Builder
     public static class Request{
-        private Long userSeq;
         private Long questionSeq;
         private UDType questionUpdownType;
 

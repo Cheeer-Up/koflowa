@@ -1,4 +1,4 @@
-import api, { auth_api } from "./api"
+import api from "./api"
 import {
   allProfile,
   userProfile,
@@ -11,37 +11,38 @@ import {
 } from "../api/urls"
 
 export const getAuthUserProfile = (seq, accessToken) => {
-  return auth_api(accessToken).get(userProfile(seq))
+  return api(accessToken).get(userProfile(seq))
 }
 
-export const getAllProfile = (page, size, sort) => {
-  return api.get(allProfile(page, size, sort))
+export const getAllProfile = (accessToken, page, size, sort) => {
+  return api(accessToken).get(allProfile(page, size, sort))
 }
 
-export const getUserProfile = (userSeq) => {
-  return api.get(userProfile(userSeq))
+export const getUserProfile = (accessToken, userSeq) => {
+  // console.log("getUserProfile")
+  return api(accessToken).get(userProfile(userSeq))
 }
 
-export const putMyProfile = () => {
-  return api.get(myProfile)
+export const putMyProfile = (accessToken) => {
+  return api(accessToken).get(myProfile)
 }
 
-export const putMyImage = (data) => {
-  return api.get(myImage, data)
+export const putMyImage = (accessToken, data) => {
+  return api(accessToken).get(myImage, data)
 }
 
-export const getUserTags = (userSeq) => {
-  return api.get(userTags(userSeq))
+export const getUserTags = (accessToken, userSeq) => {
+  return api(accessToken).get(userTags(userSeq))
 }
 
-export const getUserReputation = (page, size, sort, userSeq) => {
-  return api.get(userReputation(page, size, sort, userSeq))
+export const getUserReputation = (accessToken, page, size, sort, userSeq) => {
+  return api(accessToken).get(userReputation(page, size, sort, userSeq))
 }
 
-export const getUserquestion = (page, size, sort, userSeq) => {
-  return api.get(userQuestion(page, size, sort, userSeq))
+export const getUserquestion = (accessToken, page, size, sort, userSeq) => {
+  return api(accessToken).get(userQuestion(page, size, sort, userSeq))
 }
 
-export const getUserAnswer = (page, size, sort, userSeq) => {
-  return api.get(userAnswer(page, size, sort, userSeq))
+export const getUserAnswer = (accessToken, page, size, sort, userSeq) => {
+  return api(accessToken).get(userAnswer(page, size, sort, userSeq))
 }

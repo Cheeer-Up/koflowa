@@ -6,6 +6,7 @@ import com.d202.koflowa.user.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class UserDto {
@@ -38,7 +39,7 @@ public class UserDto {
         private AuthProvider authProvider;
         private String refreshToken;
         private int reputationScore;
-        private LocalDateTime createdTime, modifiedTime;
+        private String createdTime, modifiedTime;
 
         public Response(User user){
             this.seq = user.getSeq();
@@ -50,8 +51,21 @@ public class UserDto {
             this.authProvider = user.getAuthProvider();
             this.refreshToken = user.getRefreshToken();
             this.reputationScore = user.getReputationScore();
-            this.createdTime = user.getCreatedTime();
-            this.modifiedTime = user.getModifiedTime();
+            this.createdTime = user.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.modifiedTime = user.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+        }
+    }
+
+    @Getter
+    public static class ResponseForQuestion{
+        private Long seq;
+        private String nickname;
+        private String profile;
+
+        public ResponseForQuestion(User user){
+            this.seq = user.getSeq();
+            this.nickname = user.getNickname();
+            this.profile = user.getProfile();
         }
     }
 }

@@ -18,25 +18,30 @@ const headers = {
   credentials: "include",
   withCredentials: true,
 }
-
+console.log("headers: ", headers)
 /**
  * axios instance 생성
  *
  * oauth 시에는 axios import 해서 바로 사용하기
  * koflowa 백엔드 요청시에만 아래 정의한 api 사용
  */
-const api = axios.create({
-  baseURL: config.BASE_URL,
-  headers,
-})
 
-export const auth_api = (accessToken) => {
-  return axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    headers: {
-      ...headers,
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+export const api = (accessToken) => {
+  if (accessToken) {
+    return axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        ...headers,
+        Authorization: "Bearer " + accessToken,
+      },
+    })
+  } else {
+    return axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        ...headers,
+      },
+    })
+  }
 }
 export default api

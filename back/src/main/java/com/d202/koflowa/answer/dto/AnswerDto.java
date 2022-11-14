@@ -6,6 +6,7 @@ import com.d202.koflowa.question.domain.Question;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AnswerDto {
 
@@ -33,19 +34,30 @@ public class AnswerDto {
         private Long questionSeq;
         private String content;
         private Long userSeq;
+        private String userNickname;
         private Boolean accept;
-        private LocalDateTime createdTime;
-        private LocalDateTime modifiedTime;
+        private String createdTime;
+        private String modifiedTime;
 
         /* Entity -> Dto*/
         public Response(Answer answer){
             this.seq = answer.getSeq();
             this.questionSeq = answer.getQuestion().getSeq();
             this.content = answer.getContent();
-            this.userSeq = answer.getUserSeq();
+            this.userSeq = answer.getUser().getSeq();
+            this.userNickname = answer.getUser().getNickname();
             this.accept = answer.getAccept();
-            this.createdTime = answer.getCreatedTime();
-            this.modifiedTime = answer.getModifiedTime();
+            this.createdTime = answer.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.modifiedTime = answer.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.createdTime = answer.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+            this.modifiedTime = answer.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+        }
+
+        public Response(Long seq, Long questionSeq, String content, LocalDateTime createdTime){
+            this.seq = seq;
+            this.questionSeq = questionSeq;
+            this.content = content;
+            this.createdTime = createdTime.format(DateTimeFormatter.ISO_DATE_TIME);
         }
     }
 }

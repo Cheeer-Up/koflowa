@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +56,13 @@ public class AnswerService {
 
         // TODO: 유저 정보 저장 필요
         // TODO: 유저 명성 +1, 명성 log 등록
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Answer answer = request.toEntity(question.get());
-        answer.setUserSeq( user.getSeq());
+        answer.setUser(user);
         reputationService.saveLog(user,"답변 작성", 10, questionSeq);
+
+        // question에 answerCnt +1
+        question.get().setAnswerCount(question.get().getAnswerCount()+1);
         return new AnswerDto.Response(answerRepository.save(answer));
     }
 
@@ -82,10 +85,16 @@ public class AnswerService {
             // throw new
             throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
         }
+        Optional<Question> question = questionRepository.findById(answer.get().getQuestion().getSeq());
+        if (question.isEmpty()) {
+            throw new QuestionNotFoundException("존재하지 않는 게시글입니다.");
+        }
+
         // 채택 답변일 시 질문의 채택 답변 seq를 null로 만들어줘야 하는가
         // 아니면 방치
-        answer.get().getQuestion().setAcceptAnswerSeq(null);
+        question.get().setAcceptAnswerSeq(null);
         answerRepository.delete(answer.get());
+        question.get().setAnswerCount(question.get().getAnswerCount()-1);
     }
 
     public void upDownAnswer(Long answerSeq, AnswerUpdownDto.Request request){
@@ -94,9 +103,7 @@ public class AnswerService {
             // throw new
             throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
         }
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
-        Long seq = user.getSeq();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
         if (answerUpdown.isEmpty()){
             // 비어있다면 생성
@@ -122,11 +129,7 @@ public class AnswerService {
         }
 
         // 명성 및 로그 추가
-        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
-        if (answerUserOptional.isEmpty()){
-            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
-        }
-        reputationService.saveLog(answerUserOptional.get(),"답변 추천", 3, answer.get().getQuestion().getSeq());
+        reputationService.saveLog(answer.get().getUser(),"답변 추천", 3, answer.get().getQuestion().getSeq());
 
     }
 
@@ -155,16 +158,11 @@ public class AnswerService {
         answer.get().updateAnswerAccept(true);
 
         // 명성 및 로그 추가
-        Optional<User> answerUserOptional = userRepository.findBySeq(answer.get().getUserSeq());
-        if (answerUserOptional.isEmpty()){
-            throw new UserNotFoundException("해당 유저를 찾을 수 없습니다.");
-        }
-        reputationService.saveLog(answerUserOptional.get(),"답변 채택", 20, question.get().getSeq());
+        reputationService.saveLog(answer.get().getUser(),"답변 채택", 20, question.get().getSeq());
     }
 
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Optional<Answer> answer = answerRepository.findById(commentDto.getBoardSeq());
         if (answer.isEmpty()) {
@@ -175,24 +173,26 @@ public class AnswerService {
 
 
         commentDto.setType(QAType.ANSWER);
-        return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
+        return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
-    public CommentDto.Response updateComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeq(commentDto.getCommentSeq())
+    public CommentDto.Response updateComment(CommentDto.RequestUpdate commentDto) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUser_Seq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         comment.setContent(commentDto.getContent());
-        return new CommentDto.Response(commentRepository.save(comment));
+        return new CommentDto.Response(comment);
     }
 
     public void deleteComment(CommentDto.Request commentDto) {
-        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), commentDto.getUserSeq())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
         commentRepository.delete(comment);
     }
 
     public List<CommentDto.Response> getAnswerComment(Long answerSeq) {
-        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTime(answerSeq, QAType.ANSWER)
+        List<Comment> commentList = commentRepository.findAllByBoardSeqAndTypeOrderByCreatedTimeDesc(answerSeq, QAType.ANSWER)
                 .orElseThrow(() -> new QuestionCommentNotFoundException());
         List<CommentDto.Response> commentResponseList = new ArrayList<>();
 
