@@ -2,7 +2,7 @@ package com.d202.koflowa.user.service;
 
 import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
 import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.dto.AnswerDto;
 import com.d202.koflowa.question.domain.Question;
@@ -120,10 +120,10 @@ public class MyPageService {
         return new PageImpl<AnswerDto.Response>(dtoList, pageable, answerList.getTotalElements());
     }
 
-    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
-        Optional<User> user = userRepository.findById(userPrincipal.getId());
-        DefaultAssert.isOptionalPresent(user);
-        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
-        return ResponseEntity.ok(apiResponse);
-    }
+//    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
+//        Optional<User> user = userRepository.findById(userPrincipal.getId());
+//        DefaultAssert.isOptionalPresent(user);
+//        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
+//        return ResponseEntity.ok(apiResponse);
+//    }
 }
