@@ -8,7 +8,7 @@ import handleSorting from "utils/handleSorting"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
 import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 import handleFilter from "utils/handleFilter"
-
+import { ToastContainer, toast } from "react-toastify"
 import "./HomePage.styles.scss"
 
 import { signIn_Out } from "../../api/sign"
@@ -30,12 +30,15 @@ const HomePage = () => {
   const dispatcher = useDispatch()
   const [userState, setUserState] = useState(useSelector(selectUser))
 
+  const nofity = (error) => toast(error)
+
   useEffect(() => {
     const token = getUrlParameter("token")
     const error = getUrlParameter("error")
 
     // token
     if (token) {
+      nofity(token)
       localStorage.setItem("accessToken", token)
       localStorage.setItem("refreshToken", null)
 
@@ -67,6 +70,10 @@ const HomePage = () => {
         .catch((err) => {
           console.log(err)
         })
+    }
+
+    if (error) {
+      nofity(error)
     }
   }, [])
 
@@ -123,6 +130,7 @@ const HomePage = () => {
           handlePaginationChange={handlePaginationChange}
         />
       </div>
+      <ToastContainer />
     </Fragment>
   )
 }
