@@ -41,19 +41,22 @@ const ProfilePage = () => {
       .catch((err) => {
         console.log(err)
       })
-    getUserTags(userSeq).then((data) => {
+    getUserProfile(user.seq).then((res) => {
+      console.log(res)
+    })
+    getUserTags(user.seq).then((data) => {
       console.log("getUserTags: ", data)
 
       const payload = data.data.result.data
       setTags(payload)
     })
-    getUserquestion(page, size, sort, userSeq).then((data) => {
+    getUserquestion(page, size, sort, user.seq).then((data) => {
       console.log("getUserquestion: ", data)
 
       const payload = data.data.result.data
       console.log("question", payload)
     })
-    getUserAnswer(page, size, sort, userSeq).then((data) => {
+    getUserAnswer(page, size, sort, user.seq).then((data) => {
       console.log("getUserAnswer: ", data)
 
       const payload = data.data.result.data
