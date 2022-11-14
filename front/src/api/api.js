@@ -17,7 +17,6 @@ const headers = {
   crossDomain: true,
   credentials: "include",
   withCredentials: true,
-  Authorization: "Bearer " + localStorage.getItem("accessToken"),
 }
 console.log("headers: ", headers)
 /**
@@ -28,12 +27,21 @@ console.log("headers: ", headers)
  */
 
 export const api = (accessToken) => {
-  return axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    headers: {
-      ...headers,
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+  if (accessToken) {
+    return axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        ...headers,
+        Authorization: "Bearer " + accessToken,
+      },
+    })
+  } else {
+    return axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        ...headers,
+      },
+    })
+  }
 }
 export default api
