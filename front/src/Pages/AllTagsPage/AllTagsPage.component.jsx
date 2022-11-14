@@ -3,6 +3,7 @@ import { selectTags, selectLoading, setTags } from "redux/slice/TagSlice"
 
 import TagPanel from "Pages/AllTagsPage/TagPanel/TagPanel.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
+import LinkButton from "components/Components/LinkButton/LinkButton.component"
 // import SearchBox from "components/Components/SearchBox/SearchBox.component"
 // import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 import { useSelector, useDispatch } from "react-redux"
@@ -46,7 +47,12 @@ const AllTagsPage = () => {
   ) : (
     <Fragment>
       <div id='mainbar' className='tags-page fc-black-800'>
-        <h1 className='headline'>태그</h1>
+        <div className='tags-title'>
+          <h1 className='headline'>태그</h1>
+          <div className='questions-btn'>
+            <LinkButton text={"태그 생성하기"} link={"/add/tag"} type={"s-btn__primary"} />
+          </div>
+        </div>
         <p className='fs-body'>올바른 태그를 사용하면 다른 사람들이 당신의 질문을 더 쉽게 찾고 답변할 수 있습니다.</p>
         <div className='headline-count'>
           <span>{new Intl.NumberFormat("en-IN").format(totalPages)} 개의 태그들</span>

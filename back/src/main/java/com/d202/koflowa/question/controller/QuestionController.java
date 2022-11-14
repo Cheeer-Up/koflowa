@@ -59,7 +59,7 @@ public class QuestionController {
     /* 질문 수정 */
     @Operation(summary = "질문 수정", description = "질문 수정 api 입니다.")
     @PutMapping
-    public Response updateQuestion(QuestionDto.Request questionDto) {
+    public Response updateQuestion(@RequestBody QuestionDto.Request questionDto) {
         return Response.success(questionService.updateQuestion(questionDto));
     }
 
@@ -89,15 +89,15 @@ public class QuestionController {
     /* 질문 코멘트 수정 */
     @PutMapping("/comment")
     @Operation(summary = "코멘트 수정", description = "특정 코멘트를 수정하는 api 입니다.")
-    public Response updateComment(@RequestBody CommentDto.Request commentDto) {
+    public Response updateComment(@RequestBody CommentDto.RequestUpdate commentDto) {
         return Response.success(questionService.updateComment(commentDto));
     }
 
     /* 질문 코멘트 삭제 */
     @Operation(summary = "코멘트 삭제", description = "특정 코멘트를 삭제하는 api 입니다.")
-    @DeleteMapping ("/comment")
-    public Response deleteComment(@RequestBody CommentDto.Request commentDto) {
-        questionService.deleteComment(commentDto);
+    @DeleteMapping ("/comment/{comment_seq}")
+    public Response deleteComment(@PathVariable("comment_seq") Long commentSeq) {
+        questionService.deleteComment(commentSeq);
         return Response.success();
     }
 

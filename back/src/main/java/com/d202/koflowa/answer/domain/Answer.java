@@ -3,6 +3,7 @@ package com.d202.koflowa.answer.domain;
 import com.d202.koflowa.answer.dto.AnswerDto;
 import com.d202.koflowa.common.domain.BaseTimeEntity;
 import com.d202.koflowa.question.domain.Question;
+import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -30,8 +31,10 @@ public class Answer extends BaseTimeEntity {
     @Column(name = "answer_content")
     private String content;
 
-    @Column(name = "user_seq", columnDefinition = "bigint unsigned")
-    private Long userSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
+    @JsonBackReference
+    private User user;
 
     @Column(name = "answer_accept")
     private Boolean accept;
@@ -58,7 +61,7 @@ public class Answer extends BaseTimeEntity {
         this.accept = accept;
     }
 
-    public void setUserSeq(Long userSeq){
-        this.userSeq = userSeq;
+    public void setUser(User user){
+        this.user = user;
     }
 }

@@ -30,7 +30,7 @@ public class Question extends BaseTimeEntity {
     @Column(name = "question_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_seq")
     @JsonBackReference
     private User user;
