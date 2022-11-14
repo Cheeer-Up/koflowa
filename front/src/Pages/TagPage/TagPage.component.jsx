@@ -27,7 +27,7 @@ const TagPage = () => {
     <Fragment>
       <div id='mainbar' className='questions-page fc-black-800'>
         <div className='questions-grid'>
-          <h3 className='questions-headline'>Questions tagged [{tag.name}]</h3>
+          <h3 className='questions-headline'>{tag.name} 가 태그된 질문들</h3>
           <div className='questions-btn'>
             <LinkButton text={"Ask Question"} link={"/add/question"} type={"s-btn__primary"} />
           </div>
@@ -41,7 +41,7 @@ const TagPage = () => {
         </div>
         <div className='questions'>
           {tag.questionCount === 0 ? (
-            <h4 style={{ margin: "30px 30px" }}>There are no questions from this tag</h4>
+            <h4 style={{ margin: "30px 30px" }}>질문이 존재하지 않습니다.</h4>
           ) : (
             tag.questions?.map((question, index) => <PostItem key={index} question={question} />)
           )}

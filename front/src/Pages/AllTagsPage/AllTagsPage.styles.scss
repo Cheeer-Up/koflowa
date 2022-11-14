@@ -1,10 +1,11 @@
 #mainbar {
   height: 100%;
+  width: 100%;
 }
 
 .tags-page {
   display: inline-block;
-  width: 60%;
+  width: 100%;
   margin-left: 20%;
   padding: 24px 0;
 
@@ -15,6 +16,11 @@
     font-weight: 400;
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .tags-title {
+    display: flex;
+    justify-content: space-between;
   }
 
   .fs-body {
@@ -65,7 +71,7 @@
   background-color: #f48225 !important;
 }
 
-@media(max-width: 1100px) {
+@media (max-width: 1100px) {
   .side-bar {
     display: none;
   }
