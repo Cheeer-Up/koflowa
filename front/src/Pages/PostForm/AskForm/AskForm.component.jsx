@@ -75,16 +75,19 @@ const AskForm = ({ addPost }) => {
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   // 태그 핸들
+  // 렌더용 태그 변수
   const [tags, setTags] = React.useState([])
-
+  // 태그 삭제
   const handleDelete = (i) => {
     setTags(tags.filter((tag, index) => index !== i))
     setFormData({ ...formData, tagsData: tagsData.filter((tag, index) => index !== i) })
   }
-
+  // 태그 추가
   const handleAddition = (tag) => {
-    setTags([...tags, tag])
-    setFormData({ ...formData, tagsData: [...tagsData, tag] })
+    if (tags.length < 5) {
+      setTags([...tags, tag])
+      setFormData({ ...formData, tagsData: [...tagsData, tag] })
+    }
   }
 
   const handleDrag = (tag, currPos, newPos) => {
@@ -180,16 +183,6 @@ const AskForm = ({ addPost }) => {
                   질문의 내용을 설명하는 최대 5개의 태그를 추가하세요.
                 </p>
               </label>
-              {/* <input
-                className='tag-input s-input'
-                type='text'
-                name='name'
-                value={name}
-                onChange={(e) => onChange(e)}
-                id='name'
-                placeholder='예시) (python, spring, c)'
-                required
-              /> */}
               <ReactTags
                 tags={tags}
                 suggestions={suggestions}
