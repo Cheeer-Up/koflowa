@@ -2,7 +2,7 @@
 /.idea
 /.vscode
 /client/node_modules
-.env
+.env.*
 package-lock.json
 /client/package-lock.json
 yarn.lock
