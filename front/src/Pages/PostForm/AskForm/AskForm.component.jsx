@@ -1,11 +1,28 @@
 import React, { Fragment, useState, useEffect, useRef } from "react"
-import PropTypes from "prop-types"
 import MarkdownEditor from "components/Layouts/MarkdownEditor/MarkdownEditor.component"
 import { badWordsFilter } from "utils/censorBadWords"
 import { useNavigate } from "react-router-dom"
 import { Modal, Box } from "@mui/material"
 
+import { WithContext as ReactTags } from "react-tag-input"
+import { COUNTRIES } from "./countries"
+
 import "./AskForm.styles.scss"
+
+// 태그 핸들용
+const suggestions = COUNTRIES.map((country) => {
+  return {
+    id: country,
+    text: country,
+  }
+})
+
+const KeyCodes = {
+  comma: 188,
+  enter: 13,
+}
+const delimiters = [KeyCodes.comma, KeyCodes.enter]
+// 태그 핸들용
 
 const de = {
   position: "absolute",
@@ -25,22 +42,25 @@ const AskForm = ({ addPost }) => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    name: "",
+    tagsData: [],
   })
 
-  const [modalOpen, setmodalOpen] = useState(false)
+  // 모달 핸들러
+  const [modalOpen, setmodalOpen] = useState(false) // 모달 상태(ex 열림 닫힘 상태)
+  // 모달 여는 이벤트
   const handleOpen = () => {
     setmodalOpen(true)
   }
+  // 모달 닫는 이벤트
   const handleClose = () => {
     setmodalOpen(false)
   }
 
   const navigate = useNavigate()
-
   const goback = () => {
     navigate(-1)
   }
+  // 모달 핸들러
 
   const [formErrors, setFormErrors] = useState({})
 
@@ -50,57 +70,64 @@ const AskForm = ({ addPost }) => {
 
   const markdownEditorRef = useRef(null)
 
-  const { title, body, name } = formData
+  const { title, body, tagsData } = formData
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
+  // 태그 핸들
+  // 렌더용 태그 변수
+  const [tags, setTags] = React.useState([])
+  // 태그 삭제
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i))
+    setFormData({ ...formData, tagsData: tagsData.filter((tag, index) => index !== i) })
+  }
+  // 태그 추가
+  const handleAddition = (tag) => {
+    if (tags.length < 5) {
+      setTags([...tags, tag])
+      setFormData({ ...formData, tagsData: [...tagsData, tag] })
+    }
+  }
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const newTags = tags.slice()
+
+    newTags.splice(currPos, 1)
+    newTags.splice(newPos, 0, tag)
+
+    setTags(newTags)
+    setFormData({ ...formData, tagsData: newTags })
+  }
+
+  // 태그 핸들
+
+  // 오류 검사
   const validateFormData = () => {
     const errors = []
-
-    const tags = formData.name
-      .split(",")
-      .filter(Boolean)
-      .map((tag) => tag.trim())
-
-    tags.forEach((tag) => {
-      if (tag.length > 25) {
-        errors.push({
-          name: `태그이름은 25글자 보다 길어질수 없습니다.`,
-          // name: `A tag name can't be longer than 25 characters.`,
-        })
-      } else if (/[^a-zA-Z]/.test(tag)) {
-        errors.push({
-          // name: `${tag} tag must contain English alphabets only (no spaces).`,
-          name: `${tag} 태그는 항상 알파벳으로만 이루어져 있고 공백이 있어선 안됩니다.`,
-        })
-      }
-    })
-
-    if (badWordsFilter.isProfane(formData.name)) {
-      // errors.push({ name: "Inappropriate words are not allowed." })
-      errors.push({ name: "부적절한 단어는 허용되지 않습니다." })
-    }
 
     errors.reverse().forEach((err) => setFormErrors((prev) => ({ ...prev, ...err })))
 
     return errors
   }
+  // 오류 검사
 
   const onSubmit = async (e) => {
+    console.log(formData)
     e.preventDefault()
 
     const errors = validateFormData()
 
     // if there are errors, don't submit
     if (errors.length > 0) return
-
-    addPost({ title, body, name })
+    addPost({ title, body, tagsData })
 
     setFormData({
       title: "",
       body: "",
-      name: "",
+      tagsData: [],
     })
+
     markdownEditorRef.current.cleanEditorState()
   }
 
@@ -156,15 +183,15 @@ const AskForm = ({ addPost }) => {
                   질문의 내용을 설명하는 최대 5개의 태그를 추가하세요.
                 </p>
               </label>
-              <input
-                className='tag-input s-input'
-                type='text'
-                name='name'
-                value={name}
-                onChange={(e) => onChange(e)}
-                id='name'
-                placeholder='예시) (python, spring, c)'
-                required
+              <ReactTags
+                tags={tags}
+                suggestions={suggestions}
+                delimiters={delimiters}
+                handleDelete={handleDelete}
+                handleAddition={handleAddition}
+                handleDrag={handleDrag}
+                inputFieldPosition='bottom'
+                autocomplete
               />
               <p className='fc-error fw-bold ml8 mt4'>{formErrors.name}</p>
             </div>
@@ -201,10 +228,6 @@ const AskForm = ({ addPost }) => {
       </Modal>
     </Fragment>
   )
-}
-
-AskForm.propTypes = {
-  // addPost: PropTypes.func.isRequired,
 }
 
 export default AskForm
