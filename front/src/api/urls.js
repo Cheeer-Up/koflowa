@@ -39,6 +39,14 @@ export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해
 export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
 
 // ANSWER
+export const createAnswer = (questionSeq) => ANSWER + `/${questionSeq}`
+export const editAnswer = (answerSeq) => ANSWER + `/${answerSeq}`
+export const getAnswerDetail = (questionSeq) => ANSWER + `/detail/${questionSeq}`
+export const comment = ANSWER + `/comment`
+export const answerUpDown = (answerSeq) => ANSWER + `/updown/${answerSeq}`
+export const answerAccept = (answerSeq) => ANSWER + `/accept/${answerSeq}`
+export const getAnswerComment = (questionSeq) => ANSWER + `/comment/${questionSeq}`
+export const getAnswerList = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
 
 // TAGS
 export const allTagsData = TAGS
