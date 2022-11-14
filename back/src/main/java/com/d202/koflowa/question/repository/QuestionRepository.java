@@ -20,12 +20,12 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT question, question.user FROM Question question " +
             "WHERE (question.content LIKE %:keyword%) OR" +
             "(question.title LIKE %:keyword%)")
-    Page<Question> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageRequest);
+    Page<Question> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     @Query(value = "SELECT question, question.user FROM Question question")
-    Page<Question> findAll(PageRequest pageRequest);
+    Page<Question> findAll(Pageable pageable);
 
-    Page<Question> findAllByUserSeq(Long userSeq, PageRequest pageRequest);
+    Page<Question> findAllByUserSeq(Long userSeq, Pageable pageable);
 
     List<Question> findAllByUserSeq(Long userSeq);
 

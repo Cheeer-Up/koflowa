@@ -49,9 +49,7 @@ public class QuestionService {
     private final ReputationService reputationService;
 
     public Page<QuestionDto.Response> getAllQuestion(Pageable pageable) {
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-
-        Page<Question> questions = questionRepository.findAll(pageRequest);
+        Page<Question> questions = questionRepository.findAll(pageable);
 
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
@@ -64,8 +62,7 @@ public class QuestionService {
     }
 
     public Page<QuestionDto.Response> searchQuestionByKeyword(String keyword, Pageable pageable) {
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-        Page<Question> questions = questionRepository.findAllByKeyword(keyword, pageRequest);
+        Page<Question> questions = questionRepository.findAllByKeyword(keyword, pageable);
 
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
@@ -78,8 +75,7 @@ public class QuestionService {
     }
 
     public Page<QuestionDto.Response> searchQuestionByUserSeq(Long userSeq, Pageable pageable) {
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-        Page<Question> questions = questionRepository.findAllByUserSeq(userSeq, pageRequest);
+        Page<Question> questions = questionRepository.findAllByUserSeq(userSeq, pageable);
 
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
