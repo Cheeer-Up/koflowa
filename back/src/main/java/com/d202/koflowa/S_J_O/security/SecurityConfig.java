@@ -10,6 +10,7 @@ import com.d202.koflowa.S_J_O.service.auth.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -80,16 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/", "/error","/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js")
-                        .permitAll()
-                    .antMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
-                        .permitAll()
-                    .antMatchers("/login/**","/auth/**", "/oauth2/**")
-                        .permitAll()
-                    .antMatchers("/blog/**")
-                        .permitAll()
+                .antMatchers(HttpMethod.POST,"/question", "/tags/regist", "/answer/","/answer/accept/*,","/answer/comment").authenticated()
+                .antMatchers(HttpMethod.PUT,"/answer/*","/answer/comment").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/answer/*","/answer/comment").authenticated()
                     .anyRequest()
-                        .authenticated()
+                        .permitAll()
                     .and()
                 .oauth2Login()
                     .authorizationEndpoint()
