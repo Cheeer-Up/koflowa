@@ -8,11 +8,11 @@ import "./PostItem.styles.scss"
 
 function PostItem(question) {
   // 여기서 부터
-  const tags = ["python", "java"]
-  const comment_count = 10
+  const tags = ["python", "java"] //
+  const comment_count = 10 // 추가 예정
   const username = "test"
   const gravatar = "https://cdn-icons-png.flaticon.com/512/5435/5435719.png"
-  const answer = 3
+  const answer = 3 // 추가 예정
   // 여기까지는 테스트용 데이터 입니다
   console.log(question)
   return (
@@ -37,9 +37,7 @@ function PostItem(question) {
       </div>
       <div className='summary'>
         <h3>
-          <Link to={`/questions/${question.question.questionSeq}`}>
-            {question.question.questionTitle}
-          </Link>
+          <Link to={`/questions/${question.question.seq}`}>{question.question.title}</Link>
         </h3>
         {/* 컬럼값 추가가 되면 수정될 예정
         <div className='profile-tags'>
