@@ -19,6 +19,7 @@ export const AuthSlice = createSlice({
     },
     setIsEdit: (state, action) => {
       state.isEdit = action.payload
+    },
     setIsAuthenticated: (state) => {
       state.isAuthenticated = !state.isAuthenticated
     },
