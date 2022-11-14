@@ -104,7 +104,7 @@ const Header = () => {
         <div className='header-search-div'>
           {/* 로그인 시 AuthLinks 아닐 시 guest */}
           <IsAuth />
-          {/* <Search className='search-icon' onClick={() => setSearchState(!searchState)} /> */}
+          <Search className='search-icon' onClick={() => setSearchState(!searchState)} />
           {/* {!user && <Fragment>{isAuthenticated ? <AuthLinks /> : <GuestLinks />}</Fragment>} */}
         </div>
       </nav>

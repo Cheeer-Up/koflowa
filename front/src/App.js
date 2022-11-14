@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
-import Header from "components/Layouts/Header/Header.component"
+import Header from "./components/Layouts/Header/Header.component"
 // import Alert from "components/Alert/Alert.component"
 import HomePage from "Pages/HomePage/HomePage.component"
 import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
