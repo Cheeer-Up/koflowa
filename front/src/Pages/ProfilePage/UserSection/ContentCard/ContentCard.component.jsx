@@ -4,14 +4,7 @@ import moment from "moment"
 
 import "./ContentCard.styles.scss"
 
-const ContentCard = ({
-  username,
-  answers_count,
-  posts_count,
-  comments_count,
-  tags_count,
-  created_at,
-}) => (
+const ContentCard = ({ username, answers_count, posts_count, comments_count, tags_count, created_at, user_about }) => (
   <div className='content-card'>
     <div className='content-grid'>
       <div className='info-cell'>
@@ -24,9 +17,10 @@ const ContentCard = ({
               </div>
             </h2>
           </div>
+          <div className='about'> {user_about}</div>
         </div>
       </div>
-      <div className='stats-cell'>
+      {/* <div className='stats-cell'>
         <div className='count-sec'>
           <div className='counts'>
             <div className='cells'>
@@ -55,7 +49,7 @@ const ContentCard = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   </div>
 )
