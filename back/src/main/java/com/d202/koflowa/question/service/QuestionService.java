@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -61,8 +62,7 @@ public class QuestionService {
 
     public QuestionDto.Response createQuestion(QuestionDto.RequestCreate questionDto) {
         Question question = questionRepository.save(questionDto.toEntity());
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reputationService.saveLog(user,"질문 작성", 15, question.getSeq());
         return new QuestionDto.Response(question);
     }
@@ -160,8 +160,7 @@ public class QuestionService {
     public CommentDto.Response createComment(CommentDto.RequestCreate commentDto) {
         Question question = questionRepository.findBySeq(commentDto.getBoardSeq())
                 .orElseThrow(() -> new SpecificQuestionNotFound());
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findBySeq(1l).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
         return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
     }
