@@ -2,7 +2,14 @@
 /.idea
 /.vscode
 /client/node_modules
+.env
 .env.*
+/client/.env
+/client/.env.*
+.env.development
+.env.production
+/client/.env.development
+/client/.env.production
 package-lock.json
 /client/package-lock.json
 yarn.lock
