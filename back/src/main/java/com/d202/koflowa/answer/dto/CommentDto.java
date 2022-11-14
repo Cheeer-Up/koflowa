@@ -52,7 +52,6 @@ public class CommentDto {
                     .boardSeq(boardSeq)
                     .type(type)
                     .content(content)
-                    .userNickname(userNickname)
                     .build();
             return comment;
         }
@@ -62,8 +61,7 @@ public class CommentDto {
     @Getter
     public static class Response{
         private Long seq;
-        private Long userSeq;
-        private String userNickname;
+        private User user;
         private Long boardSeq;
         private QAType type;
         private String content;
@@ -73,8 +71,7 @@ public class CommentDto {
         /* Entity -> Dto*/
         public Response(Comment comment){
             this.seq = comment.getSeq();
-            this.userSeq = comment.getUser().getSeq();
-            this.userNickname = comment.getUser().getNickname();
+            this.user = comment.getUser();
             this.boardSeq = comment.getBoardSeq();
             this.type = comment.getType();
             this.content = comment.getContent();

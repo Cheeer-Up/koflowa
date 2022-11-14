@@ -23,12 +23,9 @@ public class Comment extends BaseTimeEntity {
     private Long seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_seq")
     @JsonBackReference
     private User user;
-
-    @Column(name = "user_nickname", columnDefinition = "varchar(100)", nullable = false)
-    private String userNickname;
 
     @Column(name = "board_seq", columnDefinition = "bigint unsigned")
     private Long boardSeq;
