@@ -10,6 +10,7 @@ import com.d202.koflowa.question.service.QuestionService;
 import com.d202.koflowa.talk.dto.MessageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.SpringServletContainerInitializer;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +24,23 @@ public class QuestionController {
 
     /* 질문 전체 조회 */
     @Operation(summary = "전체 질문 조회", description = "전체 질문 조회 api 입니다.")
-    @GetMapping("/{page}/{size}")
-    public Response getAllQuestion(@PathVariable int page, @PathVariable int size) {
-        return Response.success(questionService.getAllQuestion(page, size));
+    @PostMapping("/all")
+    public Response getAllQuestion(Pageable pageable) {
+        return Response.success(questionService.getAllQuestion(pageable));
     }
 
     /* keyword가 포함된 질문 조회 */
     @Operation(summary = "keyword 포함 질문 조회", description = "keyword로 제목과 내용을 검색하여 질문들을 조회하는 api 입니다.")
-    @GetMapping("/keyword/{keyword}/{page}/{size}")
-    public Response searchQuestionByKeyword(@PathVariable String keyword, @PathVariable int page, @PathVariable int size) {
-        return Response.success(questionService.searchQuestionByKeyword(keyword, page, size));
+    @PostMapping("/keyword/{keyword}")
+    public Response searchQuestionByKeyword(@PathVariable String keyword, Pageable pageable) {
+        return Response.success(questionService.searchQuestionByKeyword(keyword, pageable));
     }
 
     /* 특정 유저가 작성한 질문 조회 */
     @Operation(summary = "유저 질문 조회", description = "특정 유저 ID값으로 질문을 검색하는 api 입니다.")
-    @GetMapping("/user/{user_seq}/{page}/{size}")
-    public Response searchQuestionByUser(@PathVariable Long user_seq, @PathVariable int page, @PathVariable int size) {
-        return Response.success(questionService.searchQuestionByUserSeq(user_seq, page, size));
+    @PostMapping("/user/{user_seq}")
+    public Response searchQuestionByUser(@PathVariable Long user_seq, Pageable pageable) {
+        return Response.success(questionService.searchQuestionByUserSeq(user_seq, pageable));
     }
 
     /* 질문 작성 */
