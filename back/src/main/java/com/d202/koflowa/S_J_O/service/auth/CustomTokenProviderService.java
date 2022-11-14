@@ -2,7 +2,8 @@ package com.d202.koflowa.S_J_O.service.auth;
 
 import com.d202.koflowa.S_J_O.TokenMapping;
 import com.d202.koflowa.S_J_O.security.OAuth2Config;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+import com.d202.koflowa.user.domain.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -27,7 +28,7 @@ public class CustomTokenProviderService {
     private CustomUserDetailsService customUserDetailsService;
 
     public TokenMapping refreshToken(Authentication authentication, String refreshToken) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
         Date now = new Date();
 
         Date accessTokenExpiresIn = new Date(now.getTime() + oAuth2Config.getAuth().getAccessTokenExpirationMsec());
@@ -37,7 +38,7 @@ public class CustomTokenProviderService {
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         String accessToken = Jwts.builder()
-                                .setSubject(Long.toString(userPrincipal.getId()))
+                                .setSubject(Long.toString(userPrincipal.getSeq()))
                                 .setIssuedAt(new Date())
                                 .setExpiration(accessTokenExpiresIn)
                                 .signWith(key, SignatureAlgorithm.HS512)
@@ -51,7 +52,7 @@ public class CustomTokenProviderService {
     }
 
     public TokenMapping createToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
 
         Date now = new Date();
 
@@ -64,7 +65,7 @@ public class CustomTokenProviderService {
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         String accessToken = Jwts.builder()
-                                .setSubject(Long.toString(userPrincipal.getId()))
+                                .setSubject(Long.toString(userPrincipal.getSeq()))
                                 .setIssuedAt(new Date())
                                 .setExpiration(accessTokenExpiresIn)
                                 .signWith(key, SignatureAlgorithm.HS512)

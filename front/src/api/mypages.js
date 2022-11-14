@@ -1,4 +1,4 @@
-import api, { auth_api } from "./api"
+import api from "./api"
 import {
   allProfile,
   userProfile,
@@ -11,7 +11,7 @@ import {
 } from "../api/urls"
 
 export const getAuthUserProfile = (seq, accessToken) => {
-  return auth_api(accessToken).get(userProfile(seq))
+  return api(accessToken).get(userProfile(seq))
 }
 
 export const getAllProfile = (page, size, sort) => {
@@ -19,6 +19,7 @@ export const getAllProfile = (page, size, sort) => {
 }
 
 export const getUserProfile = (userSeq) => {
+  console.log("getUserProfile")
   return api.get(userProfile(userSeq))
 }
 

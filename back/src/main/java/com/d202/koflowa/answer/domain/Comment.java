@@ -2,6 +2,8 @@ package com.d202.koflowa.answer.domain;
 
 import com.d202.koflowa.common.domain.BaseTimeEntity;
 import com.d202.koflowa.common.domain.QAType;
+import com.d202.koflowa.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,8 +22,10 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "comment_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @Column(name = "user_seq", columnDefinition = "bigint unsigned")
-    private Long userSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
+    @JsonBackReference
+    private User user;
 
     @Column(name = "board_seq", columnDefinition = "bigint unsigned")
     private Long boardSeq;
