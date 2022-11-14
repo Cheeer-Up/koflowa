@@ -27,7 +27,8 @@ public class ReputationService {
         if(reputationScore < THRESHOLD && reputationScore + score >= THRESHOLD){
             // 채팅 로그
         }
-        user.putReputationScore(reputationScore + score);
+        User repositoryUser = userRepository.findBySeq(user.getSeq()).get();
+        repositoryUser.putReputationScore(reputationScore + score);
         return new ReputationLogDto.Response(save);
     }
 }
