@@ -15,6 +15,7 @@ public class AnswerDto {
     @NoArgsConstructor
     @Builder
     public static class Request{
+        private Long answerSeq;
         private String content;
 
         /* Dto -> Entity */
@@ -48,6 +49,15 @@ public class AnswerDto {
             this.accept = answer.getAccept();
             this.createdTime = answer.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.modifiedTime = answer.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.createdTime = answer.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+            this.modifiedTime = answer.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+        }
+
+        public Response(Long seq, Long questionSeq, String content, LocalDateTime createdTime){
+            this.seq = seq;
+            this.questionSeq = questionSeq;
+            this.content = content;
+            this.createdTime = createdTime.format(DateTimeFormatter.ISO_DATE_TIME);
         }
     }
 }
