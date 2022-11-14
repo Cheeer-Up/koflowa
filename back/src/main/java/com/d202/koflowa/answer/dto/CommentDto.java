@@ -37,17 +37,20 @@ public class CommentDto {
     @NoArgsConstructor
     @Builder
     public static class RequestCreate{
-        private Long userSeq;
+
         private Long boardSeq;
         private QAType type;
         private String content;
+        private Long userSeq;
+        private String userNickname;
 
         public Comment toEntity(){
             Comment comment = Comment.builder()
-                    .userSeq(userSeq)
                     .boardSeq(boardSeq)
                     .type(type)
                     .content(content)
+                    .userSeq(userSeq)
+                    .userNickname(userNickname)
                     .build();
             return comment;
         }
@@ -58,6 +61,7 @@ public class CommentDto {
     public static class Response{
         private Long seq;
         private Long userSeq;
+        private String userNickname;
         private Long boardSeq;
         private QAType type;
         private String content;
@@ -68,6 +72,7 @@ public class CommentDto {
         public Response(Comment comment){
             this.seq = comment.getSeq();
             this.userSeq = comment.getUserSeq();
+            this.userNickname = comment.getUserNickname();
             this.boardSeq = comment.getBoardSeq();
             this.type = comment.getType();
             this.content = comment.getContent();

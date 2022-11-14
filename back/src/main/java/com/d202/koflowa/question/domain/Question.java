@@ -30,8 +30,10 @@ public class Question extends BaseTimeEntity {
     @Column(name = "question_seq", columnDefinition = "bigint unsigned")
     private Long seq;
 
-    @Column(name = "user_seq", columnDefinition = "bigint unsigned")
-    private Long userSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
+    @JsonBackReference
+    private User user;
 
     @Column(name = "question_title", columnDefinition = "varchar(100)", nullable = false)
     private String title;
