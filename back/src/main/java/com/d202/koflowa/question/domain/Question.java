@@ -50,4 +50,8 @@ public class Question extends BaseTimeEntity {
 
     @Column(name = "answer_count", columnDefinition = "bigint unsigned")
     private Long answerCount;
+
+    public void setAnswerCount(Long answerCount){
+        this.answerCount = answerCount;
+    }
 }
