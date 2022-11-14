@@ -30,4 +30,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findAllByUserSeq(Long userSeq);
 
     Optional<Question> findBySeq(Long question_seq);
+
+    Optional<Question> findBySeqAndUser_Seq(Long question_seq, Long userSeq);
 }
