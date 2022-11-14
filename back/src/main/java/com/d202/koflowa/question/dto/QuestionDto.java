@@ -54,6 +54,7 @@ public class QuestionDto {
     public static class Response{
         private Long questionSeq;
         private User user;
+
         private String questionTitle;
         private String questionContent;
 
@@ -77,6 +78,12 @@ public class QuestionDto {
             this.acceptAnswerSeq = question.getAcceptAnswerSeq();
             this.createdTime = question.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.updatedTime = question.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+        }
+
+        public Response(String questionTitle, Long questionSeq, LocalDateTime createdTime){
+            this.questionSeq = questionSeq;
+            this.questionTitle = questionTitle;
+            this.createdTime = createdTime.format(DateTimeFormatter.ISO_DATE_TIME);;
         }
     }
 }

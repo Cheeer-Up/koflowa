@@ -47,9 +47,7 @@ const AllTagsPage = () => {
     <Fragment>
       <div id='mainbar' className='tags-page fc-black-800'>
         <h1 className='headline'>태그</h1>
-        <p className='fs-body'>
-          올바른 태그를 사용하면 다른 사람들이 당신의 질문을 더 쉽게 찾고 답변할 수 있습니다.
-        </p>
+        <p className='fs-body'>올바른 태그를 사용하면 다른 사람들이 당신의 질문을 더 쉽게 찾고 답변할 수 있습니다.</p>
         <div className='headline-count'>
           <span>{new Intl.NumberFormat("en-IN").format(totalPages)} 개의 태그들</span>
         </div>
@@ -63,11 +61,7 @@ const AllTagsPage = () => {
             ))}
           </div>
         </div>
-        <Pagination
-          page={page}
-          count={totalPages}
-          handlePaginationChange={handlePaginationChange}
-        />
+        <Pagination page={page} count={totalPages} handlePaginationChange={handlePaginationChange} />
       </div>
     </Fragment>
   )

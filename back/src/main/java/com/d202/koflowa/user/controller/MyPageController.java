@@ -69,13 +69,13 @@ public class MyPageController {
         return Response.success(myPageService.getReputation(seq, pageable));
     }
 
-    @GetMapping("/question")
+    @GetMapping("/question/{seq}")
     @Operation(summary = "사용자 작성 질문 조회", description = "")
     public Response getQuestion(@PathVariable long seq, Pageable pageable){
         return Response.success(myPageService.getQuestion(seq, pageable));
     }
 
-    @GetMapping("/answer")
+    @GetMapping("/answer/{seq}")
     @Operation(summary = "사용자 작성 답변 조회", description = "")
     public Response getAnswer(@PathVariable long seq, Pageable pageable){
         return Response.success(myPageService.getAnswer(seq, pageable));

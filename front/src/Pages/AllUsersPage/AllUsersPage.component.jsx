@@ -12,19 +12,21 @@ import "./AllUsersPage.styles.scss"
 const AllUsersPage = () => {
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([])
+  const [token, setToken] = useState(localStorage.getItem("accessToken"))
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
   const size = 10
   const sort = "reputationScore,desc"
 
   useEffect(() => {
-    getAllProfile(page - 1, size, sort).then((data) => {
+    getAllProfile(token, page - 1, size, sort).then((data) => {
       const payload = data.data.result.data
       setUsers(payload.content)
       setTotalPage(payload.totalPages)
       setLoading(false)
     })
-  }, [page])
+  }, [page, token])
+
   const handlePaginationChange = (e, value) => {
     setPage(value)
   }
