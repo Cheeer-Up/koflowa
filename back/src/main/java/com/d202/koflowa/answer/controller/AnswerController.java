@@ -41,12 +41,12 @@ public class AnswerController {
         return Response.success();
     }
 
-//    @Operation(summary = "답글 추천,비추천", description = "")
-//    @PostMapping("/updown/{answer-seq}")
-//    public Response postAnswerUp(@PathVariable("answer-seq") Long answerSeq, @RequestBody AnswerUpdownDto.Request request) {
-//        answerService.upDownAnswer(answerSeq, request);
-//        return Response.success();
-//    }
+    @Operation(summary = "답글 추천,비추천", description = "")
+    @PostMapping("/updown/{answer-seq}")
+    public Response postAnswerUp(@PathVariable("answer-seq") Long answerSeq, @RequestBody AnswerUpdownDto.Request request) {
+        answerService.upDownAnswer(answerSeq, request);
+        return Response.success();
+    }
 
     @Operation(summary = "답글 채택", description = "")
     @PostMapping("/accept/{answer-seq}")
