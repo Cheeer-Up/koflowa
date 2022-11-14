@@ -165,7 +165,7 @@ public class QuestionService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         reputationService.saveLog(user,"댓글 작성", 5, question.getSeq());
-        return new CommentDto.Response(commentRepository.save(commentDto.toEntity()));
+        return new CommentDto.Response(commentRepository.save(commentDto.toEntity(user)));
     }
 
     public CommentDto.Response updateComment(CommentDto.Request commentDto) {
