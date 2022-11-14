@@ -3,7 +3,7 @@ package com.d202.koflowa.S_J_O.service.auth;
 import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
 import com.d202.koflowa.S_J_O.security.auth.OAuth2UserInfo;
 import com.d202.koflowa.S_J_O.security.auth.OAuth2UserInfoFactory;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.common.domain.AuthProvider;
 import com.d202.koflowa.common.domain.Role;
 import com.d202.koflowa.user.domain.User;
@@ -53,7 +53,7 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService{
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
-        return UserPrincipal.create(user, oAuth2User.getAttributes());
+        return user;
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {

@@ -54,4 +54,17 @@ public class UserDto {
             this.modifiedTime = user.getModifiedTime();
         }
     }
+
+    @Getter
+    public static class ResponseForQuestion{
+        private Long seq;
+        private String nickname;
+        private String profile;
+
+        public ResponseForQuestion(User user){
+            this.seq = user.getSeq();
+            this.nickname = user.getNickname();
+            this.profile = user.getProfile();
+        }
+    }
 }

@@ -9,7 +9,7 @@ import com.d202.koflowa.S_J_O.payload.request.auth.SignUpRequest;
 import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
 import com.d202.koflowa.S_J_O.payload.response.AuthResponse;
 import com.d202.koflowa.S_J_O.payload.response.Message;
-import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
+//import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,16 +37,16 @@ public class AuthService {
 //    private final TokenRepository tokenRepository;
     
 
-    public ResponseEntity<?> whoAmI(UserPrincipal userPrincipal){
-        Optional<User> user = userRepository.findById(userPrincipal.getId());
+    public ResponseEntity<?> whoAmI(User userPrincipal){
+        Optional<User> user = userRepository.findById(userPrincipal.getSeq());
         DefaultAssert.isOptionalPresent(user);
         ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
 
         return ResponseEntity.ok(apiResponse);
     }
 
-    public ResponseEntity<?> delete(UserPrincipal userPrincipal){
-        Optional<User> user = userRepository.findById(userPrincipal.getId());
+    public ResponseEntity<?> delete(User userPrincipal){
+        Optional<User> user = userRepository.findById(userPrincipal.getSeq());
         DefaultAssert.isTrue(user.isPresent(), "유저가 올바르지 않습니다.");
 
 //        Optional<Token> token = tokenRepository.findByUserEmail(user.get().getEmail());

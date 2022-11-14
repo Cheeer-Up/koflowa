@@ -14,7 +14,6 @@ public class AnswerDto {
     @NoArgsConstructor
     @Builder
     public static class Request{
-        private Long answerSeq;
         private String content;
 
         /* Dto -> Entity */
@@ -33,6 +32,7 @@ public class AnswerDto {
         private Long questionSeq;
         private String content;
         private Long userSeq;
+        private String userNickname;
         private Boolean accept;
         private LocalDateTime createdTime;
         private LocalDateTime modifiedTime;
@@ -42,7 +42,8 @@ public class AnswerDto {
             this.seq = answer.getSeq();
             this.questionSeq = answer.getQuestion().getSeq();
             this.content = answer.getContent();
-            this.userSeq = answer.getUserSeq();
+            this.userSeq = answer.getUser().getSeq();
+            this.userNickname = answer.getUser().getNickname();
             this.accept = answer.getAccept();
             this.createdTime = answer.getCreatedTime();
             this.modifiedTime = answer.getModifiedTime();
