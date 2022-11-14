@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -110,9 +110,9 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <LayoutRoute>
+            <BaseRoute>
               <Login />
-            </LayoutRoute>
+            </BaseRoute>
           }
         />
 
@@ -167,7 +167,7 @@ const App = () => {
         />
 
         {/* 못찾는 경로 404로 리다이렉트 */}
-        {/* <Route path='*' element={<Navigate to='/404' />} /> */}
+        <Route path='*' element={<Navigate to='/404' />} />
 
         {/* 추가가 되어야할 페이지들 */}
       </Routes>
