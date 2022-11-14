@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react"
 
-import { redirect } from "react-router-dom"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import PostItem from "components/Components/PostItem/PostItem.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
@@ -8,12 +7,11 @@ import handleSorting from "utils/handleSorting"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
 import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
 import handleFilter from "utils/handleFilter"
-import { ToastContainer, toast } from "react-toastify"
 import "./HomePage.styles.scss"
 
 import { signIn_Out } from "../../api/sign"
 import { useDispatch, useSelector } from "react-redux"
-import { setUser, selectUser } from "../../redux/slice/AuthSlice"
+import { setUser, selectUser, setToken, setIsAuthenticated } from "../../redux/slice/AuthSlice"
 import axios from "axios"
 
 //redux 사용하기 위한 함수
@@ -57,8 +55,12 @@ const HomePage = () => {
             role: information.role,
             seq: information.seq,
           }
+          // token, user 입력 및 authenticated 수정
+          dispatcher(setToken(token))
           dispatcher(setUser(user))
+          dispatcher(setIsAuthenticated(true))
           setUserState(user)
+
           // 로그인 데이터만 받아온 상황.
           // 헤더에 적용시켜주기 위해 리로드
           // window.location.href 같은 즉시 이동은 redux 저장이나 state 저장 전에 실행
@@ -71,9 +73,8 @@ const HomePage = () => {
           console.log(err)
         })
     }
-
+    // 에러시 경고 생성 (외부 alert 라이브러리 사용 예정)
     if (error) {
-      nofity(error)
     }
   }, [])
 
@@ -81,10 +82,8 @@ const HomePage = () => {
   const getUrlParameter = (name) => {
     name = name.replace(/[\\[]/, "\\[").replace(/[\]]/, "\\]")
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
-    console.log("regex: ", regex)
-    var results = regex.exec(window.location.search)
-    console.log("results : ", results)
 
+    var results = regex.exec(window.location.search)
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
   }
 
