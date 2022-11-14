@@ -60,6 +60,9 @@ public class AnswerService {
         Answer answer = request.toEntity(question.get());
         answer.setUserSeq( user.getSeq());
         reputationService.saveLog(user,"답변 작성", 10, questionSeq);
+
+        // question에 answerCnt +1
+        question.get().setAnswerCount(question.get().getAnswerCount()+1);
         return new AnswerDto.Response(answerRepository.save(answer));
     }
 
@@ -82,10 +85,16 @@ public class AnswerService {
             // throw new
             throw new AnswerNotFoundException("존재하지 않는 답변입니다.");
         }
+        Optional<Question> question = questionRepository.findById(answer.get().getQuestion().getSeq());
+        if (question.isEmpty()) {
+            throw new QuestionNotFoundException("존재하지 않는 게시글입니다.");
+        }
+
         // 채택 답변일 시 질문의 채택 답변 seq를 null로 만들어줘야 하는가
         // 아니면 방치
-        answer.get().getQuestion().setAcceptAnswerSeq(null);
+        question.get().setAcceptAnswerSeq(null);
         answerRepository.delete(answer.get());
+        question.get().setAnswerCount(question.get().getAnswerCount()-1);
     }
 
     public void upDownAnswer(Long answerSeq, AnswerUpdownDto.Request request){
