@@ -74,6 +74,7 @@ const ProfilePage = () => {
         const payload = data.data.result.data
         dispatch(setChangeInfo(payload))
         dispatch(setNewInfo(null))
+        window.location.reload()
       })
     }
   }
