@@ -50,6 +50,14 @@ public class TagController {
         return Response.success(tagService.putTag(tagName, request));
     }
 
+
+    @Operation(summary = "주시 태그 목록 가져오기", description = "사용자가 저장한 주시태그 목록을 가져옵니다.")
+    @GetMapping("/watch")
+    public Response getWatchedTag() {
+        return Response.success(tagService.getWatchedTag());
+    }
+
+
     @Operation(summary = "주시 태그 추가", description = "주시 태그 추가 api 입니다.")
     @PostMapping("/watch/{tagSeq}")
     public Response postWatchedTag(@PathVariable Long tagSeq,
@@ -64,6 +72,12 @@ public class TagController {
         return Response.success(tagService.deleteUserTag(tagSeq, userSeq, TagStatus.WATCHED));
     }
 
+    @Operation(summary = "숨김 태그 목록 가져오기", description = "사용자가 저장한 숨김 태그 목록을 가져옵니다.")
+    @GetMapping("/ignore")
+    public Response getIgnoreTag() {
+        return Response.success(tagService.getIgnoreTag());
+    }
+
     @Operation(summary = "숨김 태그 추가", description = "숨김 태그 추가 api 입니다.")
     @PostMapping("/ignore/{tagSeq}")
     public Response postIgnoredTag(@PathVariable Long tagSeq,
@@ -76,5 +90,11 @@ public class TagController {
     public Response deleteIgnoredTag(@PathVariable Long tagSeq,
                                               @RequestParam Long userSeq) {
         return Response.success(tagService.deleteUserTag(tagSeq, userSeq, TagStatus.IGNORED));
+    }
+
+    @Operation(summary = "태그 목록 가져오기", description = "모든 태그의 이름을 리스트로 반환합니다.")
+    @GetMapping("/list")
+    public Response getTagStrList() {
+        return Response.success(tagService.getTagStrList());
     }
 }
