@@ -44,4 +44,19 @@ export const api = (accessToken) => {
     })
   }
 }
+
+export const image_api = (accessToken) =>
+  axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    headers: {
+      Accept: "*/*",
+      "Access-Control-Allow-Origin": "*",
+      crossDomain: true,
+      credentials: "include",
+      withCredentials: true,
+      Authorization: "Bearer " + accessToken,
+      // "Content-Type": "multipart/form-data",
+    },
+  })
+
 export default api

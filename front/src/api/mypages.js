@@ -1,4 +1,4 @@
-import api from "./api"
+import { api, image_api } from "./api"
 import {
   allProfile,
   userProfile,
@@ -19,16 +19,16 @@ export const getAllProfile = (accessToken, page, size, sort) => {
 }
 
 export const getUserProfile = (accessToken, userSeq) => {
-  // console.log("getUserProfile")
   return api(accessToken).get(userProfile(userSeq))
 }
 
-export const putMyProfile = (accessToken) => {
-  return api(accessToken).get(myProfile)
+export const putMyProfile = (accessToken, data) => {
+  return api(accessToken).put(myProfile, data)
 }
 
-export const putMyImage = (accessToken, data) => {
-  return api(accessToken).get(myImage, data)
+export const postMyImage = (accessToken, data) => {
+  console.log(data)
+  return image_api(accessToken).post(myImage, data)
 }
 
 export const getUserTags = (accessToken, userSeq) => {
