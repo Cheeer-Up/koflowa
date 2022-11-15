@@ -28,6 +28,12 @@ public class ExceptionAdvice {
         return Response.failure(404, "채팅방 검색에 실패했습니다.");
     }
 
+    @ExceptionHandler(RoomNotCreatedException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response RoomNotCreatedException() {
+        return Response.failure(404, "채팅방 생성에 실패했습니다.");
+    }
+
     @ExceptionHandler(Room1NoFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response Room1NoFoundException() {
@@ -62,6 +68,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response MessageNotSavedException() {
         return Response.failure(404, "메시지 저장에 실패했습니다.");
+    }
+
+    @ExceptionHandler(MessageLogNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response MessageLogNotFoundException() {
+        return Response.failure(404, "메시지 로그 불러오기에 실패했습니다.");
     }
 
     /* Question 기능 Exception */
