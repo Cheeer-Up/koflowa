@@ -2,14 +2,14 @@ package com.d202.koflowa.question.domain;
 
 import com.d202.koflowa.tag.domain.Tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "question_tag")
 public class QuestionTag {

@@ -24,17 +24,32 @@ public class MessageController {
         return Response.success(messageService.createMessage(messageDto));
     }
 
-    /* 채팅방의 메시지들을 조회 : 나중에 최적화 필요 DTO를 다시 만들던가 하기 : Spring Security로 ID값 받고 요청 SEQ값 조회 */
-    @Operation(summary = "메시지 조회", description = "상대방과의 채팅방의 메시지들을 조회하는 api 입니다.")
-    @PostMapping("/log")
-    public Response getChatMessageList(@RequestBody RoomDto.Request roomDto) {
-        return Response.success(messageService.getMessageList(roomDto));
+    @Operation(summary = "채팅방 메시지들을 조회", description = "상대방과의 채팅방의 메시지들을 조회하는 api 입니다.")
+    @GetMapping("/{roomSeq}")
+    public Response getChatMessageList(@PathVariable("roomSeq") Long roomSeq) {
+        return Response.success(messageService.getMessageList(roomSeq));
     }
 
     /* 메시지 삭제 */
     @Operation(summary = "메시지 삭제", description = "메시지를 삭제하는 api 입니다.")
     @DeleteMapping
-    public Response deleteMessage(@RequestBody MessageDto.Request messageDto) {
+    public Response deleteMessage(Long messageSeq) {
+        messageService.deleteMessage(messageSeq);
         return Response.success();
+    }
+
+    /* 메시지 로깅 : 읽음 표시 */
+    @Operation(summary = "채팅방 메시지 전체 읽음 표시", description = "메시지를 전체 읽음 표시하는 api 입니다.")
+    @GetMapping("/read")
+    public Response checkMessageRead(Long roomSeq) {
+        messageService.checkMessageRead(roomSeq);
+        return Response.success();
+    }
+
+    /* 현재 유저의 미확인 메시지 개수 조회 */
+    @Operation(summary = "유저의 미확인 메시지 전체 개수 표시", description = "현재 접속한 유저의 메시지 개수를 반환하는 api 입니다.")
+    @GetMapping("/check")
+    public Response countWaitingMessage() {
+        return Response.success(messageService.countWaitingMessage());
     }
 }

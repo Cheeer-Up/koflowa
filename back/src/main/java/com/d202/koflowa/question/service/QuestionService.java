@@ -11,6 +11,7 @@ import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.exception.QuestionNotFoundException;
 import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.question.domain.Question;
+import com.d202.koflowa.question.domain.QuestionTag;
 import com.d202.koflowa.question.domain.QuestionUpdown;
 import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.dto.QuestionUpdownDto;
@@ -19,9 +20,11 @@ import com.d202.koflowa.question.exception.QuestionUpException;
 import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
+import com.d202.koflowa.question.repository.QuestionTagRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
 import com.d202.koflowa.tag.domain.Tag;
 import com.d202.koflowa.tag.dto.TagDto;
+import com.d202.koflowa.tag.repository.TagRepository;
 import com.d202.koflowa.talk.exception.RoomNotFoundException;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
@@ -44,6 +47,8 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionUpDownRepository questionUpDownRepository;
+    private final TagRepository tagRepository;
+    private final QuestionTagRepository questionTagRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ReputationService reputationService;
@@ -91,6 +96,16 @@ public class QuestionService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println("질문생성 "+user);
         Question question = questionRepository.save(questionDto.toEntity(user));
+
+        //QuestionTag 저장
+        List<String> tagList = questionDto.getTagList();
+        for (String tagName : tagList) {
+            questionTagRepository.save(QuestionTag.builder()
+                    .tag(tagRepository.findByName(tagName).get())
+                    .question(question)
+                    .build());
+        }
+
         reputationService.saveLog(user,"질문 작성", 15, question.getSeq());
         return new QuestionDto.Response(question);
     }

@@ -1,32 +1,32 @@
 package com.d202.koflowa.talk.domain;
 
+import com.d202.koflowa.common.domain.CreateTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Builder
 @Entity
-@Getter
+@Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "room")
-public class Room {
-
+public class Room extends CreateTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_seq", columnDefinition = "bigint unsigned")
     private Long roomSeq;
 
-    @Column(name = "user1")
-    private Long user1;
+    @Column(name = "user1_seq")
+    private Long user1Seq;
 
-    @Column(name = "user2")
-    private Long user2;
+    @Column(name = "user2_seq")
+    private Long user2Seq;
 
-    @Column(name = "user1_nickname")
-    private String user1Nickname;
+    @Column(name = "user1_deleted")
+    private Boolean user1Delete = Boolean.FALSE;
 
-    @Column(name = "user2_nickname")
-    private String user2Nickname;
+    @Column(name = "user2_deleted")
+    private Boolean user2Delete = Boolean.FALSE;
 }
 

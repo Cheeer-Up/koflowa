@@ -1,4 +1,4 @@
-package com.d202.koflowa.talk.controller;
+package com.d202.koflowa.talk.controller.socket;
 
 import com.d202.koflowa.talk.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
