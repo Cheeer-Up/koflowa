@@ -12,10 +12,17 @@ import java.util.Optional;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
     /* 방 id를 이용해 메시지들을 조회 */
-    Optional<List<Message>> findAllByRoomOrderByCreatedTimeDesc(Room room);
+    @Query("SELECT m FROM Message m " +
+            "LEFT OUTER JOIN MessageLog ml ON m.messageSeq = ml.message.messageSeq " +
+            "WHERE m.room = :room AND ml.userSeq = :userSeq And ml.cdType <> com.d202.koflowa.common.domain.CDType.DELETED")
+    Optional<List<Message>> findAllByRoomOrderByCreatedTimeDesc(@Param("room") Room room, @Param("userSeq") Long userSeq);
     Optional<Message> findByMessageSeqAndUser_Seq(Long messageSeq, Long userSeq);
 
-    @Query("UPDATE MessageLog ml SET ml.cdType = com.d202.koflowa.common.domain.CDType.CHECKED "
-            + "WHERE ml.room.roomSeq = :roomSeq AND ml.userSeq = :userSeq")
+    @Query("SELECT ml FROM MessageLog ml " +
+            "WHERE ml.room.roomSeq = :roomSeq AND ml.userSeq = :userSeq AND ml.cdType <> com.d202.koflowa.common.domain.CDType.DELETED")
     List<MessageLog> updateAllToReadByRoomSeqAndUserSeq(@Param("roomSeq") Long roomSeq, @Param("userSeq") Long userSeq);
+
+    @Query("SELECT ml FROM MessageLog ml " +
+            "WHERE ml.room.roomSeq = :roomSeq AND ml.userSeq = :userSeq AND ml.cdType <> com.d202.koflowa.common.domain.CDType.DELETED")
+    List<MessageLog> updateAllToDeletedByRoomSeqAndUserSeq(@Param("roomSeq") Long roomSeq, @Param("userSeq") Long userSeq);
 }

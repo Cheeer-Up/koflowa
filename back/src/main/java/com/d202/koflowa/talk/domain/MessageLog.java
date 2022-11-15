@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Builder
 @Entity
-@Getter
+@Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "message_log")

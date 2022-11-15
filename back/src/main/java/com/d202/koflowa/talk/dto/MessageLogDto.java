@@ -5,8 +5,7 @@ import com.d202.koflowa.talk.domain.Message;
 import com.d202.koflowa.talk.domain.MessageLog;
 import com.d202.koflowa.talk.domain.Room;
 import com.d202.koflowa.user.domain.User;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.format.DateTimeFormatter;
 
@@ -28,8 +27,19 @@ public class MessageLogDto {
                     .build();
             return messageLog;
         }
+    }
 
-        public MessageLog toEntityAll(Long userSeq, Message message, Room room, CDType cdType) {
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    public static class RequestForMessageLog{
+        private Message message;
+        private Room room;
+        private Long userSeq;
+        private CDType cdType;
+
+        public MessageLog toEntity() {
             MessageLog messageLog = MessageLog.builder()
                     .userSeq(userSeq)
                     .room(room)
