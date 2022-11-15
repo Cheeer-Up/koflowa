@@ -18,4 +18,6 @@ public interface UserTagRepository extends JpaRepository<UserTag, Long> {
     public Optional<UserTag> findByUserSeqAndTagSeqAndTagStatus(Long userSeq, Long tagSeq, TagStatus tagStatus);
 
     List<UserTag> findByUser_Seq(long userSeq);
+
+    public List<UserTag> findByUserAndTagStatus(User user, TagStatus tagStatus);
 }
