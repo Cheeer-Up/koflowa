@@ -1,57 +1,77 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import "moment/locale/ko"
 import moment from "moment"
+import { useLocation } from "react-router-dom"
 
 import "./ContentCard.styles.scss"
+import { useDispatch, useSelector } from "react-redux"
+import { selectUser, selectEdit, setIsEdit, selectNewInfo, setNewInfo } from "redux/slice/AuthSlice.js"
+import { useState } from "react"
 
-const ContentCard = ({ username, answers_count, posts_count, comments_count, tags_count, created_at, user_about }) => (
-  <div className='content-card'>
-    <div className='content-grid'>
-      <div className='info-cell'>
-        <div className='info'>
-          <div className='details'>
-            <h2>
-              {username}
-              <div className='date'>
-                <p>{moment(created_at).startOf("hour").fromNow()}</p>
-              </div>
-            </h2>
+const ContentCard = ({ nickname, setNickname, about, setAbout, created_at }) => {
+  const dispatch = useDispatch()
+  let isEdit = useSelector(selectEdit) // 하위 컴포넌트 수정 사항을 위해 전체 적으로 관리
+  let newInfo = useSelector(selectNewInfo)
+  let loginUser = useSelector(selectUser)
+
+  useEffect(() => {
+    // loginUser ===
+  }, [])
+
+  const saveNickname = (e) => {
+    setNickname(e.target.value)
+    dispatch(
+      setNewInfo({
+        nickname: e.target.value,
+        about,
+      })
+    )
+  }
+
+  const saveAbout = (e) => {
+    setAbout(e.target.value)
+    dispatch(
+      setNewInfo({
+        nickname,
+        about: e.target.value,
+      })
+    )
+  }
+
+  return (
+    <div className='content-card'>
+      <div className='content-grid'>
+        <div className='info-cell'>
+          <div className='info'>
+            <div className='details'>
+              <h2>
+                {isEdit ? "" : nickname}
+                <input
+                  className={isEdit ? "" : "display"}
+                  name='nickname'
+                  placeholder={nickname}
+                  onChange={saveNickname}
+                  value={nickname}
+                />
+                <div className='date'>
+                  <p>{moment(created_at).startOf("hour").fromNow()}</p>
+                </div>
+              </h2>
+            </div>
+            <div className={isEdit ? "display" : "about"}> {isEdit ? "" : about}</div>
+            <input
+              type='text'
+              className={isEdit ? "" : "display"}
+              name='about'
+              placeholder={about}
+              onChange={saveAbout}
+              value={about}
+            />
           </div>
-          <div className='about'> {user_about}</div>
         </div>
       </div>
-      {/* <div className='stats-cell'>
-        <div className='count-sec'>
-          <div className='counts'>
-            <div className='cells'>
-              <div className='column-grid'>
-                <div className='head fc-black-700'>{answers_count}</div>
-                <div className='foot fc-black-500'>answers</div>
-              </div>
-            </div>
-            <div className='cells'>
-              <div className='column-grid'>
-                <div className='head fc-black-700'>{posts_count}</div>
-                <div className='foot fc-black-500'>questions</div>
-              </div>
-            </div>
-            <div className='cells'>
-              <div className='column-grid'>
-                <div className='head fc-black-700'>{comments_count}</div>
-                <div className='foot fc-black-500'>comments</div>
-              </div>
-            </div>
-            <div className='cells'>
-              <div className='column-grid'>
-                <div className='head fc-black-700'>{tags_count}</div>
-                <div className='foot fc-black-500'>tags</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
-  </div>
-)
+  )
+}
 
 export default ContentCard
