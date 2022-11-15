@@ -5,12 +5,15 @@ import ContentCard from "./ContentCard/ContentCard.component"
 
 import "./UserSection.styles.scss"
 
-const UserSection = ({ user }) => (
+const UserSection = ({ nickname, setNickname, about, setAbout, user }) => (
   <div className='grid'>
     <AvatarCard id={user.seq} profile={user.profile} />
     <ContentCard
+      nickname={nickname}
+      setNickname={setNickname}
+      setAbout={setAbout}
+      about={about}
       username={user.nickname}
-      user_about={user.about}
       answers_count={user.answers_count}
       posts_count={user.posts_count}
       comments_count={user.comments_count}

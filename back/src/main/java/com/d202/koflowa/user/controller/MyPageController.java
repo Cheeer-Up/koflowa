@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,14 +48,18 @@ public class MyPageController {
 
     @PutMapping("/profile")
     @Operation(summary = "사용자 프로필 수정", description = "")
-    public Response putProfile(@RequestBody UserDto.Request user){
-        return Response.success(myPageService.putProfile(1, user));
+    public Response putProfile(@RequestBody UserDto.Request userInfo){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("================" + user);
+        return Response.success(myPageService.putProfile(user.getSeq(), userInfo));
     }
 
-    @PutMapping("/profile/image")
+    @PostMapping("/profile/image")
     @Operation(summary = "사용자 프로필 이미지 수정", description = "")
     public Response putProfileImg(@RequestParam("data")MultipartFile multipartFile) throws IOException {
-       return Response.success(uploadImgService.upload(multipartFile, "static",1));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(multipartFile);
+       return Response.success(uploadImgService.upload(multipartFile, "static",user.getSeq()));
     }
 
     @GetMapping("/tags/{seq}")

@@ -23,7 +23,7 @@ export const GOOGLE_AUTH_URL =
 // MYPAGES
 export const allProfile = (page, size, sort) => MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
 export const userProfile = (userSeq) => MYPAGES + `/profile/${userSeq}`
-export const myProfile = `MYPAGES + /profile`
+export const myProfile = MYPAGES + "/profile"
 export const myImage = MYPAGES + "/profile/image"
 export const userTags = (userSeq) => MYPAGES + `/tags/${userSeq}`
 export const userReputation = (page, size, sort, userSeq) =>
