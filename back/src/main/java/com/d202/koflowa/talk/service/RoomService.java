@@ -2,10 +2,7 @@ package com.d202.koflowa.talk.service;
 
 import com.d202.koflowa.talk.domain.Room;
 import com.d202.koflowa.talk.dto.RoomDto;
-import com.d202.koflowa.talk.exception.Room1NoFoundException;
-import com.d202.koflowa.talk.exception.Room2NoFoundException;
-import com.d202.koflowa.talk.exception.RoomDeleteFailureException;
-import com.d202.koflowa.talk.exception.User1NotFoundException;
+import com.d202.koflowa.talk.exception.*;
 import com.d202.koflowa.talk.repository.RoomRepository;
 import com.d202.koflowa.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +18,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
+    private final MessageService messageService;
 
     /* 기존에 있는 방을 검색 후 없으면 생성해서 반환 */
     public RoomDto.Response createRoom(RoomDto.RequestCreate roomDto){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        /* 자기 자신과는 채팅방 생성 불가 */
+        if(user.getSeq() == roomDto.getReceiver_seq()){
+            throw new RoomNotCreatedException();
+        }
+
         /* 송신자 수신자 양방향 저장 */
         Room room = roomRepository.findSpecificChatRoom(user.getSeq(), roomDto.getReceiver_seq());
-
+        System.out.println("room 중간값 : " + room);
         if(room == null){
             room = roomRepository.save(roomDto.toEntity(user.getSeq()));
 
@@ -37,9 +40,9 @@ public class RoomService {
             }
 
         /* 논리 삭제 되었다면 복구 해주기 */
-        }else if(room.getUser1Seq() == user.getSeq() && room.isUser1Delete()){
+        }else if(room.getUser1Seq() == user.getSeq() && room.getUser1Delete()){
             room.setUser1Delete(false);
-        }else if(room.getUser2Seq() == user.getSeq() && room.isUser2Delete()){
+        }else if(room.getUser2Seq() == user.getSeq() && room.getUser2Delete()){
             room.setUser2Delete(false);
         }
 
@@ -59,6 +62,7 @@ public class RoomService {
 
         for(int i = 0; i < roomList.size(); i++){
             RoomDto.Response talkTalkDto = new RoomDto.Response(roomList.get(i));
+            talkTalkDto.setWaitingMessageNumber(messageService.countWaitingMessageByRoom(talkTalkDto.getRoomSeq(), user.getSeq()));
             roomDtoList.add(talkTalkDto);
         }
 
@@ -73,9 +77,9 @@ public class RoomService {
                 .orElseThrow(() -> new RoomDeleteFailureException());
 
         if(room.getUser1Seq() == user.getSeq()){
-            room.setUser1Delete(true);
+            room.setUser1Delete(Boolean.TRUE);
         }else if(room.getUser2Seq() == user.getSeq()){
-            room.setUser2Delete(true);
+            room.setUser2Delete(Boolean.TRUE);
         }
     }
 }

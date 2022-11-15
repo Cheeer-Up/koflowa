@@ -9,6 +9,8 @@ public class RoomDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Request{
         private Long roomSeq;
 
@@ -22,6 +24,8 @@ public class RoomDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class RequestCreate{
         private Long receiver_seq;
 
@@ -40,10 +44,15 @@ public class RoomDto {
     public static class Response{
         private Long roomSeq;
         private String createdTime;
+        private Long waitingMessageNumber;
 
         public Response(Room room) {
             this.roomSeq = room.getRoomSeq();
             this.createdTime = room.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+        }
+
+        public void setWaitingMessageNumber(Long waitingMessageNumber) {
+            this.waitingMessageNumber = waitingMessageNumber;
         }
     }
 }

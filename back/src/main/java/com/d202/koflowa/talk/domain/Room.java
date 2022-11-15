@@ -24,9 +24,9 @@ public class Room extends CreateTimeEntity {
     private Long user2Seq;
 
     @Column(name = "user1_deleted")
-    private boolean user1Delete = false;
+    private Boolean user1Delete = Boolean.FALSE;
 
     @Column(name = "user2_deleted")
-    private boolean user2Delete = false;
+    private Boolean user2Delete = Boolean.FALSE;
 }
 

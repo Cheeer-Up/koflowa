@@ -13,14 +13,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByRoomSeq(Long roomSeq);
 
     @Query("SELECT room FROM Room room " +
-            "WHERE (room.roomSeq = :roomSeq AND room.user1Seq = :userSeq) " +
-            "OR (room.roomSeq = :roomSeq AND room.user2Seq = :userSeq)")
+            "WHERE (room.roomSeq = :roomSeq AND room.user1Seq = :userSeq AND room.user1Delete = false) " +
+            "OR (room.roomSeq = :roomSeq AND room.user2Seq = :userSeq AND room.user2Delete = false)")
     Optional<Room> findByRoomSeqAuthWithUserSeq(@Param("roomSeq") Long roomSeq, @Param("userSeq") Long userSeq);
 
     /* 나의 채팅방 목록 전체 조회*/
     @Query(value = "SELECT room FROM Room room " +
-            "WHERE (room.user1Seq = :userSeq AND room.user1Delete = false" +
-            "OR room.user2Seq = :userSeq) AND AND room.user1Delete = false")
+            "WHERE (room.user1Seq = :userSeq AND room.user1Delete = false) " +
+            "OR (room.user2Seq = :userSeq AND room.user2Delete = false)")
     List<Room> findMyChatRoomNotDeleted(@Param("userSeq") Long userSeq);
 
     /* 나와 특정 상대의 채팅방 목록 조회 */
@@ -30,7 +30,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Room findSpecificChatRoom(@Param("user1") Long user1, @Param("user2") Long user2);
 
     @Query(value = "SELECT room FROM Room room " +
-            "WHERE (room.user1Seq = :userSeq AND room.roomSeq = :roomSeq) " +
-            "OR (room.user2Seq = :userSeq AND room.roomSeq = :roomSeq)")
+            "WHERE (room.user1Seq = :userSeq AND room.roomSeq = :roomSeq AND room.user1Delete = false) " +
+            "OR (room.user2Seq = :userSeq AND room.roomSeq = :roomSeq AND room.user2Delete = false)")
     Optional<Room> findRoomForDelete(@Param("roomSeq") Long roomSeq, @Param("userSeq") Long userSeq);
 }
