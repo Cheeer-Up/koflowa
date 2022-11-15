@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -129,5 +130,34 @@ public class TagService {
         }
         userTagRepository.delete(userTag.get());
         return new ResponseDto("태그가 삭제되었습니다.");
+    }
+
+    public List<String> getTagStrList() {
+        List<Tag> tags = tagRepository.findAll();
+        List<String> stringList = new ArrayList<>();
+        for (Tag tag: tags) {
+            stringList.add(tag.getName());
+        }
+        return stringList;
+    }
+
+    public List<String> getWatchedTag() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserTag> userTagList = userTagRepository.findByUserAndTagStatus(user, TagStatus.WATCHED);
+        List<String> watchedList = new ArrayList<>();
+        for(UserTag userTag: userTagList) {
+            watchedList.add(userTag.getTag().getName());
+        }
+        return watchedList;
+    }
+
+    public Object getIgnoreTag() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserTag> userTagList = userTagRepository.findByUserAndTagStatus(user, TagStatus.IGNORED);
+        List<String> IgnoreList = new ArrayList<>();
+        for(UserTag userTag: userTagList) {
+            IgnoreList.add(userTag.getTag().getName());
+        }
+        return IgnoreList;
     }
 }
