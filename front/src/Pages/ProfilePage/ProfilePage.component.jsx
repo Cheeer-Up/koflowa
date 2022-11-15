@@ -24,9 +24,15 @@ import {
 } from "redux/slice/AuthSlice.js"
 
 const ProfilePage = () => {
-  const [curUser, setCurUser] = useState({})
+  // redux로부터 바로 현재 user의 데이터를 호출
+  const [curUser, setCurUser] = useState(useSelector(selectUser))
   const [edit, setEdit] = useState(false) // 변경시 css 관리를 위한 변수
   const [loading, setLoading] = useState(true)
+
+  //정보수정 시 nickname과 about의 상태 관리
+  const [nickname, setNickname] = useState(curUser.nickname)
+  const [about, setAbout] = useState(curUser.about)
+
   const userSeq = useLocation().pathname.split("/")[2]
   const accessToken = localStorage.getItem("accessToken")
 
@@ -56,11 +62,12 @@ const ProfilePage = () => {
     // 정보 수정 완료 상태
     // display 숨긴거 다시 원상 복구 해주고
     // 지금까지 수정한 값 서버로 보내주기
-    setEdit(false)
+
     dispatch(setIsEdit())
     const formData = new FormData()
     formData.append("data", file)
     if (file != null) {
+      //내 이미지를 서버에 전송
       postMyImage(accessToken, formData).then((data) => {
         const payload = data.data.result.data
         console.log(payload)
@@ -70,12 +77,14 @@ const ProfilePage = () => {
       })
     }
     if (newInfo != null) {
+      //내 프로필을 서버에 전송
       putMyProfile(accessToken, newInfo).then((data) => {
         const payload = data.data.result.data
         dispatch(setChangeInfo(payload))
         dispatch(setNewInfo(null))
       })
     }
+    setEdit(false)
   }
 
   return loading || curUser === null ? (
@@ -110,7 +119,14 @@ const ProfilePage = () => {
               <div></div>
             )}
           </div>
-          <UserSection user={curUser} />
+          <UserSection
+            nickname={nickname}
+            setNickname={setNickname}
+            setAbout={setAbout}
+            about={about}
+            user={curUser}
+            setCurUser={setCurUser}
+          />
         </div>
         <div className='row-grid'>
           <UserQuestionActivity userSeq={userSeq} />

@@ -8,10 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectUser, selectEdit, setIsEdit, selectNewInfo, setNewInfo } from "redux/slice/AuthSlice.js"
 import { useState } from "react"
 
-const ContentCard = ({ username, created_at, user_about }) => {
-  const [nickname, setNickname] = useState(username === null ? "" : username)
-  const [about, setAbout] = useState(user_about === null ? "" : user_about)
-
+const ContentCard = ({ nickname, setNickname, about, setAbout, created_at }) => {
   const dispatch = useDispatch()
   let isEdit = useSelector(selectEdit) // 하위 컴포넌트 수정 사항을 위해 전체 적으로 관리
   let newInfo = useSelector(selectNewInfo)
@@ -48,7 +45,7 @@ const ContentCard = ({ username, created_at, user_about }) => {
           <div className='info'>
             <div className='details'>
               <h2>
-                {isEdit ? "" : username}
+                {isEdit ? "" : nickname}
                 <input
                   className={isEdit ? "" : "display"}
                   name='nickname'
@@ -61,7 +58,7 @@ const ContentCard = ({ username, created_at, user_about }) => {
                 </div>
               </h2>
             </div>
-            <div className={isEdit ? "display" : "about"}> {isEdit ? "" : user_about}</div>
+            <div className={isEdit ? "display" : "about"}> {isEdit ? "" : about}</div>
             <input
               type='text'
               className={isEdit ? "" : "display"}
