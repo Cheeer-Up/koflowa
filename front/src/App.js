@@ -18,7 +18,7 @@ import TagForm from "Pages/TagForm/TagForm.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
-import { BaseRoute, LayoutRoute } from "./Router"
+import { BaseRoute, LayoutRoute, LayoutAllRoute } from "./Router"
 
 // css 추가
 
@@ -63,9 +63,9 @@ const App = () => {
         <Route
           path='/questions'
           element={
-            <LayoutRoute>
+            <LayoutAllRoute>
               <QuestionsPage />
-            </LayoutRoute>
+            </LayoutAllRoute>
           }
         />
 
