@@ -52,28 +52,18 @@ const MobileSideBar = (props) => {
             <NavLink exact='true' activeclassname='active' className='home-link' to='/'>
               <p>홈</p>
             </NavLink>
-
-            <div className='public-tabs'>
-              <p className='title fc-light'>PUBLIC</p>
-              <NavLink activeclassname='active' className='icon-link' to='/questions'>
-                <p>
-                  <GlobalIcon className='icon' />
-                  질문
-                </p>
-              </NavLink>
-              <NavLink activeclassname='active' className='link' to='/tags'>
-                <p>태그</p>
-              </NavLink>
-              <NavLink activeclassname='active' className='link' to='/users'>
-                <p>사용자</p>
-              </NavLink>
-              <NavLink activeclassname='active' className='link' to='/jobs'>
-                <p>코톡</p>
-              </NavLink>
-            </div>
-            <div className='teams-tabs'>
-              <p className='title fc-light'>TEAMS</p>
-            </div>
+            <NavLink activeclassname='active' className='home-link' to='/questions'>
+              <p>질문</p>
+            </NavLink>
+            <NavLink activeclassname='active' className='home-link' to='/tags'>
+              <p>태그</p>
+            </NavLink>
+            <NavLink activeclassname='active' className='home-link' to='/users'>
+              <p>사용자</p>
+            </NavLink>
+            <NavLink activeclassname='active' className='home-link' to='/jobs'>
+              <p>코톡</p>
+            </NavLink>
           </div>
         </div>
       </SidebarUI.Content>
