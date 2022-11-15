@@ -7,7 +7,7 @@ import TagsWidgetItem from "./TagsWidgetItem.component"
 import "./TagsWidget.styles.scss"
 
 const TagsWidget = () => {
-  const tags = [] // test
+  const tags = ["java"] // test
   const loading = false // test
   // useEffect(() => {
   //   getTags()
@@ -30,11 +30,6 @@ const TagsWidget = () => {
       </div>
     </Fragment>
   )
-}
-
-TagsWidget.propTypes = {
-  // getTags: PropTypes.func.isRequired,
-  // tag: PropTypes.object.isRequired,
 }
 
 export default TagsWidget
