@@ -6,6 +6,7 @@ import com.d202.koflowa.user.domain.User;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 public class QuestionDto {
@@ -36,6 +37,7 @@ public class QuestionDto {
     public static class RequestCreate{
         private String questionTitle;
         private String questionContent;
+        private List<String> tagList;
 
         public Question toEntity(User user){
             return Question.builder()
