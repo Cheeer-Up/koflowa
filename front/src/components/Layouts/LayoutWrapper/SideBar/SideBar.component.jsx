@@ -11,10 +11,11 @@ const SideBar = () => (
       <SideBarItem isHome={true} link='/tags' text='태그' />
       <SideBarItem isHome={true} link='/users' text='사용자' />
       <SideBarItem isHome={true} link='/jobs' text='코톡' />
-      <SideBarItem isHome={true} link='/meeting' text='화상회의' />
-      <a href='http://localhost:3000/meeting' className='title fc-light' target='_blank' rel='noreferrer'>
-        화상 회의
-      </a>
+      <div className='teams-tabs'>
+        <a href='http://localhost:3000/meeting' className='title fc-light' target='_blank' rel='noreferrer'>
+          화상 회의
+        </a>
+      </div>
     </div>
   </div>
 )
