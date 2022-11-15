@@ -16,20 +16,21 @@ public class RoomController {
 
     @Operation(summary = "방 생성하기", description = "상대방과의 채팅방을 생성하는 api 입니다.")
     @PostMapping
-    public Response createRoom(@RequestBody RoomDto.Request roomDto) {
+    public Response createRoom(@RequestBody RoomDto.RequestCreate roomDto) {
         return Response.success(roomService.createRoom(roomDto));
     }
 
     //token 도입시 파라미터를 삭제하고 토큰 값에서 조회할 것
     @Operation(summary = "채팅방 조회", description = "나의 현재 채팅방을 조회하는 api 입니다.")
-    @GetMapping("/{user_id}")
-    public Response getMyRoomList(@PathVariable Long user_id) {
-        return Response.success(roomService.getMyRoomList(user_id));
+    @GetMapping
+    public Response getMyRoomList() {
+        return Response.success(roomService.getMyRoomList());
     }
 
     @Operation(summary = "채팅방 삭제", description = "해당 채팅방의 삭제하는 api 입니다.")
     @DeleteMapping
     public Response deleteRoom(@RequestBody RoomDto.Request roomDto) {
+        roomService.deleteRoom(roomDto);
         return Response.success();
     }
 }

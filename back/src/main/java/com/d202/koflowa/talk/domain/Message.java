@@ -1,6 +1,8 @@
 package com.d202.koflowa.talk.domain;
 
 import com.d202.koflowa.common.domain.BaseTimeEntity;
+import com.d202.koflowa.common.domain.CreateTimeEntity;
+import com.d202.koflowa.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
@@ -19,20 +21,19 @@ public class Message extends BaseTimeEntity {
     @Column(name = "message_seq", columnDefinition = "bigint unsigned")
     private Long messageSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "room_seq")
     @JsonBackReference
     private Room room;
 
-    @Column(name = "checked")
-    private Boolean checked;
+    @ManyToOne
+    @JoinColumn(name = "user_seq")
+    @JsonBackReference
+    private User user;
 
     @Column(name = "content")
     private String content;
 
-    @Column(name = "type")
-    private int type;
-
     @Column(name = "session_code")
-    private int sessionCode;
+    private int sessionCode = -1;
 }
