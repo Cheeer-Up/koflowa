@@ -17,15 +17,15 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findByUserSeq(Long userSeq, @PageableDefault(size = 15) Pageable pageable);
 
-    @Query(value = "SELECT question, question.user FROM Question question " +
-            "WHERE (question.content LIKE %:keyword%) OR" +
-            "(question.title LIKE %:keyword%)")
-    Page<Question> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageRequest);
+    @Query(value = "SELECT question FROM Question question " +
+            "WHERE (question.content LIKE %:keyword%) OR " +
+            "(question.title LIKE %:keyword%) " +"ORDER BY question.createdTime DESC")
+    Page<Question> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query(value = "SELECT question, question.user FROM Question question")
-    Page<Question> findAll(PageRequest pageRequest);
+    @Query(value = "SELECT question FROM Question question " + "ORDER BY question.createdTime DESC")
+    Page<Question> findAll(Pageable pageable);
 
-    Page<Question> findAllByUserSeq(Long userSeq, PageRequest pageRequest);
+    Page<Question> findAllByUserSeqOrderByCreatedTimeDesc(Long userSeq, Pageable pageable);
 
     List<Question> findAllByUserSeq(Long userSeq);
 

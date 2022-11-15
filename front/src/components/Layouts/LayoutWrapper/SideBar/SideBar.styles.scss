@@ -11,7 +11,8 @@
 
   .side-bar-tabs {
     float: right;
-    margin-top: 25px;
+    margin-top: 40px;
+    // width: 100%;
 
     .public-tabs {
       margin-bottom: 12px;
@@ -30,7 +31,10 @@
         }
 
         .menu-list-text {
-          margin: 0 !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+          margin-right: 30%;
+          margin-left: 5%;
           &:hover {
             // color: #0c0d0e;
             color: #ffffff;
@@ -42,7 +46,8 @@
     .home-link {
       li {
         border-right: 3px;
-        margin-bottom: 12px;
+        height: 40px;
+        // margin-bottom: 12px;
       }
     }
 
@@ -53,13 +58,14 @@
 
         .menu-list-btn {
           padding-left: 8px;
+          // padding-left: 50px;
         }
       }
     }
 
     .title {
       font-size: 12px;
-      padding-left: 8px;
+      padding-left: 58px;
       margin-bottom: 5px;
     }
 
