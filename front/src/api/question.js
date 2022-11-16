@@ -10,5 +10,5 @@ export const getQuestionsData = (accessToken, page, size) => {
 }
 
 export const getQuestionData = (questionSeq) => {
-  return api.get(getQuestion(questionSeq))
+  return api().get(getQuestion(questionSeq))
 }

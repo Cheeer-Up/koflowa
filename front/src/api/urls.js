@@ -36,17 +36,18 @@ export const userAnswer = (page, size, sort, userSeq) =>
 // QUESTION
 export const createQuestion = QUESTION // 질문 생성 POST 요청
 export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회 GET 요청
+// export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
 export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
 
 // ANSWER
-export const createAnswer = (questionSeq) => ANSWER + `/${questionSeq}`
-export const editAnswer = (answerSeq) => ANSWER + `/${answerSeq}`
-export const getAnswerDetail = (answerSeq) => ANSWER + `/detail/${answerSeq}`
-export const comment = ANSWER + `/comment`
-export const answerUpDown = (answerSeq) => ANSWER + `/updown/${answerSeq}`
-export const answerAccept = (answerSeq) => ANSWER + `/accept/${answerSeq}`
-export const getAnswerComment = (answerSeq) => ANSWER + `/comment/${answerSeq}`
-export const getAnswerList = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
+export const createAnswerUrl = (questionSeq) => ANSWER + `/${questionSeq}`
+export const editAnswerUrl = (answerSeq) => ANSWER + `/${answerSeq}`
+export const getAnswerDetailUrl = (answerSeq) => ANSWER + `/detail/${answerSeq}`
+export const commentUrl = ANSWER + `/comment`
+export const answerUpDownUrl = (answerSeq) => ANSWER + `/updown/${answerSeq}`
+export const answerAcceptUrl = (answerSeq) => ANSWER + `/accept/${answerSeq}`
+export const getAnswerCommentUrl = (answerSeq) => ANSWER + `/comment/${answerSeq}`
+export const getAnswerListUrl = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
 
 // TAGS
 export const allTagsData = TAGS
