@@ -57,15 +57,18 @@
     padding: 2rem 0;
     filter: contrast(1.4);
     .side-bar-tabs {
-      float: right;
+      float: left;
       margin-top: 25px;
+      margin-left: 50%;
+
+      width: 50%;
 
       .home-link {
         text-decoration: none;
         color: #c2c3c5;
 
         p {
-          padding: 5px 5px 5px 5px;
+          padding: 5px 5px 5px 20%;
           border-right: 3px;
           font-size: 13px;
         }
