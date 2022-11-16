@@ -10,6 +10,7 @@ import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
 import Register from "./Pages/Register/Register.component"
+import Nickname from "Pages/Register/Nickname.component"
 import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
@@ -123,6 +124,16 @@ const App = () => {
           element={
             <BaseRoute>
               <Register />
+            </BaseRoute>
+          }
+        />
+
+        {/* 회원가입 페이지 */}
+        <Route
+          path='/nickname'
+          element={
+            <BaseRoute>
+              <Nickname />
             </BaseRoute>
           }
         />
