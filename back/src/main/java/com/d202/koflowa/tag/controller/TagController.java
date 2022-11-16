@@ -1,11 +1,11 @@
 package com.d202.koflowa.tag.controller;
 
 import com.d202.koflowa.common.response.Response;
-import com.d202.koflowa.tag.domain.Tag;
 import com.d202.koflowa.common.domain.TagStatus;
 import com.d202.koflowa.tag.dto.TagDto;
 import com.d202.koflowa.tag.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/tags")
+@Tag(name = "Tag", description = "Tag API")
 @RequiredArgsConstructor // 초기화 되지않은 final 필드나, @NonNull 이 붙은 필드에 대해 생성자를 생성해준다.
 public class TagController {
 
