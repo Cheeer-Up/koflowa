@@ -24,7 +24,7 @@ const de = {
 }
 
 const AskForm = () => {
-  const token = useSelector(selectToken)
+  const [token] = useState(useSelector(selectToken))
   const [formData, setFormData] = useState({
     title: "",
     body: "",

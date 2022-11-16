@@ -14,5 +14,5 @@ export const getQuestionDatabyTagName = (data) => {
 }
 
 export const getQuestionData = (questionSeq) => {
-  return api.get(singleQuestionData(questionSeq))
+  return api().get(singleQuestionData(questionSeq))
 }
