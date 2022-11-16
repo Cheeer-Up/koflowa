@@ -1,28 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from "react"
 
-import TagBadge from "../../../../Components/TagBadge/TagBadge.component";
+import TagBadge from "../../../../Components/TagBadge/TagBadge.component"
 
-import "./TagsWidgetItem.styles.scss";
+import "./TagsWidgetItem.styles.scss"
 
-const TagsWidgetItem = ({ tagname, posts_count }) => {
+const TagsWidgetItem = ({ tag_name, posts_count }) => {
   return (
     <Fragment>
-      <div className="tag-content">
-        <TagBadge
-          tag_name={tagname}
-          size={"s-tag s-tag__md"}
-          display={"inline"}
-          href={true}
-        />
+      <div className='tag-content'>
+        <TagBadge tag_name={tag_name} size={"s-tag s-tag__md"} display={"inline"} href={true} />
         &nbsp;
-        <span className="tag-mult">
+        <span className='tag-mult'>
           <span>&times;</span>
           &nbsp;
           <span>{posts_count}</span>
         </span>
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
-export default TagsWidgetItem;
+export default TagsWidgetItem

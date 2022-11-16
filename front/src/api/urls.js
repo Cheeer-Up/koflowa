@@ -7,6 +7,7 @@ const MEETING = "/meeting"
 const TALK = "/talk"
 const AUTH = "/auth"
 const GOOGLE = "google"
+
 // USERS
 export const usersData = "/users"
 export const profileData = "/users/{id}"
