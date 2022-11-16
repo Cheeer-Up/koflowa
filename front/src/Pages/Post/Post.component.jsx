@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom"
 
 import LinkButton from "../../components/Components/LinkButton/LinkButton.component"
 import Spinner from "../../components/Components/Spinner/Spinner.component"
-// import AnswerSection from "./AnswerSection/AnswerSection.component"
-// import QuestionSection from "./QuestionSection/QuestionSection.component"
+import AnswerSection from "./AnswerSection/AnswerSection.component"
+import QuestionSection from "./QuestionSection/QuestionSection.component"
 import { getQuestionData } from "api/question"
 
 import "./Post.styles.scss"
@@ -59,7 +59,6 @@ const Post = () => {
   //   }, [])
   useEffect(() => {
     getQuestionData(questionSeq.postSeq).then((res) => {
-      // console.log(res.data.result.data)
       setQuestion(res.data.result.data)
       setLoading(false)
     })
@@ -87,8 +86,9 @@ const Post = () => {
           </div>
         </div>
         <div className='question-main pl24 pt16'>
-          {/* <QuestionSection /> */}
-          {/* <AnswerSection /> */}
+          <p>{question.questionContent}</p>
+          <QuestionSection />
+          <AnswerSection questionSeq={questionSeq.postSeq} page="0" size="10"/>
         </div>
       </div>
     </Fragment>
