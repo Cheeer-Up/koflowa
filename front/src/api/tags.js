@@ -5,8 +5,8 @@ export const getAllTagsData = (params) => {
   return api().get(allTagsData, params)
 }
 
-export const postRegistTag = (data) => {
-  return api().post(registTag, data)
+export const postRegistTag = (accessToken, data) => {
+  return api(accessToken).post(registTag, data)
 }
 
 export const getSingleTagData = (tagName) => {
