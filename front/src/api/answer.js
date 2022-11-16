@@ -1,55 +1,55 @@
 import api from "api/api"
 import {
-  createAnswer,
-  editAnswer,
-  getAnswerDetail,
-  comment,
-  answerUpDown,
-  answerAccept,
-  getAnswerComment,
-  getAnswerList,
+  createAnswerUrl,
+  editAnswerUrl,
+  getAnswerDetailUrl,
+  commentUrl,
+  answerUpDownUrl,
+  answerAcceptUrl,
+  getAnswerCommentUrl,
+  getAnswerListUrl,
 } from "api/urls"
 
-export const putAnwer = (answerSeq, data) => {
-  return api.put(editAnswer(answerSeq), data)
+export const putAnswer = (answerSeq, data) => {
+  return api().put(editAnswerUrl(answerSeq), data)
 }
 
-export const deleteAnwer = (answerSeq) => {
-  return api.delete(editAnswer(answerSeq))
+export const deleteAnswer = (answerSeq) => {
+  return api().delete(editAnswerUrl(answerSeq))
 }
 
-export const postAnwer = (data) => {
-  return api.post(createAnswer, data)
+export const postAnswer = (data) => {
+  return api().post(createAnswerUrl, data)
 }
 
-export const answerUpDown = (answerSeq, data) => {
-  return api.post(answerUpDown(answerSeq), data)
+export const answerUpdown = (answerSeq, data) => {
+  return api().post(answerUpDownUrl(answerSeq), data)
 }
 
 export const answerAccept = (answerSeq) => {
-  return api.post(answerAccept(answerSeq))
+  return api().post(answerAcceptUrl(answerSeq))
 }
 
 export const getAnswerDetail = (answerSeq) => {
-  return api.get(getAnswerDetail(answerSeq))
+  return api().get(getAnswerDetailUrl(answerSeq))
 }
 
 export const getAnswerList = (questionSeq, page, size) => {
-  return api.get(getAnswerList(questionSeq, page, size))
+  return api().get(getAnswerListUrl(questionSeq, page, size))
 }
 
 export const getAnswerComment = (answerSeq) => {
-  return api.get(getAnswerComment(answerSeq))
+  return api().get(getAnswerCommentUrl(answerSeq))
 }
 
 export const postAnswerComment = (data) => {
-  return api.post(comment, data)
+  return api().post(commentUrl, data)
 }
 
 export const putAnswerComment = (data) => {
-  return api.put(comment, data)
+  return api().put(commentUrl, data)
 }
 
 export const deleteAnswerComment = () => {
-  return api.delete(comment)
+  return api().delete(commentUrl)
 }
