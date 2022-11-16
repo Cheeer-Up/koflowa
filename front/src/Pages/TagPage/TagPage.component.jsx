@@ -6,17 +6,21 @@ import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import "./TagPage.styles.scss"
 import { getSingleTagData } from "api/tags"
+import { getQuestionDatabyTagName } from "api/question"
 
 const TagPage = () => {
   const [tag, setTag] = useState({})
   const { tagName } = useParams()
+  const [questionList, setQuestionList] = useState([])
 
   useEffect(() => {
     getSingleTagData(tagName).then((result) => {
-      console.log(result)
       setTag(result.data.result.data)
     })
-  }, [])
+    getQuestionDatabyTagName(tagName).then((result) => {
+      setQuestionList(result.data.result.data.content)
+    })
+  }, [tagName])
 
   return tag === null ? (
     <Spinner type='page' width='75px' height='200px' />
@@ -40,7 +44,7 @@ const TagPage = () => {
           {tag.questionCount === 0 ? (
             <h4 style={{ margin: "30px 30px" }}>질문이 존재하지 않습니다.</h4>
           ) : (
-            tag.questions?.map((question, index) => <PostItem key={index} question={question} />)
+            questionList?.map((question, index) => <PostItem key={index} question={question} />)
           )}
         </div>
       </div>

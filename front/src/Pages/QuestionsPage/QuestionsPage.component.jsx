@@ -13,7 +13,6 @@ import "./QuestionsPage.styles.scss"
 const itemsPerPage = 10
 
 const QuestionsPage = () => {
-  const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
   const [questions, setQuestions] = useState(null)
@@ -22,23 +21,25 @@ const QuestionsPage = () => {
 
   useEffect(() => {
     console.log("searchQuery: ", searchQuery)
-    getQuestionsData(localStorage.getItem("accessToken"), page - 1, itemsPerPage).then((res) => {
+    getQuestionsData(localStorage.getItem("accessToken"), {
+      page: page - 1,
+      size: itemsPerPage,
+      sort: ["createdTime.desc"],
+    }).then((res) => {
       console.log("getQuestionsData: ", res)
       setTotalPage(res.data.result.data.totalPages)
       // setQuestions(res.data.result.data.content)
       setQuestions(res.data.result.data)
-      setLoading(false)
     })
   }, [page])
 
   const handlePaginationChange = (e, value) => {
     if (value !== page) {
       setPage(value)
-      setLoading(true)
     }
   }
 
-  return loading === true || questions === null ? (
+  return questions === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
