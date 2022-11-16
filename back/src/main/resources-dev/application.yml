@@ -4,7 +4,7 @@ spring:
     include: oauth,secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3307/koflowa?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
 
   redis:
     host: localhost
