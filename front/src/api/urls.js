@@ -34,16 +34,9 @@ export const userAnswer = (page, size, sort, userSeq) =>
   MYPAGES + `/answer/${userSeq}?page=${page}&size=${size}&sort=${sort}`
 
 // QUESTION
-<<<<<<< HEAD
 export const question = QUESTION
 export const questionTag = (tagName) => QUESTION + `/tag/${tagName}`
 export const singleQuestionData = (questionSeq) => QUESTION + `/${questionSeq}`
-=======
-export const createQuestion = QUESTION // 질문 생성 POST 요청
-export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회 GET 요청
-// export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
-export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
->>>>>>> 6963acd26315a0652bfd184ea03a9170f5e28da5
 
 // ANSWER
 export const createAnswerUrl = (questionSeq) => ANSWER + `/${questionSeq}`
