@@ -1,23 +1,21 @@
 import React, { Fragment } from "react"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
+import { selectIsAuthenticated } from "redux/slice/AuthSlice"
 import { Navigate } from "react-router-dom"
-import PropTypes from "prop-types"
 
-import Spinner from "../../components/Components/Spinner/Spinner.component"
 import AskWidget from "./AskWidget/AskWidget.component"
 import AskForm from "./AskForm/AskForm.component"
 import Footer from "../../components/Layouts/Footer/Footer.component"
 
 import "./TagForm.styles.scss"
 
-const TagForm = ({ auth: { isAuthenticated, loading } }) => {
-  // if (!isAuthenticated) {
-  //   return <Navigate to='/login' />
-  // }
+const TagForm = () => {
+  const isAuthenticated = useSelector(selectIsAuthenticated)
+  if (!isAuthenticated) {
+    return <Navigate to='/login' />
+  }
 
-  return loading === null ? (
-    <Spinner type='page' width='75px' height='200px' />
-  ) : (
+  return (
     <Fragment>
       <div className='post-form-container'>
         <div className='post-form-content'>
@@ -39,10 +37,6 @@ const TagForm = ({ auth: { isAuthenticated, loading } }) => {
       <Footer />
     </Fragment>
   )
-}
-
-TagForm.propTypes = {
-  // auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
