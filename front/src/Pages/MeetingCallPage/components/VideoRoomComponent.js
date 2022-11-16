@@ -19,15 +19,11 @@ class VideoRoomComponent extends Component {
     this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
       ? this.props.openviduServerUrl
       : "https://k7d202.p.ssafy.io:8443"
-    this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret
-      ? this.props.openviduSecret
-      : "koflowa202"
+    this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : "koflowa202"
     this.hasBeenUpdated = false
     this.layout = new OpenViduLayout()
     let sessionName = this.props.sessionName ? this.props.sessionName : "SessionA"
-    let userName = this.props.user
-      ? this.props.user
-      : "OpenVidu_User" + Math.floor(Math.random() * 100)
+    let userName = this.props.user ? this.props.user : "OpenVidu_User" + Math.floor(Math.random() * 100)
     this.remotes = []
     this.localUserAccessAllowed = false
     this.state = {
@@ -381,9 +377,7 @@ class VideoRoomComponent extends Component {
       var videoDevices = devices.filter((device) => device.kind === "videoinput")
 
       if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
-        )
+        var newVideoDevice = videoDevices.filter((device) => device.deviceId !== this.state.currentVideoDevice.deviceId)
 
         if (newVideoDevice.length > 0) {
           // Creating a new publisher with specific videoSource
@@ -465,8 +459,7 @@ class VideoRoomComponent extends Component {
     let isScreenShared
     // return true if at least one passes the test
     isScreenShared =
-      this.state.subscribers.some((user) => user.isScreenShareActive()) ||
-      localUser.isScreenShareActive()
+      this.state.subscribers.some((user) => user.isScreenShareActive()) || localUser.isScreenShareActive()
     const openviduLayoutOptions = {
       maxRatio: 3 / 2,
       minRatio: 9 / 16,
@@ -578,9 +571,7 @@ class VideoRoomComponent extends Component {
    */
 
   getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
-    )
+    return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId))
   }
 
   createSession(sessionId) {
@@ -604,8 +595,7 @@ class VideoRoomComponent extends Component {
           } else {
             console.log(error)
             console.warn(
-              "No connection to OpenVidu Server. This may be a certificate error at " +
-                this.OPENVIDU_SERVER_URL
+              "No connection to OpenVidu Server. This may be a certificate error at " + this.OPENVIDU_SERVER_URL
             )
             if (
               window.confirm(
@@ -628,16 +618,12 @@ class VideoRoomComponent extends Component {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({})
       axios
-        .post(
-          this.OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection",
-          data,
-          {
-            headers: {
-              Authorization: "Basic " + btoa("OPENVIDUAPP:" + this.OPENVIDU_SERVER_SECRET),
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        .post(this.OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+          headers: {
+            Authorization: "Basic " + btoa("OPENVIDUAPP:" + this.OPENVIDU_SERVER_SECRET),
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           console.log("TOKEN", response)
           resolve(response.data.token)
