@@ -17,6 +17,7 @@ const QuestionsPage = () => {
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
   const [questions, setQuestions] = useState(null)
+  console.log(questions);
 
   let searchQuery = new URLSearchParams(useLocation().search).get("search")
 
