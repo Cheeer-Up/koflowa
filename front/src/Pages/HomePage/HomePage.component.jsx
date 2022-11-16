@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setUser, selectUser, setToken, setIsAuthenticated } from "../../redux/slice/AuthSlice"
 
 const HomePage = () => {
-  const dispatcher = useDispatch()
+  const dispatch = useDispatch()
   const [userState, setUserState] = useState(useSelector(selectUser))
 
   useEffect(() => {
@@ -34,9 +34,9 @@ const HomePage = () => {
             seq: information.seq,
           }
           // token, user 입력 및 authenticated 수정
-          dispatcher(setToken(token))
-          dispatcher(setUser(user))
-          dispatcher(setIsAuthenticated(true))
+          dispatch(setToken(token))
+          dispatch(setUser(user))
+          dispatch(setIsAuthenticated(true))
           setUserState(user)
 
           // 로그인 데이터만 받아온 상황.
@@ -54,7 +54,7 @@ const HomePage = () => {
     // 에러시 경고 생성 (외부 alert 라이브러리 사용 예정)
     if (error) {
     }
-  }, [])
+  }, [dispatch])
 
   /**token을 받아올 수 있는 주소를 parsing */
   const getUrlParameter = (name) => {
