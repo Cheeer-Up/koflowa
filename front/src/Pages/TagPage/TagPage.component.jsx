@@ -1,27 +1,24 @@
 import React, { useEffect, Fragment, useState } from "react"
-import { Navigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import PostItem from "components/Components/PostItem/PostItem.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
-import { useSelector, useDispatch } from "react-redux"
 import "./TagPage.styles.scss"
-import { selectLoading, selectTag, setTag } from "redux/slice/TagSlice"
 import { getSingleTagData } from "api/tags"
 
 const TagPage = () => {
-  let loading = useSelector(selectLoading)
-  let tag = useSelector(selectTag)
-  const dispatch = useDispatch()
+  const [tag, setTag] = useState({})
   const { tagName } = useParams()
 
   useEffect(() => {
     getSingleTagData(tagName).then((result) => {
-      dispatch(setTag(result.data))
+      console.log(result)
+      setTag(result.data.result.data)
     })
   }, [])
 
-  return tag === null || loading ? (
+  return tag === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>

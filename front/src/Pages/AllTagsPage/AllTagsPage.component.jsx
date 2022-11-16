@@ -1,12 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react"
-import { selectTags, selectLoading, setTags } from "redux/slice/TagSlice"
 
 import TagPanel from "Pages/AllTagsPage/TagPanel/TagPanel.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
-// import SearchBox from "components/Components/SearchBox/SearchBox.component"
-// import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
-import { useSelector, useDispatch } from "react-redux"
 import "./AllTagsPage.styles.scss"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
 import { getAllTagsData } from "api/tags"
@@ -14,12 +10,9 @@ import { getAllTagsData } from "api/tags"
 const itemsPerPage = 12
 
 const AllTagsPage = () => {
-  let tags = useSelector(selectTags)
-  let loading = useSelector(selectLoading)
-  const dispatch = useDispatch()
+  const [tags, setTags] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  // const [fetchSearch, setSearch] = useState("")
 
   useEffect(() => {
     getAllTagsData({
@@ -29,20 +22,14 @@ const AllTagsPage = () => {
         sort: "createdTime,desc",
       },
     }).then((result) => {
-      dispatch(setTags(result.data.content))
-      setTotalPages(result.data.totalPages)
+      setTags(result.data.result.data.content)
+      setTotalPages(result.data.result.data.totalPages)
     })
   }, [page])
 
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   setSearch(e.target.value)
-  //   setPage(1)
-  // }
-
   const handlePaginationChange = (e, value) => setPage(value)
 
-  return loading || tags === null ? (
+  return tags === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
@@ -57,9 +44,7 @@ const AllTagsPage = () => {
         <div className='headline-count'>
           <span>{new Intl.NumberFormat("en-IN").format(totalPages)} 개의 태그들</span>
         </div>
-        <div className='tags-box pl16 pr16 pb16'>
-          {/* <SearchBox placeholder={"태그 명으로 검색"} handleChange={handleChange} width={"200px"} /> */}
-        </div>
+        <div className='tags-box pl16 pr16 pb16'></div>
         <div className='user-browser'>
           <div className='grid-layout'>
             {tags.map((tag, index) => (
