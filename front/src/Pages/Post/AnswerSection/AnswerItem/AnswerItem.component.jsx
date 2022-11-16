@@ -18,19 +18,16 @@ const AnswerItem = ({
   // post: { post },
   // auth,
 }) => {
-  // console.log(answer);
-  // const answer = props.answer
-  console.log("I'm AnswerItem: ",answer);
   return (
     <Fragment>
       <div className='answer-layout'>
         <div className='vote-cell'>
           <div className='vote-container'>
-            <button className='vote-up' title='This answer is useful (click again to undo)'>
+            <button className='vote-up' title='추천'>
               <UpVote className='icon' />
             </button>
             <div className='vote-count fc-black-500'>0</div>
-            <button className='vote-down' title='This answer is not useful (click again to undo)'>
+            <button className='vote-down' title='비추천'>
               <DownVote className='icon' />
             </button>
           </div>
@@ -40,8 +37,10 @@ const AnswerItem = ({
             className='answer-content fc-black-800'
             dangerouslySetInnerHTML={{ __html: censorBadWords(body) }}
           >{content}</div> */}
-          <div
-          className='answer-content fc-black-800'>{answer.content}</div>
+          {/* <div
+          className='answer-content fc-black-800'>{doc}</div> */}
+          <div className='answer-content fc-black-800' dangerouslySetInnerHTML={ {__html: answer.content} }>
+          </div>
           <div className='answer-actions'>
             <div className='action-btns'>
               <div className='answer-menu'>

@@ -14,10 +14,11 @@ import "./AnswerSection.styles.scss"
 const AnswerSection = ({ questionSeq, page, size} ) => {
   const [auth, setAuth] = useState("");
   const [answer, setAnswer] = useState([]);
+  const questionSequence = questionSeq;
   useEffect(() => {
     getAnswerList(questionSeq, page, size).then((res)=>{
       setAnswer(res.data.result.data.content);
-      console.log("res.data.result.data.content: ",res.data.result.data.content);
+      // console.log("res.data.result.data.content: ",res.data.result.data.content);
     })
     // eslint-disable-next-line
   }, [getAnswerList])
@@ -66,7 +67,7 @@ const AnswerSection = ({ questionSeq, page, size} ) => {
         ))} */}
 
         <div className='add-answer'>
-          <AnswerForm auth={auth}/>
+          <AnswerForm auth={auth} questionSeq={questionSequence}/>
         </div>
       </div>
     </Fragment>
