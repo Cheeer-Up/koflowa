@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from "react"
+import { useSelector } from "react-redux"
 import MarkdownEditor from "components/Layouts/MarkdownEditor/MarkdownEditor.component"
 import { badWordsFilter } from "utils/censorBadWords"
 import { useNavigate } from "react-router-dom"
@@ -6,6 +7,8 @@ import { Modal, Box } from "@mui/material"
 
 import { WithContext as ReactTags } from "react-tag-input"
 import { COUNTRIES } from "./countries"
+import { postQuestion } from "api/question"
+import { selectToken } from "redux/slice/AuthSlice"
 
 import "./AskForm.styles.scss"
 
@@ -38,7 +41,8 @@ const de = {
   pb: 3,
 }
 
-const AskForm = ({ addPost }) => {
+const AskForm = () => {
+  const [acToken] = useState(useSelector(selectToken))
   const [formData, setFormData] = useState({
     title: "",
     body: "",
@@ -86,7 +90,8 @@ const AskForm = ({ addPost }) => {
   const handleAddition = (tag) => {
     if (tags.length < 5) {
       setTags([...tags, tag])
-      setFormData({ ...formData, tagsData: [...tagsData, tag] })
+      console.log(tag)
+      setFormData({ ...formData, tagsData: [...tagsData, tag.text] })
     }
   }
 
@@ -113,14 +118,21 @@ const AskForm = ({ addPost }) => {
   // 오류 검사
 
   const onSubmit = async (e) => {
-    console.log(formData)
     e.preventDefault()
 
     const errors = validateFormData()
 
     // if there are errors, don't submit
     if (errors.length > 0) return
-    addPost({ title, body, tagsData })
+
+    console.log(formData)
+    postQuestion(acToken, {
+      questionTitle: title,
+      questionContent: body,
+      tagList: tagsData,
+    }).then((result) => {
+      navigate("/questions/" + result.data.result.data.questionSeq)
+    })
 
     setFormData({
       title: "",
