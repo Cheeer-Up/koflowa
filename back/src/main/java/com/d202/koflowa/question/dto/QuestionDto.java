@@ -67,6 +67,7 @@ public class QuestionDto {
         private Long answerCount;
 
         private Long acceptAnswerSeq;
+        private List<String> tagList;
 
         public Response(Question question){
             this.questionSeq = question.getSeq();
@@ -79,6 +80,20 @@ public class QuestionDto {
             this.acceptAnswerSeq = question.getAcceptAnswerSeq();
             this.createdTime = question.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.updatedTime = question.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+        }
+
+        public Response(Question question, List<String> tagList){
+            this.questionSeq = question.getSeq();
+            this.user = question.getUser();
+            this.questionTitle = question.getTitle();
+            this.questionContent = question.getContent();
+            this.up = question.getUp();
+            this.down = question.getDown();
+            this.answerCount = question.getAnswerCount();
+            this.acceptAnswerSeq = question.getAcceptAnswerSeq();
+            this.createdTime = question.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.updatedTime = question.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
+            this.tagList = tagList;
         }
 
         public Response(String questionTitle, Long questionSeq, LocalDateTime createdTime){

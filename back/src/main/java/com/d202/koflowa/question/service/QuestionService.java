@@ -59,7 +59,8 @@ public class QuestionService {
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
         for(Question question : questions) {
-            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            List<String> tagList = questionTagRepository.findTagNameByQuestionSeq(question.getSeq());
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question, tagList);
             pageDtoList.add(questionResponse);
         }
 
@@ -72,7 +73,21 @@ public class QuestionService {
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
 
         for(Question question : questions) {
-            QuestionDto.Response questionResponse = new QuestionDto.Response(question);
+            List<String> tagList = questionTagRepository.findTagNameByQuestionSeq(question.getSeq());
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question, tagList);
+            pageDtoList.add(questionResponse);
+        }
+
+        return new PageImpl<QuestionDto.Response>(pageDtoList, pageable, questions.getTotalElements());
+    }
+
+    public Page<QuestionDto.Response> searchQuestionByTagName(String tagName, Pageable pageable) {
+        Page<Question> questions = questionTagRepository.findQuestionByTagName(tagName, pageable);
+        List<QuestionDto.Response> pageDtoList = new ArrayList<>();
+
+        for(Question question : questions) {
+            List<String> tagList = questionTagRepository.findTagNameByQuestionSeq(question.getSeq());
+            QuestionDto.Response questionResponse = new QuestionDto.Response(question, tagList);
             pageDtoList.add(questionResponse);
         }
 
