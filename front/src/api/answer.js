@@ -10,24 +10,24 @@ import {
   getAnswerListUrl,
 } from "api/urls"
 
-export const putAnswer = (answerSeq, data) => {
-  return api().put(editAnswerUrl(answerSeq), data)
+export const putAnswer = (accessToken, answerSeq, data) => {
+  return api(accessToken).put(editAnswerUrl(answerSeq), data)
 }
 
-export const deleteAnswer = (answerSeq) => {
-  return api().delete(editAnswerUrl(answerSeq))
+export const deleteAnswer = (accessToken, answerSeq) => {
+  return api(accessToken).delete(editAnswerUrl(answerSeq))
 }
 
-export const postAnswer = (data) => {
-  return api().post(createAnswerUrl, data)
+export const postAnswer = (accessToken, questionSeq, data) => {
+  return api(accessToken).post(createAnswerUrl(questionSeq), data)
 }
 
-export const answerUpdown = (answerSeq, data) => {
-  return api().post(answerUpDownUrl(answerSeq), data)
+export const answerUpdown = (accessToken, answerSeq, data) => {
+  return api(accessToken).post(answerUpDownUrl(answerSeq), data)
 }
 
-export const answerAccept = (answerSeq) => {
-  return api().post(answerAcceptUrl(answerSeq))
+export const answerAccept = (accessToken, answerSeq) => {
+  return api(accessToken).post(answerAcceptUrl(answerSeq))
 }
 
 export const getAnswerDetail = (answerSeq) => {
@@ -42,14 +42,14 @@ export const getAnswerComment = (answerSeq) => {
   return api().get(getAnswerCommentUrl(answerSeq))
 }
 
-export const postAnswerComment = (data) => {
-  return api().post(commentUrl, data)
+export const postAnswerComment = (accessToken, data) => {
+  return api(accessToken).post(commentUrl, data)
 }
 
-export const putAnswerComment = (data) => {
-  return api().put(commentUrl, data)
+export const putAnswerComment = (accessToken, data) => {
+  return api(accessToken).put(commentUrl, data)
 }
 
-export const deleteAnswerComment = () => {
-  return api().delete(commentUrl)
+export const deleteAnswerComment = (accessToken) => {
+  return api(accessToken).delete(commentUrl)
 }
