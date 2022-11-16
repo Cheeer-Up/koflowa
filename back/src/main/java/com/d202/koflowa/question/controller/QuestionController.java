@@ -24,21 +24,21 @@ public class QuestionController {
 
     /* 질문 전체 조회 */
     @Operation(summary = "전체 질문 조회", description = "전체 질문 조회 api 입니다. 오류가 발생하면 page와 size만 입력하시오.")
-    @PostMapping("/all")
+    @GetMapping("/all")
     public Response getAllQuestion(Pageable pageable) {
         return Response.success(questionService.getAllQuestion(pageable));
     }
 
     /* keyword가 포함된 질문 조회 */
     @Operation(summary = "keyword 포함 질문 조회", description = "keyword로 제목과 내용을 검색하여 질문들을 조회하는 api 입니다. 오류가 발생하면 page와 size만 입력하시오.")
-    @PostMapping("/keyword/{keyword}")
+    @GetMapping("/keyword/{keyword}")
     public Response searchQuestionByKeyword(@PathVariable String keyword, Pageable pageable) {
         return Response.success(questionService.searchQuestionByKeyword(keyword, pageable));
     }
 
     /* 특정 유저가 작성한 질문 조회 */
     @Operation(summary = "유저 질문 조회", description = "특정 유저 ID값으로 질문을 검색하는 api 입니다. 오류가 발생하면 page와 size만 입력하시오.")
-    @PostMapping("/user/{user_seq}")
+    @GetMapping("/user/{user_seq}")
     public Response searchQuestionByUser(@PathVariable Long user_seq, Pageable pageable) {
         return Response.success(questionService.searchQuestionByUserSeq(user_seq, pageable));
     }
