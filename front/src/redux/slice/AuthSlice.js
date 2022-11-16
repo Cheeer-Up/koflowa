@@ -7,7 +7,15 @@ export const AuthSlice = createSlice({
     token: localStorage.getItem("token"),
     isAuthenticated: false,
     loading: true,
-    user: null,
+    user: {
+      authProvider: "",
+      email: "",
+      name: "",
+      nickname:"",
+      profile: "",
+      role: "",
+      seq: ""
+    },
     isEdit: false,
     file: null,
     newInfo: null,
