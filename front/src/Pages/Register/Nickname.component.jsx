@@ -5,34 +5,29 @@ import { useLocation } from "react-router-dom"
 
 import { signIn_Out, setUserNickname } from "../../api/sign"
 import { useDispatch, useSelector } from "react-redux"
-import { setUser, selectUser, setToken, setIsAuthenticated,selectToken } from "../../redux/slice/AuthSlice"
+import { setUser, selectUser, setToken, setIsAuthenticated, selectToken } from "../../redux/slice/AuthSlice"
 
 const Nickname = () => {
-  const [nickname, setNickname] = useState("")
   const dispatch = useDispatch()
-  const callUser = useSelector(selectUser);
-  const [userState, setUserState] = useState(callUser)
+  const [nickname, setNickname] = useState("")
+  const [userState, setUserState] = useState(useSelector(selectUser))
   const [accessToken, setAccessToken] = useState("")
 
   const onChange = (e) => {
-    setNickname(e.target.value);
-  };
+    setNickname(e.target.value)
+  }
 
-
+  // 닉네임 입력 버튼 클릭 시
   const setUserNicknameFunc = () => {
-    
-    //nickname 유효성 검사 어떻게 하는지 모르겠음 : alert 동작X 
-    // 잠시만 이거 음성지원도 하는걸로 아는데
-    // 형 웹엑스로 말하면서 할까?
-    // 다른 컴포넌트도 보고싶은데ㅇㅋ
-    if (nickname === "" || nickname === null) {
+    if (nickname === "") {
       alert("닉네임을 입력해 주세요.")
       return
     }
+
     setUserNickname(accessToken, nickname).then((res) => {
       if (res.data.status_code == 200) {
         alert("정상적으로 닉네임이 등록되었습니다.")
-        setUserState({ ...userState , nickname : nickname})
+        setUserState({ ...userState, nickname: nickname })
         //변경이 완료된 경우
         document.location.href = "/"
       } else {
@@ -41,7 +36,7 @@ const Nickname = () => {
       }
     })
   }
-  
+
   useEffect(() => {
     const token = getUrlParameter("token")
     const error = getUrlParameter("error")
@@ -52,9 +47,10 @@ const Nickname = () => {
       localStorage.setItem("refreshToken", null)
       setAccessToken(token)
 
-      if (!localStorage.getItem("accessToken")) {
-        return Promise.reject("No access token set.")
-      }
+      // if (!token) {
+      //   return Promise.reject("No access token set.")
+      // }
+
       signIn_Out(token)
         .then(({ data }) => {
           console.log("this is user data: ", data)
@@ -68,25 +64,26 @@ const Nickname = () => {
             seq: information.seq,
             nickname: information.nickname,
           }
+
+          console.log("user 데이터ㅣ ", user)
+
           // token, user 입력 및 authenticated 수정
           dispatch(setToken(token))
           dispatch(setUser(user))
-          dispatch(setIsAuthenticated(true))
           setUserState(user)
-          
+
           // 로그인 => nickname이 있으면 바로 홈으로 가고
           //        ㄴ> nickname이 없으면 현재 페이지에 남아서 원하는 닉네임 등록(기본적으로 유저 name을 nickname으로 등록)
-          if (user.nickname === true) {
+          if (user.nickname) {
             setTimeout(() => {
               window.location.href = "/"
-            }, 50)
+            }, 20)
           }
 
           // 로그인 데이터만 받아온 상황.
           // 헤더에 적용시켜주기 위해 리로드
           // window.location.href 같은 즉시 이동은 redux 저장이나 state 저장 전에 실행
           // setTimeOut으로 조절
-
         })
         .catch((err) => {
           console.log(err)
