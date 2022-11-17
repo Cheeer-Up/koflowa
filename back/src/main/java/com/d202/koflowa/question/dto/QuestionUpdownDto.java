@@ -33,14 +33,14 @@ public class QuestionUpdownDto {
     @Builder
     public static class Response{
         private Long questionUpdownSeq;
-        private User user;
-        private Question question;
+        private Long userSeq;
+        private Long questionSeq;
         private UDType questionUpdownType;
 
         public Response(QuestionUpdown questionUpdown){
             this.questionUpdownSeq = questionUpdown.getSeq();
-            this.user = questionUpdown.getUser();
-            this.question = questionUpdown.getQuestion();
+            this.userSeq = questionUpdown.getUser().getSeq();
+            this.questionSeq = questionUpdown.getQuestion().getSeq();
             this.questionUpdownType = questionUpdown.getType();
         }
     }

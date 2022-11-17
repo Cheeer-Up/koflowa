@@ -4,8 +4,15 @@ import "./HomePage.styles.scss"
 import { signIn_Out } from "../../api/sign"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser, selectUser, setToken, setIsAuthenticated } from "../../redux/slice/AuthSlice"
+import { Link } from "react-router-dom"
 
 const HomePage = () => {
+  // let navigate = useNavigate()
+
+  // setTimeout(function () {
+  //   navigate("/questions")
+  // }, 10000)
+
   const dispatch = useDispatch()
   const [userState, setUserState] = useState(useSelector(selectUser))
 
@@ -65,7 +72,19 @@ const HomePage = () => {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
   }
 
-  return <Fragment></Fragment>
+  return (
+    <Fragment>
+      <p>
+        <img className='koflowa vibe' src='/koflowa.png' alt='코플로와' />
+      </p>
+      <p>
+        <img className='koflowa-text' src='/koflowText.png' alt='코플로와 텍스트' />
+      </p>
+      <Link className='sbox__button' to={"/questions"}>
+        코플로와 시작하기
+      </Link>
+    </Fragment>
+  )
 }
 
 export default HomePage

@@ -41,6 +41,8 @@ export const userAnswer = (page, size, sort, userSeq) =>
 export const question = QUESTION
 export const questionTag = (tagName) => QUESTION + `/tag/${tagName}`
 export const singleQuestionData = (questionSeq) => QUESTION + `/${questionSeq}`
+export const questionUpdown = QUESTION + `/updown`
+export const getQuestionUpdownUrl = (questionSeq) => QUESTION + `/updown/${questionSeq}`
 
 // ANSWER
 export const createAnswerUrl = (questionSeq) => ANSWER + `/${questionSeq}`
@@ -56,8 +58,11 @@ export const getAnswerListUrl = (questionSeq) => ANSWER + `/${questionSeq}`
 export const allTagsData = TAGS
 export const singleTagData = (tagName) => TAGS + `/${tagName}`
 export const registTag = TAGS + "/regist"
-export const watchTag = (tagSeq) => TAGS + `/watch/${tagSeq}`
-export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
+export const watchTag = (tagName) => TAGS + `/watch/${tagName}`
+export const ignoreTag = (tagName) => TAGS + `/ignore/${tagName}`
+export const watchTagList = TAGS + `/watch`
+export const ignoreTagList = TAGS + `/ignore`
+export const allTagsStringList = TAGS + `/list`
 export const rankingTag = () => ELASTICTAGS
 
 // MEETING

@@ -10,34 +10,21 @@ import "./PostCell.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
 import { selectUser, selectToken } from "redux/slice/AuthSlice"
 
-// const PostCell = ({
-//   deletePost,
-//   auth,
-//   post: {
-//     post: { id, post_body, tags, gravatar, user_id, username, created_at },
-//   },
-// }) => {
+
 const PostCell = (data) => {
-  console.log("data :",data);
   const [curUser] = useState(useSelector(selectUser))
   const content = data.content.questionContent
   const user = data.content.user
   const questionSeq = data.content.questionSeq
   const tags = data.content.tagList
-  console.log("tags :",tags);
   return (
     <Fragment>
       <div className='post-cell'>
         <div className='post-text fc-black-800' dangerouslySetInnerHTML={{ __html: censorBadWords(content) }}></div>
-        {/* <div className='post-tags fc-black-800'> */}
         <div className='post-tags'>
           {tags!=null ?(
             tags.map((tag, index) => (
                 <TagBadge key={index} tag_name={tag} size={"s-tag"} float={"left"} />
-                  // <TagBadge key={index} tag_name={tag} size={"s-tag"} />
-              // <div className='profile-tags'>
-
-              // </div>
             ))
           ):(
             <div></div>

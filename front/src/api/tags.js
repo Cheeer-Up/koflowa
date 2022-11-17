@@ -1,5 +1,15 @@
 import api, { elastic_api } from "api/api"
-import { allTagsData, singleTagData, registTag, watchTag, ignoreTag, rankingTag } from "api/urls"
+import {
+  allTagsData,
+  singleTagData,
+  registTag,
+  watchTag,
+  ignoreTag,
+  watchTagList,
+  ignoreTagList,
+  allTagsStringList,
+  rankingTag,
+} from "api/urls"
 
 const rankingTagsCondition = {
   _source: ["tag_seq", "tag_name", "tag_count"],
@@ -39,20 +49,32 @@ export const putSingleTagData = (tagName, data) => {
   return api().put(singleTagData(tagName), data)
 }
 
-export const postWatchTag = (tagSeq, data) => {
-  return api().post(watchTag(tagSeq), data)
+export const getWatchTagList = (accessToken) => {
+  return api(accessToken).get(watchTagList)
 }
 
-export const deleteWatchTag = (tagSeq, data) => {
-  return api().delete(watchTag(tagSeq), data)
+export const postWatchTag = (accessToken, tagName) => {
+  return api(accessToken).post(watchTag(tagName))
 }
 
-export const postIgnoreTag = (tagSeq, data) => {
-  return api().delete(ignoreTag(tagSeq), data)
+export const deleteWatchTag = (accessToken, tagName) => {
+  return api(accessToken).delete(watchTag(tagName))
 }
 
-export const deleteIgnoreTag = (tagSeq, data) => {
-  return api().delete(ignoreTag(tagSeq), data)
+export const getIgnoreTagList = (accessToken) => {
+  return api(accessToken).get(ignoreTagList)
+}
+
+export const postIgnoreTag = (accessToken, tagName) => {
+  return api(accessToken).post(ignoreTag(tagName))
+}
+
+export const deleteIgnoreTag = (accessToken, tagName) => {
+  return api(accessToken).delete(ignoreTag(tagName))
+}
+
+export const getAllTagsStringList = () => {
+  return api().get(allTagsStringList)
 }
 
 export const getRankingTags = () => {
