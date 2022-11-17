@@ -8,6 +8,7 @@ import {
   watchTagList,
   ignoreTagList,
   allTagsStringList,
+  rankingTag,
 } from "api/urls"
 
 const rankingTagsCondition = {
