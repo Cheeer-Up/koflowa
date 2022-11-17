@@ -38,7 +38,7 @@ const Header = () => {
             <img alt='user-logo' className='logo' src={userState.profile} />
           </Link>
         )}
-        <LinkButton text='로그아웃' link='/' type='s-btn__filled' handleClick={removeTokens} />
+        <LinkButton text='로그아웃' link='/' className='l-btn' handleClick={removeTokens} />
       </div>
     )
   }
@@ -46,8 +46,8 @@ const Header = () => {
   const GuestLinks = () => {
     return (
       <div className='btns'>
-        <LinkButton text={"로그인"} link={"/login"} type={"s-btn__primary"} />
-        <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} />
+        <LinkButton text={"로그인"} link={"/login"} className='l-btn' />
+        {/* <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} /> */}
       </div>
     )
   }
