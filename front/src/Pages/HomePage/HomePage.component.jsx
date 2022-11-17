@@ -65,7 +65,16 @@ const HomePage = () => {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
   }
 
-  return <Fragment></Fragment>
+  return (
+    <Fragment>
+      <p>
+        <img className='koflowa' src='/koflowa.png' alt='코플로와' />
+      </p>
+      <p>
+        <img className='koflowa-text' src='/koflowText.png' alt='코플로와 텍스트' />
+      </p>
+    </Fragment>
+  )
 }
 
 export default HomePage
