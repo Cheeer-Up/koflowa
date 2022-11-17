@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import PropTypes from "prop-types"
 import { getAnswerList } from "api/answer"
 import handleSorting from "../../../utils/handleSorting"
@@ -11,24 +11,26 @@ import AnswerForm from "./AnswerForm/AnswerForm.component"
 import ButtonGroup from "../../../components/Components/ButtonGroup/ButtonGroup.component"
 
 import "./AnswerSection.styles.scss"
+import { selectEdit } from "redux/slice/AnswerSlice"
   
 const AnswerSection = ({ question } ) => {
   const [auth, setAuth] = useState("");
   const [answer, setAnswer] = useState([]);
-  // const [page, setPage] = useState(1)
-  // const [totalPage, setTotalPage] = useState(1)
-  // const size = 5
-  // const sort = "seq"
   const questionSequence = question.questionSeq;
   const [loading, setLoading] = useState(true)
+
+  let isEdit = useSelector(selectEdit)
+
   useEffect(() => {
+    setTimeout(() => 
     getAnswerList(questionSequence).then((res)=>{
       const payload = res.data.result.data
       setAnswer(payload)
       setLoading(false)
     })
-    // eslint-disable-next-line
-  }, [])
+    , 160);
+    
+  }, [isEdit])
   // const handlePaginationChange = (e, value) => {
   //   setPage(value)
   // }
