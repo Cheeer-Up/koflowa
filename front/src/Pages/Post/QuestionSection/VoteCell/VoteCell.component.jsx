@@ -1,8 +1,9 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from "react"
 
-import './VoteCell.styles.scss';
+import "./VoteCell.styles.scss"
 
-const VoteCell = ({answerCount, commentCount, tagCount}) => {
+const VoteCell = ({ answerCount, commentCount, tagCount }) => {
+  console.log(answerCount, commentCount, tagCount)
   return (
     <Fragment>
       <div className='vote-cell fc-black-800'>
@@ -22,7 +23,7 @@ const VoteCell = ({answerCount, commentCount, tagCount}) => {
         </div>
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
-export default VoteCell;
+export default VoteCell

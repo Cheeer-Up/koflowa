@@ -180,7 +180,7 @@ const App = () => {
 
         {/* 질문 상세 페이지 */}
         <Route
-          path='/questions/:postSeq'
+          path='/questions/:questionSeq'
           element={
             <LayoutRoute>
               <Post />

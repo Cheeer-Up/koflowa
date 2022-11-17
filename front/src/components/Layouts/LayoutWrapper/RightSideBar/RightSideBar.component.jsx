@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 
-import SideBarWidget from "./SideBarWidget/SideBarWidget.component"
 import TagsWidget from "./TagsWidget/TagsWidget.component"
+import WatchedTagWidget from "./WatchedTagWidget/WatchedTagWidget.component"
+import IgnoreTagWidget from "./IgnoreTagWidget/IgnoreTagWidget.component"
 
 import "./RightSideBar.styles.scss"
 
@@ -9,7 +10,8 @@ const RightSideBar = () => {
   return (
     <Fragment>
       <div id='sidebar' className='side-bar'>
-        {/* <SideBarWidget /> */}
+        <WatchedTagWidget />
+        <IgnoreTagWidget />
         <TagsWidget />
       </div>
     </Fragment>

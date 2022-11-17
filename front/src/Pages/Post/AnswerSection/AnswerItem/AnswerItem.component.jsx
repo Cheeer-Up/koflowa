@@ -2,7 +2,8 @@ import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
-import { deleteAnswer } from "../../../../redux/answers/answers.actions"
+// import { deleteAnswer } from "../../../../redux/answers/answers.actions"
+import { deleteAnswer } from "api/answer"
 
 import { ReactComponent as UpVote } from "../../../../assets/ArrowUpLg.svg"
 import { ReactComponent as DownVote } from "../../../../assets/ArrowDownLg.svg"
@@ -12,30 +13,34 @@ import "./AnswerItem.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
 
 const AnswerItem = ({
-  deleteAnswer,
-  answer: { body, user_id, gravatar, id, created_at, username },
-  post: { post },
-  auth,
+  answer,
+  // answer: { accept, content, up, down, createdTime, modifiedTime, seq },
+  // post: { post },
+  // auth,
 }) => {
   return (
     <Fragment>
       <div className='answer-layout'>
         <div className='vote-cell'>
           <div className='vote-container'>
-            <button className='vote-up' title='This answer is useful (click again to undo)'>
+            <button className='vote-up' title='추천'>
               <UpVote className='icon' />
             </button>
             <div className='vote-count fc-black-500'>0</div>
-            <button className='vote-down' title='This answer is not useful (click again to undo)'>
+            <button className='vote-down' title='비추천'>
               <DownVote className='icon' />
             </button>
           </div>
         </div>
         <div className='answer-item'>
-          <div
+          {/* <div
             className='answer-content fc-black-800'
             dangerouslySetInnerHTML={{ __html: censorBadWords(body) }}
-          ></div>
+          >{content}</div> */}
+          {/* <div
+          className='answer-content fc-black-800'>{doc}</div> */}
+          <div className='answer-content fc-black-800' dangerouslySetInnerHTML={ {__html: answer.content} }>
+          </div>
           <div className='answer-actions'>
             <div className='action-btns'>
               <div className='answer-menu'>
@@ -49,7 +54,7 @@ const AnswerItem = ({
                 >
                   follow
                 </Link>
-                {!auth.loading && auth.isAuthenticated && user_id === auth.user.id && (
+                {/* {!auth.loading && auth.isAuthenticated && user_id === auth.user.id && (
                   <Link
                     className='s-link s-link__danger'
                     style={{ paddingLeft: "4px" }}
@@ -59,17 +64,17 @@ const AnswerItem = ({
                   >
                     delete
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
-            <UserCard
+            {/* <UserCard
               created_at={created_at}
               user_id={user_id}
               gravatar={gravatar}
               username={username}
               dateType={"answered"}
               backgroundColor={"transparent"}
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -78,15 +83,16 @@ const AnswerItem = ({
 }
 
 AnswerItem.propTypes = {
-  // auth: PropTypes.object.isRequired,
-  // post: PropTypes.object.isRequired,
-  // answer: PropTypes.object.isRequired,
-  // deleteAnswer: PropTypes.func.isRequired,
+//   // auth: PropTypes.object.isRequired,
+//   // post: PropTypes.object.isRequired,
+  answer: PropTypes.object.isRequired,
+//   // deleteAnswer: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  post: state.post,
-})
+// const mapStateToProps = (state) => ({
+//   auth: state.auth,
+//   post: state.post,
+// })
 
-export default connect(mapStateToProps, { deleteAnswer })(AnswerItem)
+// export default connect(mapStateToProps, { deleteAnswer })(AnswerItem)
+export default AnswerItem

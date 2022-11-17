@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@elastic/elasticsearch": "^8.5.0",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.10.14",
     "@reduxjs/toolkit": "^1.8.6",
@@ -64,6 +65,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8081/api/"
+  }
 }

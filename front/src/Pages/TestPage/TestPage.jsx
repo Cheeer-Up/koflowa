@@ -1,28 +1,27 @@
 import React, { useEffect, Fragment, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 
 import PostItem from "components/Components/PostItem/PostItem.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
+import { useSelector, useDispatch } from "react-redux"
 import "./TagPage.styles.scss"
+import { selectLoading, selectTag, setTag } from "redux/slice/TagSlice"
 import { getSingleTagData } from "api/tags"
-import { getQuestionDatabyTagName } from "api/question"
 
 const TagPage = () => {
-  const [tag, setTag] = useState({})
+  let loading = useSelector(selectLoading)
+  let tag = useSelector(selectTag)
+  const dispatch = useDispatch()
   const { tagName } = useParams()
-  const [questionList, setQuestionList] = useState([])
 
   useEffect(() => {
     getSingleTagData(tagName).then((result) => {
-      setTag(result.data.result.data)
+      dispatch(setTag(result.data))
     })
-    getQuestionDatabyTagName(tagName).then((result) => {
-      setQuestionList(result.data.result.data.content)
-    })
-  }, [tagName])
+  }, [])
 
-  return tag === null ? (
+  return tag === null || loading ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
@@ -44,7 +43,7 @@ const TagPage = () => {
           {tag.questionCount === 0 ? (
             <h4 style={{ margin: "30px 30px" }}>질문이 존재하지 않습니다.</h4>
           ) : (
-            questionList?.map((question, index) => <PostItem key={index} question={question} />)
+            tag.questions?.map((question, index) => <PostItem key={index} question={question} />)
           )}
         </div>
       </div>
