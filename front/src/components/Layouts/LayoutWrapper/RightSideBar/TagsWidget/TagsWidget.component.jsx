@@ -19,57 +19,59 @@ import { EastTwoTone } from "@mui/icons-material"
 //     password: "changeme",
 //   },
 // })
-
+const data = {
+  _source: ["tag_seq", "tag_name", "tag_count"],
+  size: 10,
+  collapse: {
+    field: "tag_seq",
+  },
+  sort: [
+    {
+      tag_count: {
+        order: "desc",
+      },
+    },
+  ],
+}
 const TagsWidget = () => {
   const [tags, setTags] = useState([])
   const loading = false // test
   useEffect(() => {
-    axios("http://k7d202.p.ssafy.io:9200/koflowa_tag_ranking/_search?sort=tag_count:desc", {
-      method: "get",
-      data: {
-        _source: ["tag_seq", "tag_name", "tag_count"],
-        size: 10,
-        collapse: {
-          field: "tag_seq",
+    axios
+      .post("http://k7d202.p.ssafy.io:9200/koflowa_tag_ranking/_search", data, {
+        headers: {
+          "Content-Type": "application/json",
         },
-        sort: [
-          {
-            tag_count: {
-              order: "desc",
-            },
-          },
-        ],
-      },
-    })
+      })
       .then((res) => {
-        console.log("axios get: ", res)
+        console.log("axios get: ", res.data.hits.hits)
       })
       .catch((err) => {
         console.log(err)
       })
 
-    getTagsRanking()
-      .then((res) => {
-        let datas = res.data.hits.hits
-        console.log("getTagsRanking: ", datas)
-        let gatherTags = []
-        if (datas !== null) {
-          console.log(datas)
-          datas.map(({ _source }) =>
-            gatherTags.push({
-              tag_seq: _source.tag_seq,
-              tag_count: _source.tag_count,
-              tag_name: _source.tag_name,
-            })
-          )
-          setTags(gatherTags)
-        }
+    // getTagsRanking()
+    //   .then((res) => {
+    //     let datas = res.data.hits.hits
+    //     console.log("getTagsRanking: ", datas)
+    //     let gatherTags = []
+    //     if (datas !== null) {
+    //       console.log(datas)
+    //       datas.map(({ _source }) =>
+    //         gatherTags.push({
+    //           tag_seq: _source.tag_seq,
+    //           tag_count: _source.tag_count,
+    //           tag_name: _source.tag_name,
+    //         })
+    //       )
+    //       setTags(gatherTags)
+    //     }
 
-        console.log("getTagsRanking: ", res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    //     console.log("getTagsRanking: ", res)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }, [])
   return (
     <Fragment>
