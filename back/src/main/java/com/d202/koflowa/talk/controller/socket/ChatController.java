@@ -1,6 +1,6 @@
-package com.d202.koflowa.talk.controller;
+package com.d202.koflowa.talk.controller.socket;
 
-import com.d202.koflowa.talk.dto.ChatDto;
+import com.d202.koflowa.talk.dto.socket.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

@@ -1,4 +1,4 @@
-package com.d202.koflowa.talk.dto;
+package com.d202.koflowa.talk.dto.socket;
 
 import lombok.Data;
 

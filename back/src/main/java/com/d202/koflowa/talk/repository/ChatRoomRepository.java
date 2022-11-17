@@ -1,6 +1,6 @@
 package com.d202.koflowa.talk.repository;
 
-import com.d202.koflowa.talk.dto.ChatRoomDto;
+import com.d202.koflowa.talk.dto.socket.ChatRoomDto;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;

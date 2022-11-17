@@ -1,12 +1,12 @@
-import api from "api/api"
+import api, { elastic_api } from "api/api"
 import { allTagsData, singleTagData, registTag, watchTag, ignoreTag } from "api/urls"
 
 export const getAllTagsData = (params) => {
   return api().get(allTagsData, params)
 }
 
-export const postRegistTag = (data) => {
-  return api().post(registTag, data)
+export const postRegistTag = (accessToken, data) => {
+  return api(accessToken).post(registTag, data)
 }
 
 export const getSingleTagData = (tagName) => {
@@ -31,4 +31,8 @@ export const postIgnoreTag = (tagSeq, data) => {
 
 export const deleteIgnoreTag = (tagSeq, data) => {
   return api().delete(ignoreTag(tagSeq), data)
+}
+
+export const getTagsRanking = () => {
+  return elastic_api().post()
 }

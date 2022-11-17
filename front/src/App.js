@@ -10,6 +10,7 @@ import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
 import Register from "./Pages/Register/Register.component"
+import Nickname from "Pages/Register/Nickname.component"
 import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
@@ -127,6 +128,16 @@ const App = () => {
           }
         />
 
+        {/* 회원가입 페이지 */}
+        <Route
+          path='/nickname'
+          element={
+            <BaseRoute>
+              <Nickname />
+            </BaseRoute>
+          }
+        />
+
         {/* 질문 생성 페이지 */}
         <Route
           path='/add/question'
@@ -169,7 +180,7 @@ const App = () => {
 
         {/* 질문 상세 페이지 */}
         <Route
-          path='/questions/:postSeq'
+          path='/questions/:questionSeq'
           element={
             <LayoutRoute>
               <Post />
