@@ -85,5 +85,4 @@ public class MyPageController {
     public Response getAnswer(@PathVariable long seq, Pageable pageable){
         return Response.success(myPageService.getAnswer(seq, pageable));
     }
-
 }
