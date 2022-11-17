@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useRef } from "react"
-import { connect, useSelector } from "react-redux"
+import { connect, useSelector, userDispatch, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 // import { addAnswer } from "../../../../redux/answers/answers.actions"
 import { postAnswer } from "api/answer"
 import { selectToken } from "redux/slice/AuthSlice"
+import { setIsEdit } from "redux/slice/AnswerSlice"
 
 import LinkButton from "../../../../components/Components/LinkButton/LinkButton.component"
 import MarkdownEditor from "../../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
@@ -14,21 +15,20 @@ const AnswerForm = ({ auth, questionSeq }) => {
   const [formData, setFormData] = useState({
     content: "",
   })
-  // console.log(formData);
   const [acToken] = useState(useSelector(selectToken))
-  // console.log(acToken);
   const markdownEditorRef = useRef(null)
+  const dispatch = useDispatch()
 
   const { content } = formData
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     postAnswer(acToken, questionSeq, {content})
-    // console.log("content : ", {content});
     setFormData({
       content: "",
     })
     markdownEditorRef.current.cleanEditorState()
+    dispatch(setIsEdit())
   }
 
   const updateConvertedContent = (htmlConvertedContent) => {

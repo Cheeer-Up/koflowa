@@ -6,6 +6,7 @@ const initialState = {
   loading: true,
   redirect: false,
   error: {},
+  isEdit: false,
 }
 
 const AnswerSlice = createSlice({
@@ -22,11 +23,15 @@ const AnswerSlice = createSlice({
       state.loading = false
       state.redirect = false
     },
+    setIsEdit: (state) => {
+      state.isEdit = !state.isEdit
+    },
   },
 })
 
 export const selectAnswers = (state) => state.tag.tags
 export const selectAnswer = (state) => state.tag.tag
+export const selectEdit = (state) => state.answer.isEdit
 
-export const {} = AnswerSlice.actions
+export const { setIsEdit } = AnswerSlice.actions
 export default AnswerSlice.reducer
