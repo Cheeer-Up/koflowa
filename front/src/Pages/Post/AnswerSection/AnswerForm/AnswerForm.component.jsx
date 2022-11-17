@@ -14,17 +14,17 @@ const AnswerForm = ({ auth, questionSeq }) => {
   const [formData, setFormData] = useState({
     content: "",
   })
-  console.log(formData);
+  // console.log(formData);
   const [acToken] = useState(useSelector(selectToken))
-  console.log(acToken);
+  // console.log(acToken);
   const markdownEditorRef = useRef(null)
 
   const { content } = formData
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    postAnswer(acToken, questionSeq, {content} )
-    console.log("content : ", {content});
+    postAnswer(acToken, questionSeq, {content})
+    // console.log("content : ", {content});
     setFormData({
       content: "",
     })
@@ -41,18 +41,18 @@ const AnswerForm = ({ auth, questionSeq }) => {
         <Fragment>
           <form className='answer-form' onSubmit={(e) => handleSubmit(e)}>
             <div className='answer-grid'>
-              <label className=' fc-black-800'>Your Answer</label>
+              <label className=' fc-black-800'>답변 작성하기</label>
               <div className='s-textarea rich-text-editor-container'>
                 <MarkdownEditor ref={markdownEditorRef} onChange={updateConvertedContent} />
               </div>
-              <button className='s-btn s-btn__primary'>Post Your Answer</button>
+              <button className='s-btn s-btn__primary'>작성하기</button>
             </div>
           </form>
         </Fragment>
       ) : (
         <Fragment>
           <LinkButton
-            text={"You need to login to add an answer"}
+            text={"작성하려면 로그인이 필요합니다"}
             link={"/login"}
             type={"s-btn__outlined"}
             marginTop={"12px"}
