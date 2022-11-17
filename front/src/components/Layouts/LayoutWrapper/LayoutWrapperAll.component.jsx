@@ -9,10 +9,8 @@ const LayoutWrapper = ({ children }) => {
     <Fragment>
       <div className='page'>
         <SideBar />
-        <div id='content'>
-          {children}
-          <RightSideBar />
-        </div>
+        <div id='content'>{children}</div>
+        <RightSideBar />
       </div>
       <Footer />
     </Fragment>
