@@ -50,7 +50,7 @@ export const commentUrl = ANSWER + `/comment`
 export const answerUpDownUrl = (answerSeq) => ANSWER + `/updown/${answerSeq}`
 export const answerAcceptUrl = (answerSeq) => ANSWER + `/accept/${answerSeq}`
 export const getAnswerCommentUrl = (answerSeq) => ANSWER + `/comment/${answerSeq}`
-export const getAnswerListUrl = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
+export const getAnswerListUrl = (questionSeq) => ANSWER + `/${questionSeq}`
 
 // TAGS
 export const allTagsData = TAGS

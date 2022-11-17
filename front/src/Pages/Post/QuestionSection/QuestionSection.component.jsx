@@ -7,6 +7,7 @@ import PostCell from "./PostCell/PostCell.component"
 import "./QuestionSection.styles.scss"
 
 const QuestionSection = (question) => {
+  console.log("this question : ",question);
   return (
     <Fragment>
       <div className='question'>
@@ -14,9 +15,9 @@ const QuestionSection = (question) => {
           <VoteCell
             answerCount={question.question.answerCount}
             commentCount={question.question.comment_count}
-            tagCount={question.question.tagList ? question.tagList.length : 0}
+            tagCount={question.question.tagList ? question.question.tagList.length : 0}
           />
-          <PostCell content={question.question.questionContent} user={question.question.user} />
+          <PostCell content={question.question}/>
           {/* <CommentCell /> */}
         </div>
       </div>

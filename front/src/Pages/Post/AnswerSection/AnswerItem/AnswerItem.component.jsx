@@ -1,9 +1,10 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 // import { deleteAnswer } from "../../../../redux/answers/answers.actions"
-import { deleteAnswer } from "api/answer"
+import { useSelector } from "react-redux"
+import { deleteAnswer, answerUpdown, getAnswerUpDown } from "api/answer"
 
 import { ReactComponent as UpVote } from "../../../../assets/ArrowUpLg.svg"
 import { ReactComponent as DownVote } from "../../../../assets/ArrowDownLg.svg"
@@ -11,6 +12,7 @@ import UserCard from "../../../../components/Components/UserCard/UserCard.compon
 
 import "./AnswerItem.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
+import { selectUser, selectToken } from "redux/slice/AuthSlice"
 
 const AnswerItem = ({
   answer,
@@ -18,17 +20,59 @@ const AnswerItem = ({
   // post: { post },
   // auth,
 }) => {
+  const [acToken] = useState(useSelector(selectToken))
+  const [user] = useState(useSelector(selectUser))
+  const [vote, setVote] = useState(answer.up-answer.down)
+  // console.log("user : ", user);
+  // console.log(answer);
+  const answerUpDown = (type) => {
+    getAnswerUpDown(acToken, answer.seq).then((res)=>{
+      console.log(res);
+      const updownData = res.data.result.data
+      if(updownData==null){
+        if (type=="UP"){
+          setVote(vote+1)
+        }else{
+          setVote(vote-1)
+        }
+      }else{
+        if(updownData.type=='UP'){
+          if (type=="UP"){
+            setVote(vote-1)
+          }else{
+            setVote(vote-2)
+          }
+        }else{
+          if (type=="UP"){
+            setVote(vote+2)
+          }else{
+            setVote(vote+1)
+          }
+        }
+      }
+      // const payload = res.data.result.data
+      // setAnswer(payload)
+      // setLoading(false)
+    })
+    answerUpdown(acToken, answer.seq, {type})
+    // if (type=="UP"){
+    //   setVote(vote+1)
+    // }else{
+    //   setVote(vote-1)
+    // }
+  }
+
   return (
     <Fragment>
       <div className='answer-layout'>
         <div className='vote-cell'>
           <div className='vote-container'>
-            <button className='vote-up' title='추천'>
-              <UpVote className='icon' />
+            <button className='vote-up' title='추천' onClick={() =>answerUpDown("UP")}>
+              <UpVote className='icon'/>
             </button>
-            <div className='vote-count fc-black-500'>0</div>
-            <button className='vote-down' title='비추천'>
-              <DownVote className='icon' />
+            <div className='vote-count fc-black-500'>{vote}</div>
+            <button className='vote-down' title='비추천' onClick={() => answerUpDown("DOWN")}>
+              <DownVote className='icon'/>
             </button>
           </div>
         </div>
@@ -54,27 +98,27 @@ const AnswerItem = ({
                 >
                   follow
                 </Link>
-                {/* {!auth.loading && auth.isAuthenticated && user_id === auth.user.id && (
+                {answer.userSeq === user.seq && (
                   <Link
                     className='s-link s-link__danger'
                     style={{ paddingLeft: "4px" }}
                     title='Delete the answer'
-                    onClick={(e) => deleteAnswer(id)}
-                    to={`/questions/${post.id}`}
+                    onClick={(e) => deleteAnswer(acToken,answer.seq)}
+                    to={`/questions/${answer.questionSeq}`}
                   >
                     delete
                   </Link>
-                )} */}
+                )}
               </div>
             </div>
-            {/* <UserCard
-              created_at={created_at}
-              user_id={user_id}
-              gravatar={gravatar}
-              username={username}
+            <UserCard
+              created_at={answer.createdTime}
+              user_id={answer.userSeq}
+              gravatar={user.profile}
+              username={answer.userNickname}
               dateType={"answered"}
               backgroundColor={"transparent"}
-            /> */}
+            />
           </div>
         </div>
       </div>
