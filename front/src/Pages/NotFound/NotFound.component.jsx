@@ -34,12 +34,10 @@ const NotFound = () => {
           <div className='box__description'>
             <div className='box__description-container'>
               <div className='box__description-title fc-black-800'>이런!</div>
-              <div className='box__description-text fc-black-500'>
-                죄송해요 당신이 원하는 페이지를 찾을 수가 없어요
-              </div>
+              <div className='box__description-text fc-black-500'>죄송해요 당신이 원하는 페이지를 찾을 수가 없어요</div>
             </div>
-            <Link to='/' className='box__button'>
-              홈페이지로 이동
+            <Link to='/questions' className='box__button'>
+              질문페이지로 이동
             </Link>
           </div>
         </div>
