@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -38,8 +38,32 @@ const titles = {
   "/add/question": "질문하기 - 코플로와",
 }
 
+//일정 시간마다 함수 호출 가능
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef()
+
+  useEffect(() => {
+    savedCallback.current = callback
+  })
+
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current()
+    }
+
+    const timerId = setInterval(tick, delay)
+    return () => clearInterval(timerId)
+  }, [delay])
+}
+
 const App = () => {
   const location = useLocation()
+  const [timer, setTimer] = useState(5)
+
+  useInterval(() => {
+    console.log(timer)
+    setTimer(timer - 1)
+  }, 1000)
 
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
   return (
