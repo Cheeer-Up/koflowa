@@ -8,7 +8,7 @@ const TALK = "/talk"
 const AUTH = "/auth"
 const GOOGLE = "google"
 const NICKNAME = "/nickname"
-
+const ELASTICTAGS = "/koflowa_tag_ranking/_search"
 // USERS
 export const usersData = "/users"
 export const profileData = "/users/{id}"
@@ -58,6 +58,7 @@ export const singleTagData = (tagName) => TAGS + `/${tagName}`
 export const registTag = TAGS + "/regist"
 export const watchTag = (tagSeq) => TAGS + `/watch/${tagSeq}`
 export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
+export const rankingTag = () => ELASTICTAGS
 
 // MEETING
 

@@ -1,5 +1,27 @@
 import api, { elastic_api } from "api/api"
-import { allTagsData, singleTagData, registTag, watchTag, ignoreTag } from "api/urls"
+import { allTagsData, singleTagData, registTag, watchTag, ignoreTag, rankingTag } from "api/urls"
+
+const rankingTagsCondition = {
+  _source: ["tag_seq", "tag_name", "tag_count"],
+  size: 10,
+  collapse: {
+    field: "tag_seq",
+  },
+  sort: [
+    {
+      tag_count: {
+        order: "desc",
+      },
+    },
+  ],
+}
+
+const allTagsCondition = {
+  _source: ["tag_seq", "tag_name", "tag_count"],
+  collapse: {
+    field: "tag_seq",
+  },
+}
 
 export const getAllTagsData = (params) => {
   return api().get(allTagsData, params)
@@ -33,6 +55,20 @@ export const deleteIgnoreTag = (tagSeq, data) => {
   return api().delete(ignoreTag(tagSeq), data)
 }
 
-export const getTagsRanking = () => {
-  return elastic_api().post()
+export const getRankingTags = () => {
+  return elastic_api().get(rankingTag(), {
+    params: {
+      source: JSON.stringify(rankingTagsCondition),
+      source_content_type: "application/json",
+    },
+  })
+}
+
+export const getAllTags = () => {
+  return elastic_api().get(rankingTag(), {
+    params: {
+      source: JSON.stringify(allTagsCondition),
+      source_content_type: "application/json",
+    },
+  })
 }
