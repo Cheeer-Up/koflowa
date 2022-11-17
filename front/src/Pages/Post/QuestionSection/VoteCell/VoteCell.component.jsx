@@ -8,8 +8,7 @@ import { ReactComponent as UpVote } from "../../../../assets/ArrowUpLg.svg"
 import { ReactComponent as DownVote } from "../../../../assets/ArrowDownLg.svg"
 import { postQuestionUpdown, getQuestionUpdown } from "api/question"
 
-const VoteCell = ({ answerCount, commentCount, tagCount, question }) => {
-  console.log("thiss : ",question);
+const VoteCell = ({ question }) => {
   const questionSeq = question.questionSeq
   const [acToken] = useState(useSelector(selectToken))
   const [user] = useState(useSelector(selectUser))
@@ -40,31 +39,15 @@ const VoteCell = ({ answerCount, commentCount, tagCount, question }) => {
           }
         }
       }
-      // const payload = res.data.result.data
-      // setAnswer(payload)
-      // setLoading(false)
     })
-    postQuestionUpdown(acToken, {questionUpdownType, questionSeq}) // questionSeq, type 객체로
+    postQuestionUpdown(acToken, {questionUpdownType, questionSeq})
 
   }
 
-  // console.log(answerCount, commentCount, tagCount)
   return (
     <Fragment>
       <div className='vote-cell fc-black-800'>
         <div className='stats'>
-          {/* <div className='vote'>
-            <span className='vote-count'>{answerCount}</span>
-            <div className='count-text'>답변</div>
-          </div> */}
-          {/* <div className='vote'>
-            <span className='vote-count'>{commentCount}0</span>
-            <div className='count-text'>코멘트</div>
-          </div> */}
-          {/* <div className='vote'>
-            <span className='vote-count'>{tagCount}</span>
-            <div className='count-text'>태그</div>
-          </div> */}
           </div>
         <div/>
         <div className='answer-layout'>
