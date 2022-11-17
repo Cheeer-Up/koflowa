@@ -1,38 +1,43 @@
 import React, { Fragment, useState, useRef } from "react"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import PropTypes from "prop-types"
-import { addAnswer } from "../../../../redux/answers/answers.actions"
+// import { addAnswer } from "../../../../redux/answers/answers.actions"
+import { postAnswer } from "api/answer"
+import { selectToken } from "redux/slice/AuthSlice"
 
 import LinkButton from "../../../../components/Components/LinkButton/LinkButton.component"
 import MarkdownEditor from "../../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
 
 import "./AnswerForm.styles.scss"
 
-const AnswerForm = ({ addAnswer, auth, post: { post } }) => {
+const AnswerForm = ({ auth, questionSeq }) => {
   const [formData, setFormData] = useState({
-    text: "",
+    content: "",
   })
-
+  console.log(formData);
+  const [acToken] = useState(useSelector(selectToken))
+  console.log(acToken);
   const markdownEditorRef = useRef(null)
 
-  const { text } = formData
+  const { content } = formData
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    addAnswer(post.id, { text })
+    postAnswer(acToken, questionSeq, {content} )
+    console.log("content : ", {content});
     setFormData({
-      text: "",
+      content: "",
     })
     markdownEditorRef.current.cleanEditorState()
   }
 
   const updateConvertedContent = (htmlConvertedContent) => {
-    setFormData({ ...formData, text: htmlConvertedContent })
+    setFormData({ ...formData, content : htmlConvertedContent })
   }
 
   return (
     <Fragment>
-      {!auth.loading && auth.isAuthenticated ? (
+      {acToken ? (
         <Fragment>
           <form className='answer-form' onSubmit={(e) => handleSubmit(e)}>
             <div className='answer-grid'>
@@ -59,7 +64,7 @@ const AnswerForm = ({ addAnswer, auth, post: { post } }) => {
 }
 
 AnswerForm.propTypes = {
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   // addAnswer: PropTypes.func.isRequired,
   // post: PropTypes.object.isRequired,
 }
@@ -69,4 +74,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 })
 
-export default connect(mapStateToProps, { addAnswer })(AnswerForm)
+export default connect(mapStateToProps, { postAnswer })(AnswerForm)

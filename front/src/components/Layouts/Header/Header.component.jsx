@@ -16,13 +16,15 @@ const Header = () => {
   let history = useNavigate()
   const dispatch = useDispatch()
   const isAuthenticated = true
-  const [userState] = useState(useSelector(selectUser))
+  const [userState, setUserState] = useState(useSelector(selectUser))
   const [searchState, setSearchState] = useState(false)
 
   const AuthLinks = () => {
     /** localStorage의 Token들과 redux의 user를 삭제하여 로그아웃을 합니다. */
     const removeTokens = () => {
       dispatch(setUser(null))
+      dispatch(setToken(null))
+      setUserState(null)
       localStorage.removeItem("accessToken")
       localStorage.removeItem("refreshToken")
       history.push("/")
@@ -68,7 +70,7 @@ const Header = () => {
       </form>
     )
   }
-  if (window.location.pathname === '/meeting') return null;
+  if (window.location.pathname === "/meeting") return null
   return (
     <Fragment>
       {/* 모바일 사이즈 시 햄버거 노출 */}

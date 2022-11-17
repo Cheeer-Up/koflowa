@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { getAnswers } from "../../../redux/answers/answers.actions"
+import { getAnswerList } from "api/answer"
 import handleSorting from "../../../utils/handleSorting"
 
 import AnswerItem from "./AnswerItem/AnswerItem.component"
@@ -10,12 +10,18 @@ import AnswerForm from "./AnswerForm/AnswerForm.component"
 import ButtonGroup from "../../../components/Components/ButtonGroup/ButtonGroup.component"
 
 import "./AnswerSection.styles.scss"
-
-const AnswerSection = ({ getAnswers, answer, post: { post } }) => {
+  
+const AnswerSection = ({ questionSeq, page, size} ) => {
+  const [auth, setAuth] = useState("");
+  const [answer, setAnswer] = useState([]);
+  const questionSequence = questionSeq;
   useEffect(() => {
-    getAnswers(post.id)
+    getAnswerList(questionSeq, page, size).then((res)=>{
+      setAnswer(res.data.result.data.content);
+      // console.log("res.data.result.data.content: ",res.data.result.data.content);
+    })
     // eslint-disable-next-line
-  }, [getAnswers])
+  }, [getAnswerList])
 
   const [sortType, setSortType] = useState("Newest")
 
@@ -34,17 +40,34 @@ const AnswerSection = ({ getAnswers, answer, post: { post } }) => {
             />
           </div>
         </div>
-        {answer.loading === null ? (
+        {/* {answer.loading === null ? (
           <Spinner width='25px' height='25px' />
         ) : (
           answer.answers?.sort(handleSorting(sortType)).map((answer, index) => (
             <div key={index} className='answers'>
               <AnswerItem answer={answer} />
+              <p>test</p>
             </div>
           ))
-        )}
+        )} */}
+
+        {
+        answer.map((data, idx) => (
+            <div key={idx} className='answers'>
+              <AnswerItem answer={data} />
+            </div>
+          ))
+        }
+
+        {/* {answer.answers?.sort().map((answer, index) => (
+          <div key={index} className='answers'>
+            <AnswerItem answer={answer} />
+            <p>test</p>
+          </div>
+        ))} */}
+
         <div className='add-answer'>
-          <AnswerForm />
+          <AnswerForm auth={auth} questionSeq={questionSequence}/>
         </div>
       </div>
     </Fragment>
@@ -62,4 +85,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 })
 
-export default connect(mapStateToProps, { getAnswers })(AnswerSection)
+export default connect(mapStateToProps, { getAnswerList })(AnswerSection)
