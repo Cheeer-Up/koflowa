@@ -35,9 +35,9 @@ const MarkdownEditor = forwardRef((props, ref) => {
       // 'HISTORY_BUTTONS',
     ],
     INLINE_STYLE_BUTTONS: [
-      {label: 'Bold', style: 'BOLD', className: 'button-format'},
-      {label: 'Italic', style: 'ITALIC', className: 'button-format'},
-      {label: 'Underline', style: 'UNDERLINE', className: 'button-format'},
+      {label: '굵게', style: 'BOLD', className: 'button-format'},
+      {label: '기울임꼴', style: 'ITALIC', className: 'button-format'},
+      {label: '밑줄', style: 'UNDERLINE', className: 'button-format'},
       // {label: 'Monospace', style: 'CODE', className: 'button-format'},
     ],
     // BLOCK_TYPE_DROPDOWN: [
@@ -47,11 +47,11 @@ const MarkdownEditor = forwardRef((props, ref) => {
     //   {label: 'Heading Small', style: 'header-three'},
     // ],
     BLOCK_TYPE_BUTTONS: [
-      {label: 'UL', style: 'unordered-list-item', className: 'button-format'},
-      {label: 'OL', style: 'ordered-list-item', className: 'button-format'},
-      {label: 'Blockquote', style: 'blockquote', className: 'button-format'},
+      {label: '글머리 기호', style: 'unordered-list-item', className: 'button-format'},
+      {label: '번호 매기기', style: 'ordered-list-item', className: 'button-format'},
+      {label: '인용', style: 'blockquote', className: 'button-format'},
       {
-        label: 'Code Block',
+        label: '코드 블록',
         style: 'code-block',
         className: 'button-format code-block',
       },

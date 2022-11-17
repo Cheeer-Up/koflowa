@@ -16,7 +16,7 @@ const Post = () => {
 
   useEffect(() => {
     getQuestionData(questionSeq).then((result) => {
-      console.log(result.data.result.data)
+      // console.log("question : ",result.data.result.data)
       setQuestion(result.data.result.data)
     })
   }, [])
@@ -26,6 +26,8 @@ const Post = () => {
   ) : (
     <Fragment>
       <div id='mainbar' className='post'>
+        <br />
+        <br />
         <div className='question-header fc-black-800 pl24'>
           <h1>{question.questionTitle}</h1>
           <div>
@@ -38,9 +40,8 @@ const Post = () => {
           </div>
         </div>
         <div className='question-main pl24 pt16'>
-          <p>{question.questionContent}</p>
           <QuestionSection question={question} />
-          <AnswerSection questionSeq={questionSeq} page='0' size='10' />
+          <AnswerSection question={question}/>
         </div>
       </div>
     </Fragment>

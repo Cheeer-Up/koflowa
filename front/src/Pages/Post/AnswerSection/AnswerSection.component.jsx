@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { getAnswerList } from "api/answer"
 import handleSorting from "../../../utils/handleSorting"
+import Pagination from "components/Layouts/Pagination/Pagination.component"
 
 import AnswerItem from "./AnswerItem/AnswerItem.component"
 import Spinner from "../../../components/Components/Spinner/Spinner.component"
@@ -11,27 +12,37 @@ import ButtonGroup from "../../../components/Components/ButtonGroup/ButtonGroup.
 
 import "./AnswerSection.styles.scss"
   
-const AnswerSection = ({ questionSeq, page, size} ) => {
+const AnswerSection = ({ question } ) => {
   const [auth, setAuth] = useState("");
   const [answer, setAnswer] = useState([]);
-  const questionSequence = questionSeq;
+  // const [page, setPage] = useState(1)
+  // const [totalPage, setTotalPage] = useState(1)
+  // const size = 5
+  // const sort = "seq"
+  const questionSequence = question.questionSeq;
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
-    getAnswerList(questionSeq, page, size).then((res)=>{
-      setAnswer(res.data.result.data.content);
-      // console.log("res.data.result.data.content: ",res.data.result.data.content);
+    getAnswerList(questionSequence).then((res)=>{
+      const payload = res.data.result.data
+      setAnswer(payload)
+      setLoading(false)
     })
     // eslint-disable-next-line
-  }, [getAnswerList])
-
+  }, [])
+  // const handlePaginationChange = (e, value) => {
+  //   setPage(value)
+  // }
   const [sortType, setSortType] = useState("Newest")
-
+  const handleChange = (e) => {
+    e.preventDefault()
+  }
   return (
     <Fragment>
       <div className='answer'>
         <div className='answer-header fc-black-800'>
           <div className='answer-sub-header'>
             <div className='answer-headline'>
-              <h2>Answers</h2>
+              <h2>답변</h2>
             </div>
             <ButtonGroup
               buttons={["Newest", "Oldest"]}
@@ -51,13 +62,18 @@ const AnswerSection = ({ questionSeq, page, size} ) => {
           ))
         )} */}
 
-        {
-        answer.map((data, idx) => (
-            <div key={idx} className='answers'>
-              <AnswerItem answer={data} />
-            </div>
-          ))
+        {loading === null ? (
+          <Spinner width='25px' height='25px' />
+        ) : (
+          answer.map((data, idx) => (
+              <div key={idx} className='answers'>
+                <AnswerItem answer={data} />
+              </div>
+            ))
+        )
         }
+
+        {/* <Pagination page={page} count={totalPage} handlePaginationChange={handlePaginationChange} /> */}
 
         {/* {answer.answers?.sort().map((answer, index) => (
           <div key={index} className='answers'>
