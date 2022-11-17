@@ -19,7 +19,11 @@ export const GOOGLE_AUTH_URL =
   GOOGLE +
   "?redirect_uri=" +
   process.env.REACT_APP_PUBLIC_URL +
-  "/"
+  "/nickname"
+
+export const GOOGLE_REGISTER_SET_NICKNAME =
+  process.env.REACT_APP_API_URL + 
+  "/nickname/"
 
 // MYPAGES
 export const allProfile = (page, size, sort) => MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
@@ -62,3 +66,4 @@ export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
 
 //SIGN
 export const auth = AUTH
+export const getNickname = (nickname) => NICKNAME + `/${nickname}`
