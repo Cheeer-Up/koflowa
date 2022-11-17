@@ -34,8 +34,8 @@ export const getAnswerDetail = (answerSeq) => {
   return api().get(getAnswerDetailUrl(answerSeq))
 }
 
-export const getAnswerList = (questionSeq, page, size) => {
-  return api().get(getAnswerListUrl(questionSeq, page, size))
+export const getAnswerList = (questionSeq) => {
+  return api().get(getAnswerListUrl(questionSeq))
 }
 
 export const getAnswerComment = (answerSeq) => {
@@ -52,4 +52,8 @@ export const putAnswerComment = (accessToken, data) => {
 
 export const deleteAnswerComment = (accessToken) => {
   return api(accessToken).delete(commentUrl)
+}
+
+export const getAnswerUpDown = (accessToken, answerSeq) => {
+  return api(accessToken).get(answerUpDownUrl(answerSeq))
 }

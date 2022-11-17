@@ -1,38 +1,28 @@
 package com.d202.koflowa.question.service;
 
-import com.d202.koflowa.S_J_O.service.auth.CustomUserDetailsService;
-import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.domain.Comment;
 import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.answer.repository.CommentRepository;
 import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.common.domain.UDType;
 import com.d202.koflowa.common.exception.CommentNotFoundException;
-import com.d202.koflowa.exception.QuestionNotFoundException;
-import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.question.domain.QuestionTag;
 import com.d202.koflowa.question.domain.QuestionUpdown;
 import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.dto.QuestionUpdownDto;
 import com.d202.koflowa.question.exception.QuestionCommentNotFoundException;
-import com.d202.koflowa.question.exception.QuestionUpException;
-import com.d202.koflowa.question.exception.QuestionUserNotFoundException;
 import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.question.repository.QuestionTagRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
-import com.d202.koflowa.tag.domain.Tag;
-import com.d202.koflowa.tag.dto.TagDto;
 import com.d202.koflowa.tag.repository.TagRepository;
-import com.d202.koflowa.talk.exception.RoomNotFoundException;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
 import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -128,7 +118,8 @@ public class QuestionService {
     public QuestionDto.Response getQuestionDetail(Long question_seq) {
         Question question = questionRepository.findBySeq(question_seq)
                 .orElseThrow(() -> new SpecificQuestionNotFound());
-        return  new QuestionDto.Response(question);
+        List<String> tagList = questionTagRepository.findTagNameByQuestionSeq(question.getSeq());
+        return new QuestionDto.Response(question, tagList);
     }
     public QuestionDto.Response updateQuestion(QuestionDto.Request questionDto) {
         System.out.println(questionDto);

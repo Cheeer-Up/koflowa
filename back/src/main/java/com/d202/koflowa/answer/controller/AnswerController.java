@@ -8,6 +8,7 @@ import com.d202.koflowa.common.response.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,8 +95,14 @@ public class AnswerController {
 
     /* 질문에 대한 답변 리스트 조회 */
     @Operation(summary = "질문에 대한 답변 리스트 조회", description = "질문 seq로 질문에 대한 대답 리스트를 조회하는 api 입니다.")
-    @GetMapping("/{question-seq}/{page}/{size}")
-    public Response searchQuestionByKeyword(@PathVariable("question-seq") Long questionSeq, @PathVariable int page, @PathVariable int size) {
-        return Response.success(answerService.searchAnswerByQuestionSeq(questionSeq, page, size));
+    @GetMapping("/{question-seq}")
+    public Response searchAnswerByQuestionSeq(@PathVariable("question-seq") Long questionSeq) {
+        return Response.success(answerService.searchAnswerByQuestionSeq(questionSeq));
+    }
+
+    @Operation(summary = "답변 추천 여부 조회", description = "답변 seq로 답변에 대한 추천 여부를 조회하는 api 입니다.")
+    @GetMapping("/updown/{answer-seq}")
+    public Response searchAnswerUpdown(@PathVariable("answer-seq") Long answerSeq) {
+        return Response.success(answerService.searchAnswerUpdown(answerSeq));
     }
 }

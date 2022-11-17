@@ -2,10 +2,7 @@ package com.d202.koflowa.S_J_O.service.auth;
 
 import com.d202.koflowa.S_J_O.TokenMapping;
 import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
-import com.d202.koflowa.S_J_O.payload.request.auth.ChangePasswordRequest;
 import com.d202.koflowa.S_J_O.payload.request.auth.RefreshTokenRequest;
-import com.d202.koflowa.S_J_O.payload.request.auth.SignInRequest;
-import com.d202.koflowa.S_J_O.payload.request.auth.SignUpRequest;
 import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
 import com.d202.koflowa.S_J_O.payload.response.AuthResponse;
 import com.d202.koflowa.S_J_O.payload.response.Message;
@@ -15,14 +12,10 @@ import com.d202.koflowa.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Optional;
 
 @RequiredArgsConstructor
