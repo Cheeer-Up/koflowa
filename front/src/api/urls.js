@@ -41,6 +41,8 @@ export const userAnswer = (page, size, sort, userSeq) =>
 export const question = QUESTION
 export const questionTag = (tagName) => QUESTION + `/tag/${tagName}`
 export const singleQuestionData = (questionSeq) => QUESTION + `/${questionSeq}`
+export const questionUpdown = QUESTION + `/updown`
+export const getQuestionUpdownUrl = (questionSeq) => QUESTION + `/updown/${questionSeq}`
 
 // ANSWER
 export const createAnswerUrl = (questionSeq) => ANSWER + `/${questionSeq}`
