@@ -16,6 +16,7 @@ const QuestionSection = (question) => {
             answerCount={question.question.answerCount}
             commentCount={question.question.comment_count}
             tagCount={question.question.tagList ? question.question.tagList.length : 0}
+            question={question.question}
           />
           <PostCell content={question.question}/>
           {/* <CommentCell /> */}
