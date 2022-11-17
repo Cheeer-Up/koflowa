@@ -15,8 +15,7 @@ const itemsPerPage = 10
 const QuestionsPage = () => {
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
-  const [questions, setQuestions] = useState(null)
-  console.log(questions);
+  const [questions, setQuestions] = useState([])
 
   let searchQuery = new URLSearchParams(useLocation().search).get("search")
 
@@ -26,12 +25,21 @@ const QuestionsPage = () => {
       page: page - 1,
       size: itemsPerPage,
       sort: ["createdTime.desc"],
-    }).then((res) => {
-      console.log("getQuestionsData: ", res)
-      setTotalPage(res.data.result.data.totalPages)
-      // setQuestions(res.data.result.data.content)
-      setQuestions(res.data.result.data)
     })
+      .then((res) => {
+        console.log("getQuestionsData: ", res)
+        setTotalPage(res.data.result.data.totalPages)
+        console.log("res.data.result.data.totalPages: ", res.data.result.data.totalPages)
+        // setQuestions(res.data.result.data.content)
+        setQuestions(res.data.result.data.content)
+        console.log("res.data.result.data.content: ", res.data.result.data.content)
+        res.data.result.data.content.map((data, idx) => {
+          console.log("data, idx: ", data, idx)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [page])
 
   const handlePaginationChange = (e, value) => {
@@ -40,9 +48,10 @@ const QuestionsPage = () => {
     }
   }
 
-  return questions === null ? (
-    <Spinner type='page' width='75px' height='200px' />
-  ) : (
+  // loading === true || questions === null ? (
+  //   <Spinner type='page' width='75px' height='200px' />
+  // ) : (
+  return (
     <Fragment>
       <div id='mainbar' className='questions-page fc-black-800'>
         <div className='questions-grid'>
@@ -51,6 +60,7 @@ const QuestionsPage = () => {
             <LinkButton text={"질문 하기"} link={"/add/question"} type={"s-btn__primary"} />
           </div>
         </div>
+        {/* 질문을 검색했다면 */}
         {searchQuery ? (
           <div className='search-questions'>
             <span style={{ color: "#acb2b8", fontSize: "12px" }}>Results for {searchQuery}</span>
@@ -60,10 +70,10 @@ const QuestionsPage = () => {
           ""
         )}
         <div className='questions-tabs'>
-          <span>{new Intl.NumberFormat("en-IN").format(questions.content.length)} 질문글</span>
+          <span>{new Intl.NumberFormat("en-IN").format(questions.length)} 질문글</span>
         </div>
         <div className='questions'>
-          {questions.content.map((question, index) => (
+          {questions.map((question, index) => (
             <PostItem key={index} question={question} />
           ))}
         </div>
