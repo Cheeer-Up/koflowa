@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-// import axios from "axios"
 
 export const AuthSlice = createSlice({
   name: "AuthSlice",
@@ -11,10 +10,10 @@ export const AuthSlice = createSlice({
       authProvider: "",
       email: "",
       name: "",
-      nickname:"",
+      nickname: "",
       profile: "",
       role: "",
-      seq: ""
+      seq: "",
     },
     isEdit: false,
     file: null,
