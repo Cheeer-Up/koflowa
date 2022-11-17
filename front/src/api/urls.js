@@ -8,7 +8,7 @@ const TALK = "/talk"
 const AUTH = "/auth"
 const GOOGLE = "google"
 const NICKNAME = "/nickname"
-
+const ELASTICTAGS = "/koflowa_tag_ranking/_search"
 // USERS
 export const usersData = "/users"
 export const profileData = "/users/{id}"
@@ -50,7 +50,7 @@ export const commentUrl = ANSWER + `/comment`
 export const answerUpDownUrl = (answerSeq) => ANSWER + `/updown/${answerSeq}`
 export const answerAcceptUrl = (answerSeq) => ANSWER + `/accept/${answerSeq}`
 export const getAnswerCommentUrl = (answerSeq) => ANSWER + `/comment/${answerSeq}`
-export const getAnswerListUrl = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
+export const getAnswerListUrl = (questionSeq) => ANSWER + `/${questionSeq}`
 
 // TAGS
 export const allTagsData = TAGS
@@ -58,6 +58,7 @@ export const singleTagData = (tagName) => TAGS + `/${tagName}`
 export const registTag = TAGS + "/regist"
 export const watchTag = (tagSeq) => TAGS + `/watch/${tagSeq}`
 export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
+export const rankingTag = () => ELASTICTAGS
 
 // MEETING
 

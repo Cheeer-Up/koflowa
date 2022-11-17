@@ -7,8 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Page<Answer> findByUserSeq(long userSeq, Pageable pageable);
-    Page<Answer> findAllByQuestion_Seq(Long questionSeq, PageRequest pageRequest);
+    List<Answer> findAllByQuestion_Seq(Long questionSeq);
 }
