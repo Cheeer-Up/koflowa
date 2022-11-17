@@ -9,12 +9,22 @@ import { getTagsRanking } from "api/tags"
 import axios from "axios"
 import { EastTwoTone } from "@mui/icons-material"
 
+// const { Client } = require("@elastic/elasticsearch")
+// const client = new Client({
+//   cloud: {
+//     id: "<cloud-id>",
+//   },
+//   auth: {
+//     username: "elastic",
+//     password: "changeme",
+//   },
+// })
+
 const TagsWidget = () => {
   const [tags, setTags] = useState([])
   const loading = false // test
   useEffect(() => {
-    axios({
-      url: "http://k7d202.p.ssafy.io:9200/koflowa_tag_ranking/_search?sort=tag_count:desc",
+    axios("http://k7d202.p.ssafy.io:9200/koflowa_tag_ranking/_search?sort=tag_count:desc", {
       method: "get",
       data: {
         _source: ["tag_seq", "tag_name", "tag_count"],
