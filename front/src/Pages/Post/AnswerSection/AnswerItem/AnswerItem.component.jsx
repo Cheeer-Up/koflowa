@@ -23,11 +23,8 @@ const AnswerItem = ({
   const [acToken] = useState(useSelector(selectToken))
   const [user] = useState(useSelector(selectUser))
   const [vote, setVote] = useState(answer.up-answer.down)
-  // console.log("user : ", user);
-  // console.log(answer);
   const answerUpDown = (type) => {
     getAnswerUpDown(acToken, answer.seq).then((res)=>{
-      console.log(res);
       const updownData = res.data.result.data
       if(updownData==null){
         if (type=="UP"){
