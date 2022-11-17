@@ -1,6 +1,7 @@
 package com.d202.koflowa.question.service;
 
 import com.d202.koflowa.answer.domain.Comment;
+import com.d202.koflowa.answer.dto.AnswerUpdownDto;
 import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.answer.repository.CommentRepository;
 import com.d202.koflowa.common.domain.QAType;
@@ -244,5 +245,15 @@ public class QuestionService {
         }
 
         return commentResponseList;
+    }
+
+    public QuestionUpdownDto.Response searchupDownQuestion(Long questionSeq){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        QuestionUpdown questionUpdownOptional = questionUpDownRepository.findByQuestionSeqAndUserSeq(questionSeq, user.getSeq());
+        if(questionUpdownOptional!=null) {
+            return new QuestionUpdownDto.Response(questionUpdownOptional);
+        }else{
+            return null;
+        }
     }
 }

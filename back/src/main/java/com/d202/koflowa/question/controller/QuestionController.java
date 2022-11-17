@@ -87,8 +87,14 @@ public class QuestionController {
     @Operation(summary = "질문 추천/비추천", description = "질문을 추천하거나 비추천하는 api 입니다.")
     @PostMapping("/updown")
     public Response upDownQuestion(@RequestBody QuestionUpdownDto.Request questionUpdownDto) {
-        Long user_seq = 0L; // 헤더에서 토큰 분리 후 같이 조회하기
         return Response.success(questionService.setQuestionUpDown(questionUpdownDto));
+    }
+
+    /* 질문 추천 및 비추천 여부 조회 */
+    @Operation(summary = "질문 추천 여부 조회", description = "질문 seq로 질문에 대한 추천 여부를 조회하는 api 입니다.")
+    @GetMapping("/updown/{question-seq}")
+    public Response searchupDownQuestion(@PathVariable("question-seq") Long questionSeq) {
+        return Response.success(questionService.searchupDownQuestion(questionSeq));
     }
 
     /* 질문 코멘트 작성 */
