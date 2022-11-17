@@ -60,17 +60,15 @@ public class TagController {
 
 
     @Operation(summary = "주시 태그 추가", description = "주시 태그 추가 api 입니다.")
-    @PostMapping("/watch/{tagSeq}")
-    public Response postWatchedTag(@PathVariable Long tagSeq,
-                                            @RequestParam Long userSeq) {
-        return Response.success(tagService.postUserTag(tagSeq, userSeq, TagStatus.WATCHED));
+    @PostMapping("/watch/{tagName}")
+    public Response postWatchedTag(@PathVariable String tagName) {
+        return Response.success(tagService.postUserTag(tagName, TagStatus.WATCHED));
     }
 
     @Operation(summary = "주시 태그 삭제", description = "주시 태그 삭제 api 입니다.")
-    @DeleteMapping("/watch/{tagSeq}")
-    public Response deleteWatchedTag(@PathVariable Long tagSeq,
-                                              @RequestParam Long userSeq) {
-        return Response.success(tagService.deleteUserTag(tagSeq, userSeq, TagStatus.WATCHED));
+    @DeleteMapping("/watch/{tagName}")
+    public Response deleteWatchedTag(@PathVariable String tagName) {
+        return Response.success(tagService.deleteUserTag(tagName, TagStatus.WATCHED));
     }
 
     @Operation(summary = "숨김 태그 목록 가져오기", description = "사용자가 저장한 숨김 태그 목록을 가져옵니다.")
@@ -80,17 +78,15 @@ public class TagController {
     }
 
     @Operation(summary = "숨김 태그 추가", description = "숨김 태그 추가 api 입니다.")
-    @PostMapping("/ignore/{tagSeq}")
-    public Response postIgnoredTag(@PathVariable Long tagSeq,
-                                            @RequestParam Long userSeq) {
-        return Response.success(tagService.postUserTag(tagSeq, userSeq, TagStatus.IGNORED));
+    @PostMapping("/ignore/{tagName}")
+    public Response postIgnoredTag(@PathVariable String tagName) {
+        return Response.success(tagService.postUserTag(tagName, TagStatus.IGNORED));
     }
 
     @Operation(summary = "숨김 태그 삭제", description = "숨김 태그 삭제 api 입니다.")
-    @DeleteMapping("/ignore/{tagSeq}")
-    public Response deleteIgnoredTag(@PathVariable Long tagSeq,
-                                              @RequestParam Long userSeq) {
-        return Response.success(tagService.deleteUserTag(tagSeq, userSeq, TagStatus.IGNORED));
+    @DeleteMapping("/ignore/{tagName}")
+    public Response deleteIgnoredTag(@PathVariable String tagName) {
+        return Response.success(tagService.deleteUserTag(tagName, TagStatus.IGNORED));
     }
 
     @Operation(summary = "태그 목록 가져오기", description = "모든 태그의 이름을 리스트로 반환합니다.")
