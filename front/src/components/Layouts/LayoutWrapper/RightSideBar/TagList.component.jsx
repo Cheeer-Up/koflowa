@@ -12,7 +12,7 @@ function TagList(props) {
 
   return (
     <Fragment>
-      <div class='ReactTags__selected'>{tagsListDiv}</div>
+      <div className='ReactTags__selected'>{tagsListDiv}</div>
     </Fragment>
   )
 }
