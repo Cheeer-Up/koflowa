@@ -2,10 +2,11 @@
   margin-top: 4px;
   margin-bottom: 4px;
   border-radius: 3px;
-  background-color: #3e4a52;
+  background-color: #d0e3f1;
   text-align: left;
   vertical-align: top;
   width: 200px;
+  // border: 1px solid;
 
   .user-block {
     box-sizing: border-box;
@@ -60,7 +61,7 @@
         font-size: 14px;
 
         &:hover {
-          color:#0095ff;
+          color: #0095ff;
         }
       }
     }
