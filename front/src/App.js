@@ -58,12 +58,12 @@ const useInterval = (callback, delay) => {
 
 const App = () => {
   const location = useLocation()
-  const [timer, setTimer] = useState(5)
+  // const [timer, setTimer] = useState(5)
 
-  useInterval(() => {
-    console.log(timer)
-    setTimer(timer - 1)
-  }, 1000)
+  // useInterval(() => {
+  //   console.log(timer)
+  //   setTimer(timer - 1)
+  // }, 1000)
 
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
   return (
@@ -79,9 +79,9 @@ const App = () => {
         <Route
           path='/'
           element={
-            <LayoutRoute>
+            <BaseRoute>
               <HomePage />
-            </LayoutRoute>
+            </BaseRoute>
           }
         />
         {/* 질문 페이지 */}

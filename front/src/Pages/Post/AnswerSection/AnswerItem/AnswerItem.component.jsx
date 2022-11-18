@@ -23,6 +23,7 @@ const AnswerItem = ({
   const [acToken] = useState(useSelector(selectToken))
   const [user] = useState(useSelector(selectUser))
   const [vote, setVote] = useState(answer.up-answer.down)
+  console.log("answer : ",answer);
   const answerUpDown = (type) => {
     getAnswerUpDown(acToken, answer.seq).then((res)=>{
       const updownData = res.data.result.data
@@ -111,7 +112,7 @@ const AnswerItem = ({
             <UserCard
               created_at={answer.createdTime}
               user_id={answer.userSeq}
-              gravatar={user.profile}
+              gravatar={answer.profile}
               username={answer.userNickname}
               dateType={"answered"}
               backgroundColor={"transparent"}

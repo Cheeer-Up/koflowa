@@ -36,6 +36,7 @@ public class AnswerDto {
         private Long userSeq;
 //        private User user;
         private String userNickname;
+        private String profile;
         private Boolean accept;
         private String createdTime;
         private String modifiedTime;
@@ -50,6 +51,7 @@ public class AnswerDto {
             this.content = answer.getContent();
             this.userSeq = answer.getUser().getSeq();
             this.userNickname = answer.getUser().getNickname();
+            this.profile  = answer.getUser().getProfile();
             this.accept = answer.getAccept();
             this.createdTime = answer.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);
             this.modifiedTime = answer.getModifiedTime().format(DateTimeFormatter.ISO_DATE_TIME);
