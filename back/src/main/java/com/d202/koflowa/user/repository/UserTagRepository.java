@@ -20,4 +20,7 @@ public interface UserTagRepository extends JpaRepository<UserTag, Long> {
     List<UserTag> findByUser_Seq(long userSeq);
 
     public List<UserTag> findByUserAndTagStatus(User user, TagStatus tagStatus);
+
+    @Query("select ut.tag from UserTag as ut where ut.user = :user and ut.tagStatus = :tagStatus")
+    List<Tag> findTagByUserAndTagStatus(User user, TagStatus tagStatus);
 }

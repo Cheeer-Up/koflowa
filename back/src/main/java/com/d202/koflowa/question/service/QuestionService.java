@@ -1,10 +1,10 @@
 package com.d202.koflowa.question.service;
 
 import com.d202.koflowa.answer.domain.Comment;
-import com.d202.koflowa.answer.dto.AnswerUpdownDto;
 import com.d202.koflowa.answer.dto.CommentDto;
 import com.d202.koflowa.answer.repository.CommentRepository;
 import com.d202.koflowa.common.domain.QAType;
+import com.d202.koflowa.common.domain.TagStatus;
 import com.d202.koflowa.common.domain.UDType;
 import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.question.domain.Question;
@@ -19,12 +19,13 @@ import com.d202.koflowa.question.repository.QuestionTagRepository;
 import com.d202.koflowa.question.repository.QuestionUpDownRepository;
 import com.d202.koflowa.tag.repository.TagRepository;
 import com.d202.koflowa.user.domain.User;
-import com.d202.koflowa.user.repository.UserRepository;
+import com.d202.koflowa.user.repository.UserTagRepository;
 import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -40,15 +41,23 @@ public class QuestionService {
     private final QuestionUpDownRepository questionUpDownRepository;
     private final TagRepository tagRepository;
     private final QuestionTagRepository questionTagRepository;
-    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ReputationService reputationService;
 
     public Page<QuestionDto.Response> getAllQuestion(Pageable pageable) {
-        Page<Question> questions = questionRepository.findAll(pageable);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Page<Question> questions;
+        if (authentication.getPrincipal() != "anonymousUser")
+        {
+            // 로그인 한 경우
+            User user = (User) authentication.getPrincipal();
+            // WATCHED 로 필터링
+            questions = questionTagRepository.findQuestionByUser(user, pageable);
+        } else {
+            questions = questionRepository.findAll(pageable);
+        }
 
         List<QuestionDto.Response> pageDtoList = new ArrayList<>();
-
         for(Question question : questions) {
             List<String> tagList = questionTagRepository.findTagNameByQuestionSeq(question.getSeq());
             QuestionDto.Response questionResponse = new QuestionDto.Response(question, tagList);
