@@ -78,14 +78,14 @@ const Header = () => {
         <div className='hamburger'>
           <MobileSideBar hasOverlay />
         </div>
+        ``
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
-          <Link className='navbar-brand' to='/'>
+          <Link className='navbar-brand' to='/questions'>
             <Logo className='full-logo' />
             <SmallLogo className='glyph-logo' />
           </Link>
         </div>
-
         {/* 검색 창 */}
         <form
           id='search'
@@ -105,7 +105,6 @@ const Header = () => {
             <Search />
           </div>
         </form>
-
         <div className='header-search-div'>
           {/* 로그인 시 AuthLinks 아닐 시 guest */}
           <IsAuth />
