@@ -34,7 +34,7 @@ const Header = () => {
         {userState === null ? (
           <Spinner width='50px' height='50px' />
         ) : (
-          <Link to={`/users/${userState.email}`}>
+          <Link to={`/users/${userState.seq}`}>
             <img alt='user-logo' className='logo' src={userState.profile} />
           </Link>
         )}
