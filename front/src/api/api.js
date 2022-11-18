@@ -1,5 +1,4 @@
 import axios from "axios"
-
 // BASE_URL 설정
 const config = {
   BASE_URL: "https://k7d202.p.ssafy.io/api",
@@ -60,7 +59,7 @@ export const image_api = (accessToken) =>
 
 export const elastic_api = () => {
   return axios.create({
-    baseURL: process.env.REACT_APP_ELASTIC,
+    baseURL: process.env.REACT_APP_ELASTIC_URL,
   })
 }
 
