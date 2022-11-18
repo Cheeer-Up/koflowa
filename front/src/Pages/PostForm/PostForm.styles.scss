@@ -2,10 +2,11 @@
   width: 100%;
   height: calc(100vh - 64px);
   max-width: 100%;
+  min-height: 1000px;
   display: flex;
   justify-content: center;
   // margin: 64px 0 0 0;
-  background-color: #3d3d3d;
+  background-color: #ffffff;
   position: relative;
   flex: 1 0 auto;
   color: #242729;
@@ -15,7 +16,7 @@
     overflow: visible;
     width: 100%;
     margin: 0;
-    background-color: transparent;
+    background-color: #ffffff !important;
     padding-top: 0;
     padding-left: 24px;
     padding-right: 24px;

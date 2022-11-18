@@ -29,11 +29,11 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter]
 
 const de = {
   position: "absolute",
-  top: "50%",
+  top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#3c4146",
+  bgcolor: "#ffffff",
   boxShadow: 24,
   borderRadius: "15px",
   pt: 2,
@@ -178,8 +178,7 @@ const AskForm = () => {
                 {/* Body */}
                 내용
                 <p className='body-desc fw-normal fs-caption fc-black-800'>
-                  {/* Include all the information someone would need to answer your question */}
-                  누군가가 귀하의 질문에 대답하는 데 필요한 모든 정보를 포함하십시오.
+                  다른사람들이 질문을 이해하기 쉽게 가능한한 많은 정보를 넣어주세요.
                 </p>
               </label>
               <div className='s-textarea rich-text-editor-container'>
@@ -190,10 +189,7 @@ const AskForm = () => {
               <label className='form-label s-label'>
                 {/* Tag Name */}
                 태그 이름
-                <p className='tag-desc fw-normal fs-caption'>
-                  {/* Add up to 5 tags to describe what your question is about */}
-                  질문의 내용을 설명하는 최대 5개의 태그를 추가하세요.
-                </p>
+                <p className='tag-desc fw-normal fs-caption'>질문의 내용을 설명하는 최대 5개의 태그를 추가해 보세요.</p>
               </label>
               <ReactTags
                 tags={tags}
@@ -214,7 +210,6 @@ const AskForm = () => {
             {/* Post your question */}
             질문 개시
           </button>
-          <s>`\t`</s>
         </div>
       </form>
       <button className='s-btn s-btn__danger' onClick={handleOpen}>
