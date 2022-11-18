@@ -53,6 +53,9 @@ public class QuestionService {
             User user = (User) authentication.getPrincipal();
             // WATCHED 로 필터링
             questions = questionTagRepository.findQuestionByUser(user, pageable);
+            if (questions.isEmpty()) {
+                questions = questionRepository.findAll(pageable);
+            }
         } else {
             questions = questionRepository.findAll(pageable);
         }
