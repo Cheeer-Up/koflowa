@@ -74,7 +74,7 @@ public class AnswerController {
     /* 답변 코멘트 삭제 */
     @Operation(summary = "코멘트 삭제", description = "특정 코멘트를 삭제하는 api 입니다.")
     @DeleteMapping ("/comment")
-    public Response deleteComment(@RequestBody CommentDto.Request commentDto) {
+    public Response deleteComment(@RequestBody CommentDto.RequestDelete commentDto) {
         answerService.deleteComment(commentDto);
         return Response.success();
     }

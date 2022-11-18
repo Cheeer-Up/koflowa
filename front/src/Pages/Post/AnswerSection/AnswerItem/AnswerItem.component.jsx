@@ -3,19 +3,22 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 // import { deleteAnswer } from "../../../../redux/answers/answers.actions"
-import { useSelector } from "react-redux"
-import { deleteAnswer, answerUpdown, getAnswerUpDown } from "api/answer"
+import { useSelector, useDispatch } from "react-redux"
+import { deleteAnswer, answerUpdown, getAnswerUpDown, answerAccept } from "api/answer"
 
 import { ReactComponent as UpVote } from "../../../../assets/ArrowUpLg.svg"
 import { ReactComponent as DownVote } from "../../../../assets/ArrowDownLg.svg"
 import UserCard from "../../../../components/Components/UserCard/UserCard.component"
+import CommentCellComponent from "Pages/Post/QuestionSection/CommentCell/CommentCell.component"
 
 import "./AnswerItem.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
 import { selectUser, selectToken } from "redux/slice/AuthSlice"
+import { setIsEdit } from "redux/slice/AnswerSlice"
 
 const AnswerItem = ({
   answer,
+  question,
   // answer: { accept, content, up, down, createdTime, modifiedTime, seq },
   // post: { post },
   // auth,
@@ -23,7 +26,7 @@ const AnswerItem = ({
   const [acToken] = useState(useSelector(selectToken))
   const [user] = useState(useSelector(selectUser))
   const [vote, setVote] = useState(answer.up-answer.down)
-  console.log("answer : ",answer);
+  const dispatch = useDispatch()
   const answerUpDown = (type) => {
     getAnswerUpDown(acToken, answer.seq).then((res)=>{
       const updownData = res.data.result.data
@@ -60,6 +63,11 @@ const AnswerItem = ({
     // }
   }
 
+  const acceptAnswer = (answerSeq)=>{
+    answerAccept(acToken, answerSeq)
+    dispatch(setIsEdit())
+  }
+
   return (
     <Fragment>
       <div className='answer-layout'>
@@ -72,21 +80,47 @@ const AnswerItem = ({
             <button className='vote-down' title='비추천' onClick={() => answerUpDown("DOWN")}>
               <DownVote className='icon'/>
             </button>
+            {user!==null ? (
+              question.user.seq===user.seq? (
+                answer.accept===true ? (
+                  <div title='이 답변을 채택하셨습니다'>
+                    <svg aria-hidden="true" class="svg-icon iconCheckmarkLg fc-green-500" width="36" height="36" viewBox="0 0 36 36" color="#999"><path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path></svg>
+                  </div>
+                ):(
+                  <div title='이 답변을 채택하시겠습니까?' onClick={()=>acceptAnswer(answer.seq)}>
+                    <svg aria-hidden="true" class="svg-icon iconCheckmarkLg fc-green-200" width="36" height="36" viewBox="0 0 36 36" color="#999"><path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path></svg>
+                  </div>
+                )
+                
+              ):(
+                answer.accept==true ? (
+                  <div title='질문자가 이 답변을 채택하였습니다'>
+                    <svg aria-hidden="true" class="svg-icon iconCheckmarkLg fc-green-500" width="36" height="36" viewBox="0 0 36 36" color="#999"><path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path></svg>
+                  </div>
+                ):(
+                  <div></div>
+                )
+              )
+            ):(
+              answer.accept==true ? (
+                <div title='질문자가 이 답변을 채택하였습니다'>
+                  <svg aria-hidden="true" class="svg-icon iconCheckmarkLg fc-green-500" width="36" height="36" viewBox="0 0 36 36" color="#999"><path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path></svg>
+                </div>
+              ):(
+                <div></div>
+              )
+            )}
+            
+            
           </div>
         </div>
         <div className='answer-item'>
-          {/* <div
-            className='answer-content fc-black-800'
-            dangerouslySetInnerHTML={{ __html: censorBadWords(body) }}
-          >{content}</div> */}
-          {/* <div
-          className='answer-content fc-black-800'>{doc}</div> */}
           <div className='answer-content fc-black-800' dangerouslySetInnerHTML={ {__html: answer.content} }>
           </div>
           <div className='answer-actions'>
             <div className='action-btns'>
               <div className='answer-menu'>
-                <Link className='answer-links' title='short permalink to this question' to='/'>
+                {/* <Link className='answer-links' title='short permalink to this question' to='/'>
                   share
                 </Link>
                 <Link
@@ -95,8 +129,8 @@ const AnswerItem = ({
                   to='/'
                 >
                   follow
-                </Link>
-                {answer.userSeq === user.seq && (
+                </Link> */}
+                {user!==null&&answer.userSeq === user.seq && (
                   <Link
                     className='s-link s-link__danger'
                     style={{ paddingLeft: "4px" }}
@@ -118,6 +152,9 @@ const AnswerItem = ({
               backgroundColor={"transparent"}
             />
           </div>
+
+          {/* <CommentCellComponent answer={answer}/> */}
+
         </div>
       </div>
     </Fragment>

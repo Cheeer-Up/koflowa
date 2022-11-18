@@ -186,7 +186,7 @@ public class AnswerService {
         return new CommentDto.Response(comment);
     }
 
-    public void deleteComment(CommentDto.Request commentDto) {
+    public void deleteComment(CommentDto.RequestDelete commentDto) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
