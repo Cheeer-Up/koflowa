@@ -68,6 +68,11 @@ const AnswerItem = ({
     dispatch(setIsEdit())
   }
 
+  const answerDelete = (answerSeq)=>{
+    deleteAnswer(acToken,answerSeq)
+    dispatch(setIsEdit())
+  }
+
   return (
     <Fragment>
       <div className='answer-layout'>
@@ -135,7 +140,7 @@ const AnswerItem = ({
                     className='s-link s-link__danger'
                     style={{ paddingLeft: "4px" }}
                     title='Delete the answer'
-                    onClick={(e) => deleteAnswer(acToken,answer.seq)}
+                    onClick={(e) => answerDelete(answer.seq)}
                     to={`/questions/${answer.questionSeq}`}
                   >
                     delete
