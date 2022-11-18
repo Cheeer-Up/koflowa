@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 
 import VoteCell from "./VoteCell/VoteCell.component"
 import PostCell from "./PostCell/PostCell.component"
-// import CommentCell from "./CommentCell/CommentCell.component"
+import CommentCell from "./CommentCell/CommentCell.component"
 
 import "./QuestionSection.styles.scss"
 
@@ -15,7 +15,6 @@ const QuestionSection = (question) => {
             question={question.question}
           />
           <PostCell content={question.question}/>
-          {/* <CommentCell /> */}
         </div>
       </div>
     </Fragment>

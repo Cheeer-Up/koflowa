@@ -35,12 +35,12 @@ const PostCell = (data) => {
           <div className='post-actions-extended'>
             <div className='post-btns'>
               <div className='post-menu'>
-                <Link className='post-links' title='short permalink to this question' to='/'>
+                {/* <Link className='post-links' title='short permalink to this question' to='/'>
                   share
                 </Link>
                 <Link className='post-links' title='Follow this question to receive notifications' to='/'>
                   follow
-                </Link>
+                </Link> */}
                 {/* {curUser.seq === user.seq && (
                   <Link
                     className='s-link s-link__danger'

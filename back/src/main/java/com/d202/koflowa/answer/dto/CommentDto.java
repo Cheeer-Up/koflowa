@@ -72,6 +72,14 @@ public class CommentDto {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class RequestDelete{
+        private Long commentSeq;
+    }
+
     @Getter
     public static class Response{
         private Long seq;
