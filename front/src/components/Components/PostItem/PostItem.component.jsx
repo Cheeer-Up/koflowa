@@ -40,7 +40,7 @@ function PostItem(question) {
           created_at={question.question.createdTime}
           user_id={question.question.user.seq}
           gravatar={question.question.user.profile}
-          username={question.question.user.username}
+          username={question.question.user.nickname}
           float={"right"}
           backgroundColor={"transparent"}
         />
