@@ -1,5 +1,6 @@
 .rich-text-editor-root {
-  background-color: transparent !important;
+  // background-color: transparent !important;
+  color: black;
   border: none !important;
   font-family: inherit !important;
   font-size: inherit !important;
@@ -49,12 +50,16 @@
     .DraftEditor-root {
       pre {
         padding: 5px;
-        background-color: var(--black-100);
-        color: var(--black-800);
+        // background-color: var(--black-100);
+        // color: var(--black-800);
+        background-color: white;
+        color: black;
       }
 
       blockquote {
-        color: var(--black-800);
+        // color: var(--black-800);
+        // background-color: white;
+        color: black;
       }
     }
   }
