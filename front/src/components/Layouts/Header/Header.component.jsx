@@ -78,7 +78,6 @@ const Header = () => {
         <div className='hamburger'>
           <MobileSideBar hasOverlay />
         </div>
-        ``
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
           <Link className='navbar-brand' to='/questions'>
