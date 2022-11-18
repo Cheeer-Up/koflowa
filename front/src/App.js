@@ -79,9 +79,9 @@ const App = () => {
         <Route
           path='/'
           element={
-            <LayoutRoute>
+            <BaseRoute>
               <HomePage />
-            </LayoutRoute>
+            </BaseRoute>
           }
         />
         {/* 질문 페이지 */}
