@@ -2,8 +2,8 @@ import React, { Fragment, useState } from "react"
 import { Link, useNavigate, location } from "react-router-dom"
 
 import { ReactComponent as Search } from "assets/Search.svg"
-import { ReactComponent as Logo } from "assets/KoflowaHeaderMdDark.svg"
-import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderTextDark.svg"
+import { ReactComponent as Logo } from "assets/KoflowaHeaderMd.svg"
+import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderText.svg"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import MobileSideBar from "components/Layouts/MobileSideBar/MobileSideBar.component"
@@ -29,12 +29,13 @@ const Header = () => {
       localStorage.removeItem("refreshToken")
       history.push("/")
     }
+
     return (
       <div className='btns'>
         {userState === null ? (
           <Spinner width='50px' height='50px' />
         ) : (
-          <Link to={`/users/${userState.email}`}>
+          <Link to={`/users/${userState.seq}`}>
             <img alt='user-logo' className='logo' src={userState.profile} />
           </Link>
         )}
@@ -78,7 +79,6 @@ const Header = () => {
         <div className='hamburger'>
           <MobileSideBar hasOverlay />
         </div>
-        ``
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
           <Link className='navbar-brand' to='/questions'>
