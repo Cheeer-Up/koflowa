@@ -5,6 +5,7 @@ import com.d202.koflowa.talk.dto.RoomDto;
 import com.d202.koflowa.talk.exception.*;
 import com.d202.koflowa.talk.repository.RoomRepository;
 import com.d202.koflowa.user.domain.User;
+import com.d202.koflowa.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final MessageService messageService;
+    private final UserRepository userRepository;
 
     /* 기존에 있는 방을 검색 후 없으면 생성해서 반환 */
     public RoomDto.Response createRoom(RoomDto.RequestCreate roomDto){
@@ -50,7 +52,7 @@ public class RoomService {
     }
 
     /* 유저 ID에 해당하는 채팅방을 검색 */
-    public List<RoomDto.Response> getMyRoomList(){
+    public List<RoomDto.ResponseWithUser> getMyRoomList(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Room> roomList = roomRepository.findMyChatRoomNotDeleted(user.getSeq());
 
@@ -58,10 +60,19 @@ public class RoomService {
             throw new User1NotFoundException();
         }
 
-        List<RoomDto.Response> roomDtoList = new ArrayList<>();
+        List<RoomDto.ResponseWithUser> roomDtoList = new ArrayList<>();
 
         for(int i = 0; i < roomList.size(); i++){
-            RoomDto.Response talkTalkDto = new RoomDto.Response(roomList.get(i));
+            Long receiverSeq = -1L;
+            if(roomList.get(i).getUser1Seq() == user.getSeq()){
+                receiverSeq = roomList.get(i).getUser2Seq();
+            }else if(roomList.get(i).getUser2Seq() == user.getSeq()) {
+                receiverSeq = roomList.get(i).getUser1Seq();
+            }
+
+            User receiver = userRepository.findBySeq2(receiverSeq);
+            System.out.println("receiver : " + receiver);
+            RoomDto.ResponseWithUser talkTalkDto = new RoomDto.ResponseWithUser(roomList.get(i), receiver);
             talkTalkDto.setWaitingMessageNumber(messageService.countWaitingMessageByRoom(talkTalkDto.getRoomSeq(), user.getSeq()));
             roomDtoList.add(talkTalkDto);
         }
