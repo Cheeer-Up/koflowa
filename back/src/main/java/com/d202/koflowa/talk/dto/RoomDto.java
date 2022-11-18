@@ -1,6 +1,7 @@
 package com.d202.koflowa.talk.dto;
 
 import com.d202.koflowa.talk.domain.Room;
+import com.d202.koflowa.user.domain.User;
 import lombok.*;
 
 import java.time.format.DateTimeFormatter;
@@ -45,9 +46,26 @@ public class RoomDto {
         private Long roomSeq;
         private String createdTime;
         private Long waitingMessageNumber;
-
+        private User user;
         public Response(Room room) {
             this.roomSeq = room.getRoomSeq();
+            this.createdTime = room.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
+        }
+
+        public void setWaitingMessageNumber(Long waitingMessageNumber) {
+            this.waitingMessageNumber = waitingMessageNumber;
+        }
+    }
+
+    @Getter
+    public static class ResponseWithUser{
+        private Long roomSeq;
+        private String createdTime;
+        private Long waitingMessageNumber;
+        private User user;
+        public ResponseWithUser(Room room, User user) {
+            this.roomSeq = room.getRoomSeq();
+            this.user = user;
             this.createdTime = room.getCreatedTime().format(DateTimeFormatter.ISO_DATE_TIME);;
         }
 
