@@ -28,7 +28,7 @@ const AnswerSection = ({ question } ) => {
       setAnswer(payload)
       setLoading(false)
     })
-    , 160);
+    , 250);
     
   }, [isEdit])
   // const handlePaginationChange = (e, value) => {
@@ -69,7 +69,7 @@ const AnswerSection = ({ question } ) => {
         ) : (
           answer.map((data, idx) => (
               <div key={idx} className='answers'>
-                <AnswerItem answer={data} />
+                <AnswerItem answer={data} question={question}/>
               </div>
             ))
         )
