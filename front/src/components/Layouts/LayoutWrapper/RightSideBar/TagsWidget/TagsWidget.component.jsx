@@ -16,6 +16,7 @@ const TagsWidget = () => {
     getRankingTags()
       .then((res) => {
         let datas = res.data.hits.hits
+        console.log("태그 랭킹 목록: ", datas)
         let gatherTags = []
         if (datas !== null) {
           console.log(datas)

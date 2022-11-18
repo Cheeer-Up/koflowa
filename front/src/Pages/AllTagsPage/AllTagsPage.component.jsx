@@ -5,7 +5,7 @@ import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import "./AllTagsPage.styles.scss"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
-import { getAllTagsData } from "api/tags"
+import { getAllTagsData, getAllTags } from "api/tags"
 
 const itemsPerPage = 12
 
@@ -15,19 +15,32 @@ const AllTagsPage = () => {
   const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
-    getAllTagsData({
-      params: {
-        page: page - 1,
-        size: itemsPerPage,
-        sort: "createdTime,desc",
-      },
-    }).then((result) => {
-      setTags(result.data.result.data.content)
-      setTotalPages(result.data.result.data.totalPages)
+    getAllTags({
+      from: (page - 1) * itemsPerPage,
+      size: 12,
+      sort: "created_time",
+      order: "desc",
+    }).then((res) => {
+      const datas = res.data.hits.hits
+      console.log("res: ", res)
+      setTotalPages(Math.ceil(res.data.hits.total.value))
+      console.log("getAllTags: ", res.data.hits.hits)
+      const parse = []
+      datas.map((data) =>
+        parse.push({
+          name: data._source.tag_name,
+          description: data._source.tag_description,
+          createdTime: data._source.created_time,
+        })
+      )
+      setTags(parse)
     })
   }, [page])
 
-  const handlePaginationChange = (e, value) => setPage(value)
+  const handlePaginationChange = (e, value) => {
+    console.log(value)
+    setPage(value)
+  }
 
   return tags === null ? (
     <Spinner type='page' width='75px' height='200px' />
@@ -52,7 +65,7 @@ const AllTagsPage = () => {
             ))}
           </div>
         </div>
-        <Pagination page={page} count={totalPages} handlePaginationChange={handlePaginationChange} />
+        <Pagination page={page} count={Math.ceil(totalPages / 12)} handlePaginationChange={handlePaginationChange} />
       </div>
     </Fragment>
   )

@@ -9,9 +9,13 @@ import {
   ignoreTagList,
   allTagsStringList,
   rankingTag,
+  allTag,
 } from "api/urls"
 
 const rankingTagsCondition = {
+  query: {
+    exists: { field: "tag_count" },
+  },
   _source: ["tag_seq", "tag_name", "tag_count"],
   size: 10,
   collapse: {
@@ -26,11 +30,19 @@ const rankingTagsCondition = {
   ],
 }
 
-const allTagsCondition = {
-  _source: ["tag_seq", "tag_name", "tag_count"],
-  collapse: {
-    field: "tag_seq",
-  },
+const allTagsCondition = (condition) => {
+  console.log("condition: ", condition)
+  return {
+    from: condition.from < 0 ? 0 : condition.from,
+    size: condition.size,
+    sort: [
+      {
+        created_time: {
+          order: condition.order,
+        },
+      },
+    ],
+  }
 }
 
 export const getAllTagsData = (params) => {
@@ -86,10 +98,10 @@ export const getRankingTags = () => {
   })
 }
 
-export const getAllTags = () => {
-  return elastic_api().get(rankingTag(), {
+export const getAllTags = (conditions) => {
+  return elastic_api().get(allTag(), {
     params: {
-      source: JSON.stringify(allTagsCondition),
+      source: JSON.stringify(allTagsCondition(conditions)),
       source_content_type: "application/json",
     },
   })
