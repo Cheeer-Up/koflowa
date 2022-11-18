@@ -3,14 +3,18 @@ package com.d202.koflowa.user.domain;
 import com.d202.koflowa.common.domain.BaseTimeEntity;
 import com.d202.koflowa.common.domain.AuthProvider;
 import com.d202.koflowa.common.domain.Role;
+import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.user.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @ToString
@@ -56,6 +60,21 @@ public class User extends BaseTimeEntity implements OAuth2User, UserDetails {
 
     @Column(name = "reputation_score", columnDefinition = "int unsigned")
     private int reputationScore;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    @Builder.Default
+//    private List<Question> questions = new ArrayList<>();
+//
+//    // Sale Like Method
+//    public void addQuestion(Question question) {
+//        this.questions.add(question);
+//        question.setUser(this);
+//    }
+//
+//    public void removeQuestion(Long questionSeq) {
+//        questions.removeIf(question ->
+//                question.getSeq()==questionSeq);
+//    }
 
     public void putUser(UserDto.Request user){
         this.nickname = user.getNickname();
