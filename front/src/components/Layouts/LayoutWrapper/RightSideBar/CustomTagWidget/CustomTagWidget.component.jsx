@@ -78,7 +78,13 @@ function CustomTagWidget({ name, token, getApi, postApi, deleteApi }) {
       <div className='widget'>
         <div className='s-sidebarwidget--header'>
           <span>{name}</span>
-          {edit ? <a onClick={handleNotEdit}> 종료</a> : <a onClick={handleEdit}> 수정</a>}
+          {edit ? (
+            <a onClick={handleNotEdit}> 종료</a>
+          ) : tags.length > 0 ? (
+            <a onClick={handleEdit}> 수정</a>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className='widget-content fc-black-800'>
           <ol className='step-section'>
@@ -100,8 +106,10 @@ function CustomTagWidget({ name, token, getApi, postApi, deleteApi }) {
                     inputFieldPosition='bottom'
                     autocomplete
                   />
-                ) : (
+                ) : tags.length > 0 ? (
                   <TagList tags={tags} />
+                ) : (
+                  <button onClick={handleEdit}> 태그를 추가해 보세요</button>
                 )}
               </div>
             </li>
