@@ -9,7 +9,7 @@ const SideBar = () => (
       <SideBarItem isHome={true} link='/questions' text='질문' />
       <SideBarItem isHome={true} link='/tags' text='태그' />
       <SideBarItem isHome={true} link='/users' text='사용자' />
-      <SideBarItem isHome={true} link='/meeting' text='코톡' />
+      <SideBarItem isHome={true} link='/talk' text='코톡' />
       <div className='teams-tabs'>
         <a href='https://k7d202.p.ssafy.io/meeting' className='title fc-light' target='_blank' rel='noreferrer'>
           화상 회의

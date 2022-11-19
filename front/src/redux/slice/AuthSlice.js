@@ -3,8 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 export const AuthSlice = createSlice({
   name: "AuthSlice",
   initialState: {
-    token: localStorage.getItem("token"),
-    isAuthenticated: false,
+    token: localStorage.getItem("token") == null ? "" : localStorage.getItem("token"),
     loading: true,
     user: {
       authProvider: "",
@@ -30,9 +29,6 @@ export const AuthSlice = createSlice({
     setIsEdit: (state, action) => {
       state.isEdit = action.payload
     },
-    setIsAuthenticated: (state) => {
-      state.isAuthenticated = !state.isAuthenticated
-    },
     setFile: (state, action) => {
       state.file = action.payload
     },
@@ -54,7 +50,6 @@ export const { setToken, setUser, setIsEdit, setIsAuthenticated, setFile, setNew
 export const selectToken = (state) => state.auth.token
 export const selectUser = (state) => state.auth.user
 export const selectEdit = (state) => state.auth.isEdit
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated
 export const selectFile = (state) => state.auth.file
 export const selectNewInfo = (state) => state.auth.newInfo
 
