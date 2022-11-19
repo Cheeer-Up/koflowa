@@ -20,22 +20,15 @@ const QuestionsPage = () => {
   let searchQuery = new URLSearchParams(useLocation().search).get("search")
 
   useEffect(() => {
-    console.log("searchQuery: ", searchQuery)
     getQuestionsData(localStorage.getItem("accessToken"), {
       page: page - 1,
       size: itemsPerPage,
       sort: ["createdTime.desc"],
     })
       .then((res) => {
-        console.log("getQuestionsData: ", res)
         setTotalPage(res.data.result.data.totalPages)
-        console.log("res.data.result.data.totalPages: ", res.data.result.data.totalPages)
         // setQuestions(res.data.result.data.content)
         setQuestions(res.data.result.data.content)
-        console.log("res.data.result.data.content: ", res.data.result.data.content)
-        res.data.result.data.content.map((data, idx) => {
-          console.log("data, idx: ", data, idx)
-        })
       })
       .catch((err) => {
         console.log(err)

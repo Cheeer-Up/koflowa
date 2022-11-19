@@ -1,13 +1,11 @@
-import React, { Fragment } from "react"
-import { Navigate } from "react-router-dom"
-import PropTypes from "prop-types"
+import "./Login.styles.scss"
 
-import AuthForm from "components/Layouts/AuthForm/AuthForm.component"
+import React, { Fragment, useEffect } from "react"
+
 import Footer from "components/Layouts/Footer/Footer.component"
 import googleLogo from "../../assets/google-logo.png"
-
-import { useSelector } from "react-redux"
 import { GOOGLE_AUTH_URL } from "../../api/urls"
+import Button from "@mui/material/Button"
 
 const Login = () => {
   return (
@@ -17,7 +15,11 @@ const Login = () => {
           <div className='register-grid'>
             {/* 클릭 시 인증 페이지 이동 */}
             <a className='btn btn-block social-btn google' href={GOOGLE_AUTH_URL}>
-              <img src={googleLogo} alt='Google' /> Sign in with Google
+              <Button variant='outlined'>
+                <img src={googleLogo} alt='Google' />
+                구글을 통해
+                {window.location.pathname === "/register" ? " 회원가입하기" : " 로그인하기"}
+              </Button>
             </a>
             {/* <AuthForm action={"Log in"} /> */}
           </div>

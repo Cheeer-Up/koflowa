@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useCallback, useState, useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -9,7 +9,6 @@ import HomePage from "Pages/HomePage/HomePage.component"
 import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
-import Register from "./Pages/Register/Register.component"
 import Nickname from "Pages/Register/Nickname.component"
 import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
@@ -20,7 +19,8 @@ import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
 import { BaseRoute, LayoutRoute, LayoutAllRoute } from "./Router"
-
+import TalkPage from "Pages/TalkPage/TalkPage.component"
+import Footer from "components/Layouts/Footer/Footer.component"
 // css 추가
 
 // if (localStorage.token) {
@@ -38,34 +38,10 @@ const titles = {
   "/add/question": "질문하기 - 코플로와",
 }
 
-//일정 시간마다 함수 호출 가능
-const useInterval = (callback, delay) => {
-  const savedCallback = useRef()
-
-  useEffect(() => {
-    savedCallback.current = callback
-  })
-
-  useEffect(() => {
-    const tick = () => {
-      savedCallback.current()
-    }
-
-    const timerId = setInterval(tick, delay)
-    return () => clearInterval(timerId)
-  }, [delay])
-}
-
 const App = () => {
   const location = useLocation()
-  // const [timer, setTimer] = useState(5)
-
-  // useInterval(() => {
-  //   console.log(timer)
-  //   setTimer(timer - 1)
-  // }, 1000)
-
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
+
   return (
     <div className='App'>
       <Header />
@@ -81,6 +57,7 @@ const App = () => {
           element={
             <BaseRoute>
               <HomePage />
+              <Footer />
             </BaseRoute>
           }
         />
@@ -147,7 +124,7 @@ const App = () => {
           path='/register'
           element={
             <BaseRoute>
-              <Register />
+              <Login />
             </BaseRoute>
           }
         />
@@ -171,7 +148,14 @@ const App = () => {
             </BaseRoute>
           }
         />
-
+        <Route
+          path='/talk'
+          element={
+            <LayoutRoute>
+              <TalkPage />
+            </LayoutRoute>
+          }
+        />
         {/* 화상 회의 페이지 */}
         <Route
           path='/meeting'
