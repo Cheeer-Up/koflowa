@@ -7,6 +7,7 @@ const MEETING = "/meeting"
 const TALK = "/talk"
 const AUTH = "/auth"
 const GOOGLE = "google"
+const NICKNAME = "/nickname"
 // USERS
 export const usersData = "/users"
 export const profileData = "/users/{id}"
@@ -18,7 +19,9 @@ export const GOOGLE_AUTH_URL =
   GOOGLE +
   "?redirect_uri=" +
   process.env.REACT_APP_PUBLIC_URL +
-  "/"
+  "/nickname"
+
+export const GOOGLE_REGISTER_SET_NICKNAME = process.env.REACT_APP_API_URL + "/nickname/"
 
 // MYPAGES
 export const allProfile = (page, size, sort) => MYPAGES + `/profile?page=${page}&size=${size}&sort=${sort}`
@@ -34,30 +37,37 @@ export const userAnswer = (page, size, sort, userSeq) =>
   MYPAGES + `/answer/${userSeq}?page=${page}&size=${size}&sort=${sort}`
 
 // QUESTION
-export const createQuestion = QUESTION // 질문 생성 POST 요청
-export const getQuestions = (page, size) => QUESTION + `/${page}/${size}` // 해당 페이지의 질문 조회 GET 요청
-export const getQuestion = (questionSeq) => QUESTION + `/${questionSeq}`
+export const question = QUESTION
+export const questionTag = (tagName) => QUESTION + `/tag/${tagName}`
+export const singleQuestionData = (questionSeq) => QUESTION + `/${questionSeq}`
+export const questionUpdown = QUESTION + `/updown`
+export const getQuestionUpdownUrl = (questionSeq) => QUESTION + `/updown/${questionSeq}`
 
 // ANSWER
-export const createAnswer = (questionSeq) => ANSWER + `/${questionSeq}`
-export const editAnswer = (answerSeq) => ANSWER + `/${answerSeq}`
-export const getAnswerDetail = (answerSeq) => ANSWER + `/detail/${answerSeq}`
-export const comment = ANSWER + `/comment`
-export const answerUpDown = (answerSeq) => ANSWER + `/updown/${answerSeq}`
-export const answerAccept = (answerSeq) => ANSWER + `/accept/${answerSeq}`
-export const getAnswerComment = (answerSeq) => ANSWER + `/comment/${answerSeq}`
-export const getAnswerList = (questionSeq, page, size) => ANSWER + `/${questionSeq}/${page}/${size}`
+export const createAnswerUrl = (questionSeq) => ANSWER + `/${questionSeq}`
+export const editAnswerUrl = (answerSeq) => ANSWER + `/${answerSeq}`
+export const getAnswerDetailUrl = (answerSeq) => ANSWER + `/detail/${answerSeq}`
+export const commentUrl = ANSWER + `/comment`
+export const answerUpDownUrl = (answerSeq) => ANSWER + `/updown/${answerSeq}`
+export const answerAcceptUrl = (answerSeq) => ANSWER + `/accept/${answerSeq}`
+export const getAnswerCommentUrl = (answerSeq) => ANSWER + `/comment/${answerSeq}`
+export const getAnswerListUrl = (questionSeq) => ANSWER + `/${questionSeq}`
 
 // TAGS
 export const allTagsData = TAGS
 export const singleTagData = (tagName) => TAGS + `/${tagName}`
 export const registTag = TAGS + "/regist"
-export const watchTag = (tagSeq) => TAGS + `/watch/${tagSeq}`
-export const ignoreTag = (tagSeq) => TAGS + `/ignore/${tagSeq}`
-
+export const watchTag = (tagName) => TAGS + `/watch/${tagName}`
+export const ignoreTag = (tagName) => TAGS + `/ignore/${tagName}`
+export const watchTagList = TAGS + `/watch`
+export const ignoreTagList = TAGS + `/ignore`
+export const allTagsStringList = TAGS + `/list`
+export const rankingTag = () => "/koflowa_tag_ranking/_search"
+export const allTag = () => "/koflowa_tag/_search"
 // MEETING
 
 // TALK
 
 //SIGN
 export const auth = AUTH
+export const getNickname = (nickname) => NICKNAME + `/${nickname}`

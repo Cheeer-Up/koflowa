@@ -2,6 +2,7 @@ package com.d202.koflowa.talk.controller;
 
 import com.d202.koflowa.common.response.Response;
 import com.d202.koflowa.talk.dto.RoomDto;
+import com.d202.koflowa.talk.service.MessageService;
 import com.d202.koflowa.talk.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -13,23 +14,28 @@ import org.springframework.web.bind.annotation.*;
 public class RoomController {
 
     private final RoomService roomService;
+    private final MessageService messageService;
 
-    @Operation(summary = "방 생성하기", description = "상대방과의 채팅방을 생성하는 api 입니다.")
+    @Operation(summary = "방 생성/조회하기", description = "상대방과의 채팅방을 생성/조회하는 api 입니다.")
     @PostMapping
-    public Response createRoom(@RequestBody RoomDto.Request roomDto) {
+    public Response createRoom(@RequestBody RoomDto.RequestCreate roomDto) {
         return Response.success(roomService.createRoom(roomDto));
     }
 
-    //token 도입시 파라미터를 삭제하고 토큰 값에서 조회할 것
     @Operation(summary = "채팅방 조회", description = "나의 현재 채팅방을 조회하는 api 입니다.")
-    @GetMapping("/{user_id}")
-    public Response getMyRoomList(@PathVariable Long user_id) {
-        return Response.success(roomService.getMyRoomList(user_id));
+    @GetMapping
+    public Response getMyRoomList() {
+        return Response.success(roomService.getMyRoomList());
     }
 
     @Operation(summary = "채팅방 삭제", description = "해당 채팅방의 삭제하는 api 입니다.")
     @DeleteMapping
     public Response deleteRoom(@RequestBody RoomDto.Request roomDto) {
+        /* 해당 채팅방 논리 삭제 */
+        roomService.deleteRoom(roomDto);
+        /* 해당 메시지 로그 논리 삭제 */
+        messageService.checkMessageDeleted(roomDto.getRoomSeq());
+
         return Response.success();
     }
 }

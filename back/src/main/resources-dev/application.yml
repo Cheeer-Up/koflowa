@@ -52,7 +52,7 @@ logging:
 app:
   auth:
   oauth2:
-    authorized-redirect-uris: "http://localhost:3000/"
+    authorized-redirect-uris: "http://localhost:3000/nickname"
   cors:
     allowed-origins:
       - "http://localhost:3000"

@@ -1,23 +1,29 @@
-import React, { Fragment } from "react"
-import { connect } from "react-redux"
-import { Navigate } from "react-router-dom"
-import PropTypes from "prop-types"
+import React, { useState, useEffect, Fragment } from "react"
+import { connect, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { selectToken } from "redux/slice/AuthSlice"
 
-import Spinner from "../../components/Components/Spinner/Spinner.component"
 import AskWidget from "./AskWidget/AskWidget.component"
 import AskForm from "./AskForm/AskForm.component"
 import Footer from "../../components/Layouts/Footer/Footer.component"
 
 import "./PostForm.styles.scss"
 
-const PostForm = ({ auth: { isAuthenticated, loading } }) => {
-  // if (!isAuthenticated) {
-  //   return <Navigate to='/login' />
-  // }
+const PostForm = () => {
+  // 로그인되어있지 않을 시 route 이동
+  let navigate = useNavigate()
+  // redux로부터 accessToken을 받아옴
+  const [acToken] = useState(useSelector(selectToken))
+  // 컴포넌트 첫 랭더링 시 토큰 확인 후 없다면 로그인 페이지로 이동
+  // isAuthenticated는 acToken과 동일한 역할이기 때문에 삭제 무방
+  useEffect(() => {
+    if (!acToken) {
+      alert("로그인해주세요.")
+      navigate("/login")
+    }
+  }, [])
 
-  return loading === null ? (
-    <Spinner type='page' width='75px' height='200px' />
-  ) : (
+  return (
     <Fragment>
       <div className='post-form-container'>
         <div className='post-form-content'>
@@ -41,12 +47,4 @@ const PostForm = ({ auth: { isAuthenticated, loading } }) => {
   )
 }
 
-PostForm.propTypes = {
-  // auth: PropTypes.object.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-})
-
-export default connect(mapStateToProps, null)(PostForm)
+export default PostForm

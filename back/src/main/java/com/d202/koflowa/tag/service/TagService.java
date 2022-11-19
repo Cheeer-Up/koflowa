@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -91,43 +92,69 @@ public class TagService {
     }
 
 
-    public ResponseDto postUserTag(Long tagSeq, Long userSeq, TagStatus tagStatus) {
-        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagSeqAndTagStatus(userSeq, tagSeq, tagStatus);
+    public ResponseDto postUserTag(String tagName, TagStatus tagStatus) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagNameAndTagStatus(user.getSeq(), tagName, tagStatus);
         if (userTag.isPresent()) {
             throw new UserTagExistException("이미 등록된 태그입니다.");
         }
 
-        Optional<Tag> tag = tagRepository.findBySeq(tagSeq);
+        Optional<Tag> tag = tagRepository.findByName(tagName);
         if (tag.isEmpty()) {
-            throw new TagNotFoundException("존재하지 않는 태그 id 입니다.");
-        }
-
-        Optional<User> user = userRepository.findBySeq(userSeq);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("존재하지 않는 유저 seq 입니다.");
+            throw new TagNotFoundException("존재하지 않는 태그 입니다.");
         }
 
         // 주시 태그 저장
         userTagRepository.save(UserTag.builder()
                         .tag(tag.get())
-                        .user(user.get())
+                        .user(user)
                         .tagStatus(tagStatus)
                         .build());
 
         // 결과 리턴
         return new ResponseDto(String.format("[%s] 태그가 %s(%d) 유저의 태그로 등록되었습니다.",
                 tag.get().getName(),
-                user.get().getName(),
-                user.get().getSeq()));
+                user.getName(),
+                user.getSeq()));
     }
 
 
-    public ResponseDto deleteUserTag(Long tagSeq, Long userSeq, TagStatus tagStatus) {
-        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagSeqAndTagStatus(userSeq, tagSeq, tagStatus);
+    public ResponseDto deleteUserTag(String tagName, TagStatus tagStatus) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<UserTag> userTag = userTagRepository.findByUserSeqAndTagNameAndTagStatus(user.getSeq(), tagName, tagStatus);
         if (userTag.isEmpty()) {
             throw new UserTagNotFoundException("태그가 존재하지 않습니다.");
         }
         userTagRepository.delete(userTag.get());
         return new ResponseDto("태그가 삭제되었습니다.");
+    }
+
+    public List<String> getTagStrList() {
+        List<Tag> tags = tagRepository.findAll();
+        List<String> stringList = new ArrayList<>();
+        for (Tag tag: tags) {
+            stringList.add(tag.getName());
+        }
+        return stringList;
+    }
+
+    public List<String> getWatchedTag() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserTag> userTagList = userTagRepository.findByUserAndTagStatus(user, TagStatus.WATCHED);
+        List<String> watchedList = new ArrayList<>();
+        for(UserTag userTag: userTagList) {
+            watchedList.add(userTag.getTag().getName());
+        }
+        return watchedList;
+    }
+
+    public Object getIgnoreTag() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserTag> userTagList = userTagRepository.findByUserAndTagStatus(user, TagStatus.IGNORED);
+        List<String> IgnoreList = new ArrayList<>();
+        for(UserTag userTag: userTagList) {
+            IgnoreList.add(userTag.getTag().getName());
+        }
+        return IgnoreList;
     }
 }

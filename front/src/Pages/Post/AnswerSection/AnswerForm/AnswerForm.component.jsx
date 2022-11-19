@@ -1,53 +1,58 @@
 import React, { Fragment, useState, useRef } from "react"
-import { connect } from "react-redux"
+import { connect, useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
-import { addAnswer } from "../../../../redux/answers/answers.actions"
+// import { addAnswer } from "../../../../redux/answers/answers.actions"
+import { postAnswer } from "api/answer"
+import { selectToken } from "redux/slice/AuthSlice"
+import { setIsEdit } from "redux/slice/AnswerSlice"
 
 import LinkButton from "../../../../components/Components/LinkButton/LinkButton.component"
 import MarkdownEditor from "../../../../components/Layouts/MarkdownEditor/MarkdownEditor.component"
 
 import "./AnswerForm.styles.scss"
 
-const AnswerForm = ({ addAnswer, auth, post: { post } }) => {
+const AnswerForm = ({ auth, questionSeq }) => {
   const [formData, setFormData] = useState({
-    text: "",
+    content: "",
   })
-
+  const [acToken] = useState(useSelector(selectToken))
   const markdownEditorRef = useRef(null)
+  const dispatch = useDispatch()
 
-  const { text } = formData
+  const { content } = formData
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    addAnswer(post.id, { text })
+    postAnswer(acToken, questionSeq, {content})
     setFormData({
-      text: "",
+      content: "",
     })
     markdownEditorRef.current.cleanEditorState()
+    dispatch(setIsEdit())
   }
 
   const updateConvertedContent = (htmlConvertedContent) => {
-    setFormData({ ...formData, text: htmlConvertedContent })
+    setFormData({ ...formData, content : htmlConvertedContent })
   }
 
   return (
     <Fragment>
-      {!auth.loading && auth.isAuthenticated ? (
+      {acToken ? (
         <Fragment>
           <form className='answer-form' onSubmit={(e) => handleSubmit(e)}>
             <div className='answer-grid'>
-              <label className=' fc-black-800'>Your Answer</label>
+              <label className=' fc-black-800'>답변 작성하기</label>
               <div className='s-textarea rich-text-editor-container'>
                 <MarkdownEditor ref={markdownEditorRef} onChange={updateConvertedContent} />
               </div>
-              <button className='s-btn s-btn__primary'>Post Your Answer</button>
+              <button className='s-btn s-btn__primary'>작성하기</button>
             </div>
           </form>
         </Fragment>
       ) : (
         <Fragment>
           <LinkButton
-            text={"You need to login to add an answer"}
+            text={"작성하려면 로그인이 필요합니다"}
             link={"/login"}
             type={"s-btn__outlined"}
             marginTop={"12px"}
@@ -59,7 +64,7 @@ const AnswerForm = ({ addAnswer, auth, post: { post } }) => {
 }
 
 AnswerForm.propTypes = {
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   // addAnswer: PropTypes.func.isRequired,
   // post: PropTypes.object.isRequired,
 }
@@ -69,4 +74,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 })
 
-export default connect(mapStateToProps, { addAnswer })(AnswerForm)
+export default connect(mapStateToProps, { postAnswer })(AnswerForm)

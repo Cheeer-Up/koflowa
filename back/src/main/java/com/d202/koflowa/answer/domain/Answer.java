@@ -28,7 +28,7 @@ public class Answer extends BaseTimeEntity {
     @JsonBackReference
     private Question question;
 
-    @Column(name = "answer_content")
+    @Column(name = "answer_content", columnDefinition = "LONGTEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,10 +39,10 @@ public class Answer extends BaseTimeEntity {
     @Column(name = "answer_accept")
     private Boolean accept;
 
-    @Column(name = "up", columnDefinition = "bigint unsigned")
+    @Column(name = "up", columnDefinition = "bigint unsigned default 0")
     private Long up;
 
-    @Column(name = "down", columnDefinition = "bigint unsigned")
+    @Column(name = "down", columnDefinition = "bigint unsigned default 0")
     private Long down;
 
     public void updateAnswerContent(AnswerDto.Request answerDto){
@@ -50,10 +50,16 @@ public class Answer extends BaseTimeEntity {
     }
 
     public void updateAnswerUp(Integer num){
+        if(this.up==null){
+            this.up=0l;
+        }
         this.up += num;
     }
 
     public void updateAnswerDown(Integer num){
+        if(this.down==null){
+            this.down=0l;
+        }
         this.down += num;
     }
 

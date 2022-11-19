@@ -11,9 +11,7 @@ const Pagination = ({ page, count, handlePaginationChange }) => {
         count={count}
         onChange={handlePaginationChange}
         style={{ float: "right", margin: "0 13px 16px 0" }}
-        renderItem={(item) => (
-          <PaginationItem {...item} sx={{ color: "#cfd2d6", border: "1px solid #4c4f52" }} />
-        )}
+        renderItem={(item) => <PaginationItem {...item} sx={{ color: "#5F8BFF", border: "1px solid #0A95FF" }} />}
       />
     </Fragment>
   )

@@ -1,5 +1,4 @@
 import axios from "axios"
-
 // BASE_URL 설정
 const config = {
   BASE_URL: "https://k7d202.p.ssafy.io/api",
@@ -18,14 +17,13 @@ const headers = {
   credentials: "include",
   withCredentials: true,
 }
-console.log("headers: ", headers)
+
 /**
  * axios instance 생성
  *
  * oauth 시에는 axios import 해서 바로 사용하기
  * koflowa 백엔드 요청시에만 아래 정의한 api 사용
  */
-
 export const api = (accessToken) => {
   if (accessToken) {
     return axios.create({
@@ -58,5 +56,11 @@ export const image_api = (accessToken) =>
       // "Content-Type": "multipart/form-data",
     },
   })
+
+export const elastic_api = () => {
+  return axios.create({
+    baseURL: process.env.REACT_APP_ELASTIC_URL,
+  })
+}
 
 export default api

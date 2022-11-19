@@ -2,8 +2,8 @@ import React, { Fragment, useState } from "react"
 import { Link, useNavigate, location } from "react-router-dom"
 
 import { ReactComponent as Search } from "assets/Search.svg"
-import { ReactComponent as Logo } from "assets/KoflowaHeaderMdDark.svg"
-import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderTextDark.svg"
+import { ReactComponent as Logo } from "assets/KoflowaHeaderMd.svg"
+import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderText.svg"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import MobileSideBar from "components/Layouts/MobileSideBar/MobileSideBar.component"
@@ -16,27 +16,30 @@ const Header = () => {
   let history = useNavigate()
   const dispatch = useDispatch()
   const isAuthenticated = true
-  const [userState] = useState(useSelector(selectUser))
+  const [userState, setUserState] = useState(useSelector(selectUser))
   const [searchState, setSearchState] = useState(false)
 
   const AuthLinks = () => {
     /** localStorage의 Token들과 redux의 user를 삭제하여 로그아웃을 합니다. */
     const removeTokens = () => {
       dispatch(setUser(null))
+      dispatch(setToken(null))
+      setUserState(null)
       localStorage.removeItem("accessToken")
       localStorage.removeItem("refreshToken")
       history.push("/")
     }
+
     return (
       <div className='btns'>
         {userState === null ? (
           <Spinner width='50px' height='50px' />
         ) : (
-          <Link to={`/users/${userState.email}`}>
+          <Link to={`/users/${userState.seq}`}>
             <img alt='user-logo' className='logo' src={userState.profile} />
           </Link>
         )}
-        <LinkButton text='로그아웃' link='/' type='s-btn__filled' handleClick={removeTokens} />
+        <LinkButton text='로그아웃' link='/' className='l-btn' handleClick={removeTokens} />
       </div>
     )
   }
@@ -44,8 +47,8 @@ const Header = () => {
   const GuestLinks = () => {
     return (
       <div className='btns'>
-        <LinkButton text={"로그인"} link={"/login"} type={"s-btn__primary"} />
-        <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} />
+        <LinkButton text={"로그인"} link={"/login"} className='l-btn' />
+        {/* <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} /> */}
       </div>
     )
   }
@@ -68,7 +71,7 @@ const Header = () => {
       </form>
     )
   }
-  if (window.location.pathname === '/meeting') return null;
+  if (window.location.pathname === "/meeting") return null
   return (
     <Fragment>
       {/* 모바일 사이즈 시 햄버거 노출 */}
@@ -78,12 +81,11 @@ const Header = () => {
         </div>
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
-          <Link className='navbar-brand' to='/'>
+          <Link className='navbar-brand' to='/questions'>
             <Logo className='full-logo' />
             <SmallLogo className='glyph-logo' />
           </Link>
         </div>
-
         {/* 검색 창 */}
         <form
           id='search'
@@ -103,7 +105,6 @@ const Header = () => {
             <Search />
           </div>
         </form>
-
         <div className='header-search-div'>
           {/* 로그인 시 AuthLinks 아닐 시 guest */}
           <IsAuth />

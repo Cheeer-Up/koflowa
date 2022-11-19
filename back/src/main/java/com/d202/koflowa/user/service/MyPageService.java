@@ -1,7 +1,5 @@
 package com.d202.koflowa.user.service;
 
-import com.d202.koflowa.S_J_O.advice.assertThat.DefaultAssert;
-import com.d202.koflowa.S_J_O.payload.response.ApiResponse;
 //import com.d202.koflowa.S_J_O.security.token.UserPrincipal;
 import com.d202.koflowa.answer.domain.Answer;
 import com.d202.koflowa.answer.dto.AnswerDto;
@@ -25,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
