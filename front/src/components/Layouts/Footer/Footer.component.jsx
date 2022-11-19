@@ -28,7 +28,7 @@ const Footer = () => {
             </p>
           </div> */}
           <div className='social-item'>
-            <a href='https://naver.com' target='_blank' rel='noreferrer'>
+            <a href={process.env.REACT_APP_PUBLIC_URL} target='_self' rel='noreferrer'>
               <Koflowa />
             </a>
           </div>

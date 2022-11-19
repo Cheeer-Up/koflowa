@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import { Link, useNavigate, location } from "react-router-dom"
 
 import { ReactComponent as Search } from "assets/Search.svg"
@@ -12,33 +12,49 @@ import { useSelector, useDispatch } from "react-redux"
 
 import "./Header.styles.scss"
 
+const emptyUser = {
+  authProvider: "",
+  email: "",
+  name: "",
+  nickname: "",
+  profile: "",
+  role: "",
+  seq: "",
+}
+
 const Header = () => {
-  let history = useNavigate()
+  let navigate = useNavigate()
   const dispatch = useDispatch()
-  const isAuthenticated = true
   const [userState, setUserState] = useState(useSelector(selectUser))
+  const [acTkn, setAcTkn] = useState(useSelector(selectToken))
   const [searchState, setSearchState] = useState(false)
+
+  useEffect(() => {
+    if (userState === null || acTkn === null) {
+      dispatch(setUser(emptyUser))
+      dispatch(setToken(""))
+      setUserState(emptyUser)
+      setAcTkn("")
+    }
+  }, [userState, acTkn, dispatch])
 
   const AuthLinks = () => {
     /** localStorage의 Token들과 redux의 user를 삭제하여 로그아웃을 합니다. */
     const removeTokens = () => {
-      dispatch(setUser(null))
-      dispatch(setToken(null))
-      setUserState(null)
+      dispatch(setUser(emptyUser))
+      dispatch(setToken(""))
+      setUserState(emptyUser)
+      setAcTkn("")
       localStorage.removeItem("accessToken")
       localStorage.removeItem("refreshToken")
-      history.push("/")
+      navigate("/")
     }
 
     return (
       <div className='btns'>
-        {userState === null ? (
-          <Spinner width='50px' height='50px' />
-        ) : (
-          <Link to={`/users/${userState.seq}`}>
-            <img alt='user-logo' className='logo' src={userState.profile} />
-          </Link>
-        )}
+        <Link to={`/users/${userState.seq}`}>
+          <img alt='user-logo' className='logo' src={userState.profile} />
+        </Link>
         <LinkButton text='로그아웃' link='/' className='l-btn' handleClick={removeTokens} />
       </div>
     )
@@ -48,17 +64,18 @@ const Header = () => {
     return (
       <div className='btns'>
         <LinkButton text={"로그인"} link={"/login"} className='l-btn' />
-        {/* <LinkButton text={"회원가입"} link={"/register"} type={"s-btn__filled"} /> */}
+        <LinkButton text={"회원가입"} link={"/register"} />
       </div>
     )
   }
   const IsAuth = () => {
-    if (userState !== null) return <AuthLinks />
+    if (acTkn !== "") return <AuthLinks />
     else return <GuestLinks />
   }
+
   const SearchBar = () => {
     return (
-      <form onSubmit={() => history.push("/questions")} className='small-search-form' autoComplete='off'>
+      <form onSubmit={() => navigate.push("/questions")} className='small-search-form' autoComplete='off'>
         <input
           className='small-search'
           autoComplete='off'
@@ -71,7 +88,9 @@ const Header = () => {
       </form>
     )
   }
+
   if (window.location.pathname === "/meeting") return null
+
   return (
     <Fragment>
       {/* 모바일 사이즈 시 햄버거 노출 */}
@@ -89,7 +108,7 @@ const Header = () => {
         {/* 검색 창 */}
         <form
           id='search'
-          onSubmit={() => history.push("/questions")}
+          onSubmit={() => navigate.push("/questions")}
           className={`grid--cell fl-grow1 searchbar px12 js-searchbar`}
           autoComplete='off'
         >
@@ -116,11 +135,6 @@ const Header = () => {
       {searchState && <SearchBar />}
     </Fragment>
   )
-}
-
-Header.propTypes = {
-  // logout: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
 }
 
 export default Header

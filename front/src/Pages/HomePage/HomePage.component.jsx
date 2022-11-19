@@ -4,15 +4,10 @@ import "./HomePage.styles.scss"
 import { signIn_Out } from "../../api/sign"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser, selectUser, setToken, setIsAuthenticated } from "../../redux/slice/AuthSlice"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const HomePage = () => {
-  // let navigate = useNavigate()
-
-  // setTimeout(function () {
-  //   navigate("/questions")
-  // }, 10000)
-
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [userState, setUserState] = useState(useSelector(selectUser))
 
@@ -39,23 +34,28 @@ const HomePage = () => {
             profile: information.profile,
             role: information.role,
             seq: information.seq,
+            nickname: information.nickname,
           }
           // token, user 입력 및 authenticated 수정
           dispatch(setToken(token))
           dispatch(setUser(user))
-          dispatch(setIsAuthenticated(true))
           setUserState(user)
-
-          // 로그인 데이터만 받아온 상황.
-          // 헤더에 적용시켜주기 위해 리로드
-          // window.location.href 같은 즉시 이동은 redux 저장이나 state 저장 전에 실행
-          // setTimeOut으로 조절
+          console.log("user data: ", user)
+          if (user.nickname === null) {
+            alert("잠깐! 닉네임을 설정해주세요!")
+            setTimeout(() => {
+              window.location.href = "/nickname"
+            }, 50)
+            return
+          }
           setTimeout(() => {
             window.location.href = "/"
           }, 50)
         })
         .catch((err) => {
           console.log(err)
+          alert("로그인 중 에러가 발생했습니다. 다시 로그인해주세요.")
+          localStorage.clear()
         })
     }
     // 에러시 경고 생성 (외부 alert 라이브러리 사용 예정)
@@ -83,6 +83,8 @@ const HomePage = () => {
       <Link className='sbox__button' to={"/questions"}>
         코플로와 시작하기
       </Link>
+      <br />
+      <br />
     </Fragment>
   )
 }
