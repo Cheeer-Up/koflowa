@@ -7,7 +7,7 @@ import { persistReducer, persistStore } from "redux-persist"
 import thunk from "redux-thunk"
 
 //storageSession = 세션스토리지에 저장
-import storage from "redux-persist/lib/storage/session"
+import storage from "redux-persist/lib/storage"
 
 //redux 관리 데이터
 import AuthSlice from "./slice/AuthSlice"

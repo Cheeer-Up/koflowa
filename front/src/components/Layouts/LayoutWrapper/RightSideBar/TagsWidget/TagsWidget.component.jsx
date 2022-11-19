@@ -16,10 +16,8 @@ const TagsWidget = () => {
     getRankingTags()
       .then((res) => {
         let datas = res.data.hits.hits
-        console.log("태그 랭킹 목록: ", datas)
         let gatherTags = []
         if (datas !== null) {
-          console.log(datas)
           datas.map(({ _source }) =>
             gatherTags.push({
               tag_seq: _source.tag_seq,
@@ -39,7 +37,6 @@ const TagsWidget = () => {
       <div className='side-bar-tags'>
         <h4 className='tag-headline'>Top Tags</h4>
         {tags.map((tag, idx) => {
-          console.log("tag: ", tag)
           return <TagsWidgetItem key={idx} tag_name={tag.tag_name} posts_count={tag.tag_count} />
         })}
         <Link className='show-tags' to='/tags'>
