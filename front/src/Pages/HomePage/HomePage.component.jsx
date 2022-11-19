@@ -1,31 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react"
-
-import LinkButton from "components/Components/LinkButton/LinkButton.component"
-import PostItem from "components/Components/PostItem/PostItem.component"
-import Spinner from "components/Components/Spinner/Spinner.component"
-import handleSorting from "utils/handleSorting"
-import Pagination from "components/Layouts/Pagination/Pagination.component"
-import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
-import handleFilter from "utils/handleFilter"
 import "./HomePage.styles.scss"
 
 import { signIn_Out } from "../../api/sign"
 import { useDispatch, useSelector } from "react-redux"
 import { setUser, selectUser, setToken, setIsAuthenticated } from "../../redux/slice/AuthSlice"
-import axios from "axios"
-
-//redux 사용하기 위한 함수
-
-// import { setY, selectY } from "../../redux/slice/CharSlice"
-
-const itemsPerPage = 10
+import { Link } from "react-router-dom"
 
 const HomePage = () => {
-  const [posts, setposts] = useState(null)
+  // let navigate = useNavigate()
 
-  const [page, setPage] = useState(1)
-  const [sortType, setSortType] = useState("Month")
-  const dispatcher = useDispatch()
+  // setTimeout(function () {
+  //   navigate("/questions")
+  // }, 10000)
+
+  const dispatch = useDispatch()
   const [userState, setUserState] = useState(useSelector(selectUser))
 
   useEffect(() => {
@@ -53,9 +41,9 @@ const HomePage = () => {
             seq: information.seq,
           }
           // token, user 입력 및 authenticated 수정
-          dispatcher(setToken(token))
-          dispatcher(setUser(user))
-          dispatcher(setIsAuthenticated(true))
+          dispatch(setToken(token))
+          dispatch(setUser(user))
+          dispatch(setIsAuthenticated(true))
           setUserState(user)
 
           // 로그인 데이터만 받아온 상황.
@@ -73,7 +61,7 @@ const HomePage = () => {
     // 에러시 경고 생성 (외부 alert 라이브러리 사용 예정)
     if (error) {
     }
-  }, [])
+  }, [dispatch])
 
   /**token을 받아올 수 있는 주소를 parsing */
   const getUrlParameter = (name) => {
@@ -84,55 +72,19 @@ const HomePage = () => {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
   }
 
-  const handlePaginationChange = (e, value) => setPage(value)
-
-  return posts === null ? (
-    <Spinner type='page' width='75px' height='200px' />
-  ) : (
+  return (
     <Fragment>
-      <div id='mainbar' className='homepage fc-black-800'>
-        <div className='questions-grid'>
-          <h3 className='questions-headline'>주요 질문</h3>
-          <div className='questions-btn'>
-            <LinkButton text={"질문 하기"} link={"/add/question"} type={"s-btn__primary"} />
-          </div>
-        </div>
-        <div className='questions-tabs'>
-          <span>{new Intl.NumberFormat("en-IN").format(posts.length)} 질문 글</span>
-          <div className='btns-filter'>
-            <ButtonGroup
-              // buttons={["일간", "주간", "월간", "년간"]}
-              buttons={["Today", "Week", "Month", "Year"]}
-              selected={sortType}
-              setSelected={setSortType}
-            />
-          </div>
-        </div>
-        <div className='questions'>
-          <div className='postQues'>
-            {posts
-              .sort(handleSorting(sortType))
-              .filter(handleFilter(sortType))
-              .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-              .map((post, index) => (
-                <PostItem key={index} post={post} />
-              ))}
-          </div>
-        </div>
-        <Pagination
-          page={page}
-          itemList={posts.sort(handleSorting(sortType)).filter(handleFilter(sortType))}
-          itemsPerPage={itemsPerPage}
-          handlePaginationChange={handlePaginationChange}
-        />
-      </div>
+      <p>
+        <img className='koflowa vibe' src='/koflowa.png' alt='코플로와' />
+      </p>
+      <p>
+        <img className='koflowa-text' src='/koflowText.png' alt='코플로와 텍스트' />
+      </p>
+      <Link className='sbox__button' to={"/questions"}>
+        코플로와 시작하기
+      </Link>
     </Fragment>
   )
-}
-
-HomePage.propTypes = {
-  // getPosts: PropTypes.func.isRequired,
-  // post: PropTypes.object.isRequired,
 }
 
 export default HomePage

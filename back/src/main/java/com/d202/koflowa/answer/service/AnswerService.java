@@ -13,13 +13,9 @@ import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.common.domain.UDType;
 import com.d202.koflowa.common.exception.CommentNotFoundException;
 import com.d202.koflowa.exception.AnswerNotFoundException;
-import com.d202.koflowa.exception.AnswerUpdownExistException;
 import com.d202.koflowa.exception.QuestionNotFoundException;
-import com.d202.koflowa.exception.UserNotFoundException;
 import com.d202.koflowa.question.domain.Question;
-import com.d202.koflowa.question.dto.QuestionDto;
 import com.d202.koflowa.question.exception.QuestionCommentNotFoundException;
-import com.d202.koflowa.question.exception.SpecificQuestionNotFound;
 import com.d202.koflowa.question.repository.QuestionRepository;
 import com.d202.koflowa.user.domain.User;
 import com.d202.koflowa.user.repository.UserRepository;
@@ -27,7 +23,8 @@ import com.d202.koflowa.user.service.ReputationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,7 +104,12 @@ public class AnswerService {
         Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
         if (answerUpdown.isEmpty()){
             // 비어있다면 생성
-            AnswerUpdown response = answerUpDownRepository.save(request.toEntity(user, answer.get()));
+            AnswerUpdown response = answerUpDownRepository.save(request.toEntity(user, answer.get(), request.getType()));
+            if(request.getType()== UDType.UP){
+                answer.get().updateAnswerUp(1);
+            } else if (request.getType()== UDType.DOWN) {
+                answer.get().updateAnswerDown(1);
+            }
         } else if (answerUpdown.get().getType() == request.getType()) {
             // 타입이 같으면 삭제
             answerUpDownRepository.delete(answerUpdown.get());
@@ -184,7 +186,7 @@ public class AnswerService {
         return new CommentDto.Response(comment);
     }
 
-    public void deleteComment(CommentDto.Request commentDto) {
+    public void deleteComment(CommentDto.RequestDelete commentDto) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = commentRepository.findBySeqAndUserSeq(commentDto.getCommentSeq(), user.getSeq())
                 .orElseThrow(() -> new CommentNotFoundException());
@@ -210,8 +212,24 @@ public class AnswerService {
         return  new AnswerDto.Response(answer);
     }
 
-    public Page<Answer> searchAnswerByQuestionSeq(Long questionSeq, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return answerRepository.findAllByQuestion_Seq(questionSeq, pageRequest);
+    public List<AnswerDto.Response> searchAnswerByQuestionSeq(Long questionSeq) {
+        List<Answer> answers = answerRepository.findAllByQuestion_Seq(questionSeq);
+        List<AnswerDto.Response> answerDtoList = new ArrayList<>();
+        for (Answer answer : answers){
+            AnswerDto.Response answerResponse = new AnswerDto.Response(answer);
+            answerDtoList.add(answerResponse);
+        }
+//        return new PageImpl<AnswerDto.Response>(pageDtoList, pageable, answers.getTotalElements());
+        return answerDtoList;
+    }
+
+    public AnswerUpdownDto.Response searchAnswerUpdown(Long answerSeq){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<AnswerUpdown> answerUpdown = answerUpDownRepository.findByUser_SeqAndAnswer_Seq(user.getSeq(), answerSeq);
+        if(answerUpdown.isPresent()) {
+            return new AnswerUpdownDto.Response(answerUpdown.get());
+        }else{
+            return null;
+        }
     }
 }

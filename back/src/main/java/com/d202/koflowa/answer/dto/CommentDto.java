@@ -2,9 +2,7 @@ package com.d202.koflowa.answer.dto;
 
 import com.d202.koflowa.common.domain.QAType;
 import com.d202.koflowa.answer.domain.Comment;
-import com.d202.koflowa.question.domain.Question;
 import com.d202.koflowa.user.domain.User;
-import com.d202.koflowa.user.repository.UserRepository;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -72,6 +70,14 @@ public class CommentDto {
                     .build();
             return comment;
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class RequestDelete{
+        private Long commentSeq;
     }
 
     @Getter

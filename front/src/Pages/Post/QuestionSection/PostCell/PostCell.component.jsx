@@ -1,67 +1,60 @@
-import React, { Fragment } from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { Link } from "react-router-dom"
-import { deletePost } from "../../../../redux/posts/posts.actions"
+import React, { Fragment, useState } from "react"
+import { connect, useSelector } from "react-redux"
+// import PropTypes from "prop-types"
+// import { Link } from "react-router-dom"
 
 import TagBadge from "../../../../components/Components/TagBadge/TagBadge.component"
 import UserCard from "../../../../components/Components/UserCard/UserCard.component"
-
+import { Link, useLocation } from "react-router-dom"
 import "./PostCell.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
+import { selectUser, selectToken } from "redux/slice/AuthSlice"
 
-const PostCell = ({
-  deletePost,
-  auth,
-  post: {
-    post: { id, post_body, tags, gravatar, user_id, username, created_at },
-  },
-}) => {
+
+const PostCell = (data) => {
+  const [curUser] = useState(useSelector(selectUser))
+  const content = data.content.questionContent
+  const user = data.content.user
+  const questionSeq = data.content.questionSeq
+  const tags = data.content.tagList
   return (
     <Fragment>
       <div className='post-cell'>
-        <div
-          className='post-text fc-black-800'
-          dangerouslySetInnerHTML={{ __html: censorBadWords(post_body) }}
-        ></div>
-        <div className='post-tags fc-black-800'>
-          {tags.map((tag, index) => (
-            <TagBadge key={index} tag_name={tag.tagname} size={"s-tag"} float={"left"} />
-          ))}
+        <div className='post-text fc-black-800' dangerouslySetInnerHTML={{ __html: censorBadWords(content) }}></div>
+        <div className='post-tags'>
+          {tags!=null ?(
+            tags.map((tag, index) => (
+                <TagBadge key={index} tag_name={tag} size={"s-tag"} float={"left"} />
+            ))
+          ):(
+            <div></div>
+          )
+          }
         </div>
         <div className='post-actions fc-black-800'>
           <div className='post-actions-extended'>
             <div className='post-btns'>
               <div className='post-menu'>
-                <Link className='post-links' title='short permalink to this question' to='/'>
+                {/* <Link className='post-links' title='short permalink to this question' to='/'>
                   share
                 </Link>
-                <Link
-                  className='post-links'
-                  title='Follow this question to receive notifications'
-                  to='/'
-                >
+                <Link className='post-links' title='Follow this question to receive notifications' to='/'>
                   follow
-                </Link>
-                {!auth.loading && auth.isAuthenticated && user_id === auth.user.id && (
+                </Link> */}
+                {/* {curUser.seq === user.seq && (
                   <Link
                     className='s-link s-link__danger'
                     style={{ paddingLeft: "4px" }}
                     title='Delete the post'
-                    onClick={(e) => deletePost(id)}
+                    onClick={(e) => deletePost(questionSeq)}
                     to='/questions'
                   >
                     delete
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
-            <UserCard
-              created_at={created_at}
-              user_id={user_id}
-              gravatar={gravatar}
-              username={username}
-            />
+            <UserCard created_at={user.createdTime} user_id={user.name} gravatar={user.profile} username={user.nickname} />
           </div>
         </div>
       </div>
@@ -69,15 +62,4 @@ const PostCell = ({
   )
 }
 
-PostCell.propTypes = {
-  // post: PropTypes.object.isRequired,
-  // auth: PropTypes.object.isRequired,
-  // deletePost: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  post: state.post,
-  auth: state.auth,
-})
-
-export default connect(mapStateToProps, { deletePost })(PostCell)
+export default PostCell

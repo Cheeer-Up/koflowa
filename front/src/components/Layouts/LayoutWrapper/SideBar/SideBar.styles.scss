@@ -1,17 +1,20 @@
 .side-bar-container {
   width: 17%;
-  min-width: 206px;
+  min-width: 200px;
+  min-height: 700px;
   flex-shrink: 0;
   z-index: 1;
   box-shadow: 0 0 0 rgba(12, 13, 14, 0.05);
   transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s;
   position: relative !important;
-  // background-color: #ffffff;
-  background-color: #3d3d3d;
+  background-color: #ffffff;
+  border-right: 1px solid #d6d9dc;
+  // background-color: #3d3d3d;
 
   .side-bar-tabs {
     float: right;
-    margin-top: 25px;
+    margin-top: 40px;
+    // width: 100%;
 
     .public-tabs {
       margin-bottom: 12px;
@@ -19,8 +22,8 @@
 
     .nav-link {
       text-decoration: none;
-      // color: #525960;
-      color: #c4c8cc;
+      color: #525960;
+      // color: #c4c8cc;
 
       li {
         font-size: 13px;
@@ -30,10 +33,13 @@
         }
 
         .menu-list-text {
-          margin: 0 !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+          margin-right: 30%;
+          margin-left: 5%;
           &:hover {
-            // color: #0c0d0e;
-            color: #ffffff;
+            color: #0c0d0e;
+            // color: #ffffff;
           }
         }
       }
@@ -42,7 +48,8 @@
     .home-link {
       li {
         border-right: 3px;
-        margin-bottom: 12px;
+        height: 40px;
+        // margin-bottom: 12px;
       }
     }
 
@@ -53,23 +60,24 @@
 
         .menu-list-btn {
           padding-left: 8px;
+          // padding-left: 50px;
         }
       }
     }
 
     .title {
       font-size: 12px;
-      padding-left: 8px;
+      padding-left: 58px;
       margin-bottom: 5px;
     }
 
     .active {
       li {
         font-weight: bold;
-        // background: #f1f2f3;
-        background: #2d2d2d;
-        // color: #0c0d0e;
-        color: #f2f2f3;
+        background: #f1f2f3;
+        // background: #2d2d2d;
+        color: #0c0d0e;
+        // color: #f2f2f3;
         border-right: 3px solid #5f8bff;
       }
 

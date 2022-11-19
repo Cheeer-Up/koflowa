@@ -1,48 +1,48 @@
 import React, { Fragment, useState, useEffect } from "react"
-import { selectTags, selectLoading, setTags } from "redux/slice/TagSlice"
 
 import TagPanel from "Pages/AllTagsPage/TagPanel/TagPanel.component"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
-// import SearchBox from "components/Components/SearchBox/SearchBox.component"
-// import ButtonGroup from "components/Components/ButtonGroup/ButtonGroup.component"
-import { useSelector, useDispatch } from "react-redux"
 import "./AllTagsPage.styles.scss"
 import Pagination from "components/Layouts/Pagination/Pagination.component"
-import { getAllTagsData } from "api/tags"
+import { getAllTagsData, getAllTags } from "api/tags"
 
 const itemsPerPage = 12
 
 const AllTagsPage = () => {
-  let tags = useSelector(selectTags)
-  let loading = useSelector(selectLoading)
-  const dispatch = useDispatch()
+  const [tags, setTags] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  // const [fetchSearch, setSearch] = useState("")
 
   useEffect(() => {
-    getAllTagsData({
-      params: {
-        page: page - 1,
-        size: itemsPerPage,
-        sort: "createdTime,desc",
-      },
-    }).then((result) => {
-      dispatch(setTags(result.data.content))
-      setTotalPages(result.data.totalPages)
+    getAllTags({
+      from: (page - 1) * itemsPerPage,
+      size: 12,
+      sort: "created_time",
+      order: "desc",
+    }).then((res) => {
+      const datas = res.data.hits.hits
+      console.log("res: ", res)
+      setTotalPages(Math.ceil(res.data.hits.total.value))
+      console.log("getAllTags: ", res.data.hits.hits)
+      const parse = []
+      datas.map((data) =>
+        parse.push({
+          name: data._source.tag_name,
+          description: data._source.tag_description,
+          createdTime: data._source.created_time,
+        })
+      )
+      setTags(parse)
     })
   }, [page])
 
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   setSearch(e.target.value)
-  //   setPage(1)
-  // }
+  const handlePaginationChange = (e, value) => {
+    console.log(value)
+    setPage(value)
+  }
 
-  const handlePaginationChange = (e, value) => setPage(value)
-
-  return loading || tags === null ? (
+  return tags === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
     <Fragment>
@@ -57,9 +57,7 @@ const AllTagsPage = () => {
         <div className='headline-count'>
           <span>{new Intl.NumberFormat("en-IN").format(totalPages)} 개의 태그들</span>
         </div>
-        <div className='tags-box pl16 pr16 pb16'>
-          {/* <SearchBox placeholder={"태그 명으로 검색"} handleChange={handleChange} width={"200px"} /> */}
-        </div>
+        <div className='tags-box pl16 pr16 pb16'></div>
         <div className='user-browser'>
           <div className='grid-layout'>
             {tags.map((tag, index) => (
@@ -67,7 +65,7 @@ const AllTagsPage = () => {
             ))}
           </div>
         </div>
-        <Pagination page={page} count={totalPages} handlePaginationChange={handlePaginationChange} />
+        <Pagination page={page} count={Math.ceil(totalPages / 12)} handlePaginationChange={handlePaginationChange} />
       </div>
     </Fragment>
   )

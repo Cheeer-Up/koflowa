@@ -1,5 +1,5 @@
 // 기본패키지들 임포트
-import React, { useEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef } from "react"
 import { Route, Routes, useLocation, Navigate } from "react-router-dom"
 
 // 컴포넌트들(페이지, 콤포, 레이아웃등)을 들고옴
@@ -10,6 +10,7 @@ import QuestionsPage from "Pages/QuestionsPage/QuestionsPage.component"
 import AllTagsPage from "Pages/AllTagsPage/AllTagsPage.component"
 import AllUsersPage from "./Pages/AllUsersPage/AllUsersPage.component"
 import Register from "./Pages/Register/Register.component"
+import Nickname from "Pages/Register/Nickname.component"
 import Login from "Pages/Login/Login.component"
 import Post from "Pages/Post/Post.component"
 import PostForm from "Pages/PostForm/PostForm.component"
@@ -18,7 +19,7 @@ import TagForm from "Pages/TagForm/TagForm.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
-import { BaseRoute, LayoutRoute } from "./Router"
+import { BaseRoute, LayoutRoute, LayoutAllRoute } from "./Router"
 
 // css 추가
 
@@ -37,8 +38,32 @@ const titles = {
   "/add/question": "질문하기 - 코플로와",
 }
 
+//일정 시간마다 함수 호출 가능
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef()
+
+  useEffect(() => {
+    savedCallback.current = callback
+  })
+
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current()
+    }
+
+    const timerId = setInterval(tick, delay)
+    return () => clearInterval(timerId)
+  }, [delay])
+}
+
 const App = () => {
   const location = useLocation()
+  // const [timer, setTimer] = useState(5)
+
+  // useInterval(() => {
+  //   console.log(timer)
+  //   setTimer(timer - 1)
+  // }, 1000)
 
   useEffect(() => (document.title = titles[location.pathname] ?? "코플로와"), [location])
   return (
@@ -54,18 +79,18 @@ const App = () => {
         <Route
           path='/'
           element={
-            <LayoutRoute>
+            <BaseRoute>
               <HomePage />
-            </LayoutRoute>
+            </BaseRoute>
           }
         />
         {/* 질문 페이지 */}
         <Route
           path='/questions'
           element={
-            <LayoutRoute>
+            <LayoutAllRoute>
               <QuestionsPage />
-            </LayoutRoute>
+            </LayoutAllRoute>
           }
         />
 
@@ -127,6 +152,16 @@ const App = () => {
           }
         />
 
+        {/* 회원가입 페이지 */}
+        <Route
+          path='/nickname'
+          element={
+            <BaseRoute>
+              <Nickname />
+            </BaseRoute>
+          }
+        />
+
         {/* 질문 생성 페이지 */}
         <Route
           path='/add/question'
@@ -169,7 +204,7 @@ const App = () => {
 
         {/* 질문 상세 페이지 */}
         <Route
-          path='/questions/:postSeq'
+          path='/questions/:questionSeq'
           element={
             <LayoutRoute>
               <Post />

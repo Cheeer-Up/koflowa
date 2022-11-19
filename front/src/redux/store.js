@@ -15,6 +15,7 @@ import TagSlice from "./slice/TagSlice"
 import MeetingSlice from "./slice/MeetingSlice"
 import TalkSlice from "./slice/TalkSlice"
 import MypageSlice from "./slice/MypageSlice"
+import AnswerSlice from "./slice/AnswerSlice"
 
 //persist 설정
 const persistConfig = {
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   talk: TalkSlice,
   auth: AuthSlice,
   mypage: MypageSlice,
+  answer: AnswerSlice,
 })
 
 //persistReducer(설정, 최종 리듀서)

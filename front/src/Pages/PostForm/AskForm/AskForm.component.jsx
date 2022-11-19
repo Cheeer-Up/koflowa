@@ -1,36 +1,24 @@
 import React, { Fragment, useState, useEffect, useRef } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import MarkdownEditor from "components/Layouts/MarkdownEditor/MarkdownEditor.component"
-import { badWordsFilter } from "utils/censorBadWords"
 import { useNavigate } from "react-router-dom"
 import { Modal, Box } from "@mui/material"
 
 import { WithContext as ReactTags } from "react-tag-input"
-import { COUNTRIES } from "./countries"
+import { postQuestion } from "api/question"
+import { getAllTagsStringList } from "api/tags"
+import { selectTags, setTags } from "redux/slice/TagSlice"
+import { selectToken } from "redux/slice/AuthSlice"
 
 import "./AskForm.styles.scss"
 
-// 태그 핸들용
-const suggestions = COUNTRIES.map((country) => {
-  return {
-    id: country,
-    text: country,
-  }
-})
-
-const KeyCodes = {
-  comma: 188,
-  enter: 13,
-}
-const delimiters = [KeyCodes.comma, KeyCodes.enter]
-// 태그 핸들용
-
 const de = {
   position: "absolute",
-  top: "50%",
+  top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#3c4146",
+  bgcolor: "#ffffff",
   boxShadow: 24,
   borderRadius: "15px",
   pt: 2,
@@ -38,7 +26,26 @@ const de = {
   pb: 3,
 }
 
-const AskForm = ({ addPost }) => {
+const AskForm = () => {
+  const dispatch = useDispatch()
+  const [acToken] = useState(useSelector(selectToken))
+  const [suggestionList] = useState(useSelector(selectTags))
+
+  // 태그 핸들용
+  const suggestions = suggestionList.map((tag) => {
+    return {
+      id: tag,
+      text: tag,
+    }
+  })
+
+  const KeyCodes = {
+    comma: 188,
+    enter: 13,
+  }
+  const delimiters = [KeyCodes.comma, KeyCodes.enter]
+  // 태그 핸들용
+
   const [formData, setFormData] = useState({
     title: "",
     body: "",
@@ -65,8 +72,11 @@ const AskForm = ({ addPost }) => {
   const [formErrors, setFormErrors] = useState({})
 
   useEffect(() => {
-    setFormErrors({})
-  }, [formData])
+    // setFormErrors({})
+    getAllTagsStringList().then((result) => {
+      dispatch(setTags(result.data.result.data))
+    })
+  }, [])
 
   const markdownEditorRef = useRef(null)
 
@@ -76,27 +86,28 @@ const AskForm = ({ addPost }) => {
 
   // 태그 핸들
   // 렌더용 태그 변수
-  const [tags, setTags] = React.useState([])
+  const [tagsList, setTagsList] = React.useState([])
   // 태그 삭제
   const handleDelete = (i) => {
-    setTags(tags.filter((tag, index) => index !== i))
+    setTagsList(tagsList.filter((tag, index) => index !== i))
     setFormData({ ...formData, tagsData: tagsData.filter((tag, index) => index !== i) })
   }
   // 태그 추가
   const handleAddition = (tag) => {
-    if (tags.length < 5) {
-      setTags([...tags, tag])
-      setFormData({ ...formData, tagsData: [...tagsData, tag] })
+    if (tagsList.length < 5 && !tagsList.includes(tag) && suggestionList.includes(tag.text)) {
+      setTagsList([...tagsList, tag])
+      console.log(tag)
+      setFormData({ ...formData, tagsData: [...tagsData, tag.text] })
     }
   }
 
   const handleDrag = (tag, currPos, newPos) => {
-    const newTags = tags.slice()
+    const newTags = tagsList.slice()
 
     newTags.splice(currPos, 1)
     newTags.splice(newPos, 0, tag)
 
-    setTags(newTags)
+    setTagsList(newTags)
     setFormData({ ...formData, tagsData: newTags })
   }
 
@@ -113,14 +124,21 @@ const AskForm = ({ addPost }) => {
   // 오류 검사
 
   const onSubmit = async (e) => {
-    console.log(formData)
     e.preventDefault()
 
     const errors = validateFormData()
 
     // if there are errors, don't submit
     if (errors.length > 0) return
-    addPost({ title, body, tagsData })
+
+    console.log(formData)
+    postQuestion(acToken, {
+      questionTitle: title,
+      questionContent: body,
+      tagList: tagsData,
+    }).then((result) => {
+      navigate("/questions/" + result.data.result.data.questionSeq)
+    })
 
     setFormData({
       title: "",
@@ -166,8 +184,7 @@ const AskForm = ({ addPost }) => {
                 {/* Body */}
                 내용
                 <p className='body-desc fw-normal fs-caption fc-black-800'>
-                  {/* Include all the information someone would need to answer your question */}
-                  누군가가 귀하의 질문에 대답하는 데 필요한 모든 정보를 포함하십시오.
+                  다른사람들이 질문을 이해하기 쉽게 가능한한 많은 정보를 넣어주세요.
                 </p>
               </label>
               <div className='s-textarea rich-text-editor-container'>
@@ -178,13 +195,10 @@ const AskForm = ({ addPost }) => {
               <label className='form-label s-label'>
                 {/* Tag Name */}
                 태그 이름
-                <p className='tag-desc fw-normal fs-caption'>
-                  {/* Add up to 5 tags to describe what your question is about */}
-                  질문의 내용을 설명하는 최대 5개의 태그를 추가하세요.
-                </p>
+                <p className='tag-desc fw-normal fs-caption'>질문의 내용을 설명하는 최대 5개의 태그를 추가해 보세요.</p>
               </label>
               <ReactTags
-                tags={tags}
+                tags={tagsList}
                 suggestions={suggestions}
                 delimiters={delimiters}
                 handleDelete={handleDelete}
@@ -202,7 +216,6 @@ const AskForm = ({ addPost }) => {
             {/* Post your question */}
             질문 개시
           </button>
-          <s>`\t`</s>
         </div>
       </form>
       <button className='s-btn s-btn__danger' onClick={handleOpen}>
