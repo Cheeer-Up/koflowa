@@ -1,0 +1,43 @@
+/* Element scroll */
+.talkBox {
+  position: relative;
+  right: 100px;
+  width: 100%;
+  height: 600px;
+  border: 1px;
+  border-style: double;
+  border-color: rgb(200,204,208);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-left: 100px;
+  margin-bottom: 10px;
+}
+
+.talkBox .boxInner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.smallBox {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+  z-index: 1;
+  padding: 10px;
+  background: rgb(236, 97, 218);
+  border-radius: 6px;
+  color: #fff;
+  border: 1px solid rgb(183, 81, 187);
+  text-align: left;
+}
+
+.smallBox.fixed {
+  width: 100%;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  text-align: center;
+}

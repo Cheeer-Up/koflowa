@@ -10,7 +10,9 @@ ReactDOM.render(
   <ReduxProvider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-        <App />
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
       </BrowserRouter>
     </PersistGate>
   </ReduxProvider>,
