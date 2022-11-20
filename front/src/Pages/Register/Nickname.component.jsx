@@ -52,7 +52,7 @@ const Nickname = () => {
         <br />
         <br />
         <span className='nickname-main-write-2'>
-          코플러와에 로그인하기 위해 구글 계정을 사용하여 새 계정을 생성하겠습니다.
+          코플로와에 로그인하기 위해 구글 계정을 사용하여 새 계정을 생성하겠습니다.
         </span>
         <br />
         <br /> <br />
