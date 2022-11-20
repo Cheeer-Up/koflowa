@@ -16,14 +16,20 @@ var localUser = new UserModel()
 class VideoRoomComponent extends Component {
   constructor(props) {
     super(props)
+    const url = new URL(window.location.href)
+    const urlParams = url.searchParams
+    const parseSessionName = urlParams.get("sessionName")
+    const parseUserName = urlParams.get("user")
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", parseSessionName, " ", parseUserName)
+
     this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
       ? this.props.openviduServerUrl
       : "https://k7d202.p.ssafy.io:8443"
     this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : "koflowa202"
     this.hasBeenUpdated = false
     this.layout = new OpenViduLayout()
-    let sessionName = this.props.sessionName ? this.props.sessionName : "SessionA"
-    let userName = this.props.user ? this.props.user : "OpenVidu_User" + Math.floor(Math.random() * 100)
+    let sessionName = "tsi03137_kokomong" ? "tsi03137_kokomong" : "SessionA"
+    let userName = parseUserName ? parseUserName : "OpenVidu_User" + Math.floor(Math.random() * 100)
     this.remotes = []
     this.localUserAccessAllowed = false
     this.state = {
@@ -507,6 +513,8 @@ class VideoRoomComponent extends Component {
   }
 
   render() {
+    console.log("this.state: ", this.state)
+    console.log("this.props: ", this.props)
     const mySessionId = this.state.mySessionId
     const localUser = this.state.localUser
     var chatDisplay = { display: this.state.chatDisplay }

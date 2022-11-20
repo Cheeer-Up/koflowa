@@ -1,7 +1,7 @@
 import "./TalkPage.styles.scss"
 
 import "react-chat-elements/dist/main.css"
-import { MessageList, MessageBox, Input, Button, ChatList } from "react-chat-elements"
+import { MeetingLink, MessageBox, Input, Button, ChatList, Avatar } from "react-chat-elements"
 import { Grid } from "@mui/material"
 import React, { Fragment, useEffect, useState, useMemo, useRef } from "react"
 import { v4 as uuidv4 } from "uuid"
@@ -17,11 +17,13 @@ import {
 } from "api/talk"
 import { useSelector, useDispatch } from "react-redux"
 import { selectUser, selectToken } from "redux/slice/AuthSlice"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SockJS from "sockjs-client"
-
+import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront"
+import NotStartedIcon from "@mui/icons-material/NotStarted"
 import usestateref from "react-usestateref"
 import { Box, Container } from "@mui/system"
+import { FaComments } from "react-icons/fa"
 
 const inputReferance = React.createRef()
 
@@ -82,15 +84,15 @@ const TalkPage = () => {
   const [callbackSetup, setCallbackSetup] = useState(false)
   const messagesEndRef = useRef()
 
-  // useEffect(() => {
-  //   scrollToBottom()
-  // })
+  useEffect(() => {
+    scrollToBottom()
+  }, [chatListRef.current])
 
-  useInterval(() => {
-    getAllMyRoom(acTkn).then((res) => {
-      setAllRoomList(res.data.result.data)
-    })
-  }, 3000)
+  // useInterval(() => {
+  //   getAllMyRoom(acTkn).then((res) => {
+  //     setAllRoomList(res.data.result.data)
+  //   })
+  // }, 3000)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -107,7 +109,6 @@ const TalkPage = () => {
   // 내가 가지고있는 모든 방의 정보를 호출
   useEffect(() => {
     getAllMyRoom(acTkn).then((res) => {
-      console.log("모든 방 정보: ", res.data.result.data)
       setAllRoomList(res.data.result.data)
     })
     return () => {
@@ -137,6 +138,8 @@ const TalkPage = () => {
     }
     scrollToBottom()
   }
+
+  /** 방 생성 */
   const requestCreateRoom = (usrSeq) => {
     if (usrSeq === myInfo.seq) {
       alert("자기 자신에게 채팅창 생성 불가")
@@ -189,8 +192,10 @@ const TalkPage = () => {
       client.subscribe("/sub/chat/room/" + data.roomSeq, onMessageReceived)
     }
     client.activate()
+    console.log("crntConRoom data: ", data)
     setCrntConRoom(data)
   }
+
   const clickSendTalk = () => {
     console.log("myInfo: ", myInfo)
     let value = inputReferance.current.value.trim()
@@ -209,6 +214,7 @@ const TalkPage = () => {
       {
         content: value,
         user: { nickname: myInfo.nickname },
+        sessionCode: 0,
       },
     ])
 
@@ -230,10 +236,80 @@ const TalkPage = () => {
     })
     scrollToBottom()
   }
+  const clickSendMeeting = () => {
+    inputReferance.current.value = ""
+    const sessionName =
+      myInfo.email.split("@")[0] > crntConRoom.user.email.split("@")[0]
+        ? `${myInfo.email.split("@")[0]}${crntConRoom.user.email.split("@")[0]}`
+        : `${crntConRoom.user.email.split("@")[0]}${myInfo.email.split("@")[0]}`
+
+    let data = {
+      roomSeq: crntConRoom.roomSeq,
+      content: sessionName,
+      sessionCode: 1,
+    }
+
+    //내가 보낸 정보를 채팅 리스트에 추가
+    setChatList([
+      ...chatListRef.current,
+      {
+        user: { nickname: myInfo.nickname },
+        sessionCode: 1,
+        content: sessionName,
+      },
+    ])
+
+    sendTalk(acTkn, data)
+
+    console.log(myInfo.email.split("@")[0] > crntConRoom.user.email.split("@")[0])
+    client.publish({
+      destination: "/pub/chat/message",
+      headers: {
+        Authorization: "Bearer " + acTkn,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        userSeq: crntConRoom.roomSeq,
+        sender: myInfo.seq,
+        senderNickname: myInfo.nickname,
+        chatContent: sessionName,
+        sessionCode: 1,
+      }),
+      skipContentLengthHeader: true,
+    })
+    scrollToBottom()
+  }
+
+  const linkToMeeting = () => {}
 
   const PrintChatAll = () => {
     return chatListRef.current.map((chat, idx) => {
-      return (
+      console.log(chat)
+      return chat.sessionCode === 1 ? (
+        <Grid item key={uuidv4()}>
+          <MessageBox
+            position={chat.user.nickname === myInfo.nickname ? "right" : "left"}
+            type={"meetingLink"}
+            text={`${chat.user.nickname} 님의 미팅에 참가하기`}
+          />
+          <Link to={`/meeting?sessionName=${chat.content}&user=${myInfo.nickname}`}>
+            <Button
+              onClick={() => {
+                linkToMeeting()
+              }}
+              backgroundColor='rgb(95,139,255)'
+              text={`미팅 참가`}
+              title='send'
+              color='white'
+              icon={{
+                component: <FaComments />,
+                size: 18,
+                float: "right",
+              }}
+            />
+          </Link>
+        </Grid>
+      ) : (
         <MessageBox
           key={uuidv4()}
           position={chat.user.nickname === myInfo.nickname ? "right" : "left"}
@@ -250,8 +326,9 @@ const TalkPage = () => {
       console.log(res)
     })
   }
+
   return (
-    <Box sx={{ height: 700 }}>
+    <Box>
       <br />
       <button
         onClick={() => {
@@ -277,7 +354,20 @@ const TalkPage = () => {
             <Input
               referance={inputReferance}
               // multiline={true}
-              rightButtons={<Button color='white' backgroundColor='black' text='Send' onClick={clickSendTalk} />}
+              rightButtons={
+                <span>
+                  <VideoCameraFrontIcon
+                    sx={{ fontSize: 40, color: "rgb(95, 139, 255)", cursor: "pointer" }}
+                    onClick={() => {
+                      clickSendMeeting()
+                    }}
+                  />
+
+                  <div style={{ height: "40px", marginTop: "5px" }}>
+                    <Button color='white' backgroundColor='rgb(95,139,255)' text='Send' onClick={clickSendTalk} />
+                  </div>
+                </span>
+              }
               onKeyUp={() => {
                 if (window.event.keyCode === 13) clickSendTalk()
               }}
