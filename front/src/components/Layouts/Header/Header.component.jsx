@@ -4,7 +4,6 @@ import { Link, useNavigate, location } from "react-router-dom"
 import { ReactComponent as Search } from "assets/Search.svg"
 import { ReactComponent as Logo } from "assets/KoflowaHeaderMd.svg"
 import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderText.svg"
-import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
 import MobileSideBar from "components/Layouts/MobileSideBar/MobileSideBar.component"
 import { selectToken, selectUser, setToken, setUser } from "../../../redux/slice/AuthSlice"
@@ -104,8 +103,8 @@ const Header = () => {
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
           <Link className='navbar-brand' to='/questions'>
-            {/* <Logo className='full-logo' /> */}
-            <img src='KoflowaHeader2.png' alt='' className='full-logo' />
+            <Logo className='full-logo' />
+            {/* <img src='KoflowaHeader2.png' alt='' className='full-logo' /> */}
             <SmallLogo className='glyph-logo' />
           </Link>
         </div>
