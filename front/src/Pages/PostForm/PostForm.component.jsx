@@ -28,7 +28,7 @@ const PostForm = () => {
       <div className='post-form-container'>
         <div className='post-form-content'>
           <div className='post-form-header'>
-            <div className='post-form-headline fc-black-800'>공개 질문하기</div>
+            <div className='post-form-headline fc-black-800'>질문하기</div>
           </div>
           <div className='post-form-section'>
             <div className='postform' style={{ width: "100%" }}>

@@ -1,15 +1,11 @@
 import React, { Fragment, useState } from "react"
 import { connect, useSelector } from "react-redux"
-// import PropTypes from "prop-types"
-// import { Link } from "react-router-dom"
 
 import TagBadge from "../../../../components/Components/TagBadge/TagBadge.component"
 import UserCard from "../../../../components/Components/UserCard/UserCard.component"
-import { Link, useLocation } from "react-router-dom"
 import "./PostCell.styles.scss"
 import censorBadWords from "../../../../utils/censorBadWords"
 import { selectUser, selectToken } from "redux/slice/AuthSlice"
-
 
 const PostCell = (data) => {
   const [curUser] = useState(useSelector(selectUser))
@@ -17,45 +13,29 @@ const PostCell = (data) => {
   const user = data.content.user
   const questionSeq = data.content.questionSeq
   const tags = data.content.tagList
-  console.log(user);
+  console.log(user)
   return (
     <Fragment>
       <div className='post-cell'>
         <div className='post-text fc-black-800' dangerouslySetInnerHTML={{ __html: censorBadWords(content) }}></div>
         <div className='post-tags'>
-          {tags!=null ?(
-            tags.map((tag, index) => (
-                <TagBadge key={index} tag_name={tag} size={"s-tag"} float={"left"} />
-            ))
-          ):(
+          {tags != null ? (
+            tags.map((tag, index) => <TagBadge key={index} tag_name={tag} size={"s-tag"} float={"left"} />)
+          ) : (
             <div></div>
-          )
-          }
+          )}
         </div>
         <div className='post-actions fc-black-800'>
           <div className='post-actions-extended'>
             <div className='post-btns'>
-              <div className='post-menu'>
-                {/* <Link className='post-links' title='short permalink to this question' to='/'>
-                  share
-                </Link>
-                <Link className='post-links' title='Follow this question to receive notifications' to='/'>
-                  follow
-                </Link> */}
-                {/* {curUser.seq === user.seq && (
-                  <Link
-                    className='s-link s-link__danger'
-                    style={{ paddingLeft: "4px" }}
-                    title='Delete the post'
-                    onClick={(e) => deletePost(questionSeq)}
-                    to='/questions'
-                  >
-                    delete
-                  </Link>
-                )} */}
-              </div>
+              <div className='post-menu'></div>
             </div>
-            <UserCard created_at={user.createdTime} user_id={user.seq} gravatar={user.profile} username={user.nickname} />
+            <UserCard
+              created_at={data.content.createdTime}
+              user_id={user.name}
+              gravatar={user.profile}
+              username={user.nickname}
+            />
           </div>
         </div>
       </div>
