@@ -33,6 +33,7 @@ const AllTagsPage = () => {
           createdTime: data._source.created_time,
         })
       )
+      console.log("parse: ", parse)
       setTags(parse)
     })
   }, [page])
