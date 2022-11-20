@@ -27,3 +27,26 @@
 .display {
   display: none;
 }
+
+.is-selected {
+  background-color: #5f8bff !important;
+}
+
+.kotalk-btn {
+  padding: 6px 12px;
+  color: white;
+  background: #5f8bff;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  border: 1px solid #5f8bff;
+}
+
+.kotalk-btn:hover {
+  padding: 6px 12px;
+  background: white;
+  color: #5f8bff;
+  font-weight: bold;
+  border: 1px solid #5f8bff;
+  cursor: pointer;
+}
