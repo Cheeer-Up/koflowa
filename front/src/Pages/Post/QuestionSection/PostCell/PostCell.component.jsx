@@ -17,6 +17,7 @@ const PostCell = (data) => {
   const user = data.content.user
   const questionSeq = data.content.questionSeq
   const tags = data.content.tagList
+  console.log(user);
   return (
     <Fragment>
       <div className='post-cell'>
@@ -54,7 +55,7 @@ const PostCell = (data) => {
                 )} */}
               </div>
             </div>
-            <UserCard created_at={user.createdTime} user_id={user.name} gravatar={user.profile} username={user.nickname} />
+            <UserCard created_at={user.createdTime} user_id={user.seq} gravatar={user.profile} username={user.nickname} />
           </div>
         </div>
       </div>
