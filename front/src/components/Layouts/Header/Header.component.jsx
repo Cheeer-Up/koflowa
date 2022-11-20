@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react"
 import { Link, useNavigate, location } from "react-router-dom"
 
 import { ReactComponent as Search } from "assets/Search.svg"
-import { ReactComponent as Logo } from "assets/KoflowaHeader.svg"
+import { ReactComponent as Logo } from "assets/KoflowaHeaderMd.svg"
 import { ReactComponent as SmallLogo } from "assets/KoflowaHeaderText.svg"
 import Spinner from "components/Components/Spinner/Spinner.component"
 import LinkButton from "components/Components/LinkButton/LinkButton.component"
