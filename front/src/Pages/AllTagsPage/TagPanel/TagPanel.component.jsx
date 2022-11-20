@@ -10,7 +10,7 @@ const TagPanel = ({ tag: { name, description, createdTime } }) => {
         <TagBadge tag_name={name} size={"s-tag"} float={"left"} />
       </div>
 
-      <div className='flex--item fc-medium mb12 v-truncate4'>{description}</div>
+      <div className='flex--item fc-medium mb12 v-truncate4' dangerouslySetInnerHTML={{ __html: description }}></div>
 
       <div className='mt-auto d-flex jc-space-between fs-caption fc-black-400'>
         <div className='flex--item s-anchors s-anchors__inherit'>
