@@ -18,7 +18,7 @@ const Footer = () => {
           </div>
         </div>
         <div className='item'>
-          <span className='footer-item'>{"ⓒ 코플로와           "}</span>
+          <span className='footer-item'>{"ⓒ 코플로와"}</span>
           <div className='footer-link-list'>
             <span>
               <a

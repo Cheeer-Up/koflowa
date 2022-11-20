@@ -20,7 +20,11 @@
     overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
-    background-color: #333;
+    background-color: #ffffff !important;
+    margin-top: 63.6px;
+    border-right: 2px solid #d6d9dc;
+    border-bottom: 2px solid #d6d9dc;
+    height: 250px !important;
   }
 
   &.is-open {
@@ -65,7 +69,7 @@
 
       .home-link {
         text-decoration: none;
-        color: #c2c3c5;
+        color: #525960;
 
         p {
           padding: 5px 5px 5px 20%;
@@ -73,7 +77,7 @@
           font-size: 13px;
         }
         &:hover {
-          color: #cbcbd1;
+          color: #0c0d0e;
         }
       }
 
@@ -129,12 +133,12 @@
       }
 
       .active {
-        color: #f2f2f3;
+        color: #0c0d0e;
 
         p {
           font-weight: bold;
-          background: #5a5a5a;
-          color: #f2f2f3;
+          background: #c0c0c0 !important;
+          color: #0c0d0e;
           // border-right: 3px solid #f48024;
           border-right: 3px solid #5f8bff;
         }
@@ -157,7 +161,6 @@
       font-size: 1.2rem;
     }
     .is-selected {
-      // background-color: #f48225;
       background-color: #5f8bff !important;
       color: #0c0c0c;
     }
