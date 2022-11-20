@@ -19,6 +19,7 @@ const UserSection = ({ nickname, setNickname, about, setAbout, user }) => (
       comments_count={user.comments_count}
       tags_count={user.tags_count}
       created_at={user.createdTime}
+      reputation_score={user.reputationScore}
     />
   </div>
 )
