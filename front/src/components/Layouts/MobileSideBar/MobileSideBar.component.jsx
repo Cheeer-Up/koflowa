@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
 
 // import { ReactComponent as Hamburger } from "../../../assets/LogoGlyphMd.svg";
-import { ReactComponent as Hamburger } from "../../../assets/KoflowaSmLogoDark.svg"
+import { ReactComponent as Hamburger } from "../../../assets/KoflowaSmLogo.svg"
 // import { ReactComponent as Stack } from "../../../assets/LogoMd.svg"
 import { ReactComponent as Stack } from "../../../assets/KoflowaHeaderMdDark.svg"
 import { ReactComponent as GlobalIcon } from "../../../assets/Globe.svg"
@@ -44,14 +44,8 @@ const MobileSideBar = (props) => {
       <Hamburger onClick={openSidebar} className='ham' />
 
       <SidebarUI.Content isRight={isRight} onClick={() => openSidebar(false)}>
-        <div className='content-logo'>
-          <Stack />
-        </div>
         <div className='content-inner'>
           <div className='side-bar-tabs'>
-            <NavLink exact='true' activeclassname='active' className='home-link' to='/'>
-              <p>홈</p>
-            </NavLink>
             <NavLink activeclassname='active' className='home-link' to='/questions'>
               <p>질문</p>
             </NavLink>
