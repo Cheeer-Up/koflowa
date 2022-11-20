@@ -42,47 +42,51 @@
 ![기술 스택](/README/skill.png)
 
 ### Frontend
+
 ![title](https://img.shields.io/badge/-React-61DAFB?&logo=React&logoColor=white)
 ![title](https://img.shields.io/badge/-Redux-764ABC?&logo=React&logoColor=white)
 ![title](https://img.shields.io/badge/-HTML5-E34F26?&logo=html5&logoColor=white)
 ![title](https://img.shields.io/badge/-Sass-CC6699?&logo=Sass&logoColor=white)
 ![title](https://img.shields.io/badge/-Webpack-7ac5f1?&logo=Webpack&logoColor=white)
-![title](https://img.shields.io/badge/-Babel-eece4f?&logo=Babel&logoColor=white)  
+![title](https://img.shields.io/badge/-Babel-eece4f?&logo=Babel&logoColor=white)
 
 ![title](https://img.shields.io/badge/-Node.js_18.12.0-339933?&logo=Node.js&logoColor=white)
 ![title](https://img.shields.io/badge/-Axios-5A29E4?&logo=Axios&logoColor=white)
 ![title](https://img.shields.io/badge/-Sock.js-000000?&logoColor=white)
 ![title](https://img.shields.io/badge/-WebRTC-333333?&logo=WebRTC&logoColor=white)
 
-
 ### Backend
+
 ![title](https://img.shields.io/badge/-SpringBoot-6DB33F?&logo=SpringBoot&logoColor=white)
 ![title](https://img.shields.io/badge/-SpringSecurity-6DB33F?&logo=SpringSecurity&logoColor=white)
 ![title](https://img.shields.io/badge/-Gradle-02303A?&logo=Gradle&logoColor=white)
 ![title](https://img.shields.io/badge/-Swagger-85EA2D?&logo=Swagger&logoColor=black)
 ![title](https://img.shields.io/badge/-Java_11-000000?&logoColor=white)
-![title](https://img.shields.io/badge/-JPA-000000&logoColor=white)  
+![title](https://img.shields.io/badge/-JPA-000000&logoColor=white)
 
 ![title](https://img.shields.io/badge/-WebRTC-333333?&logo=WebRTC&logoColor=white)
-![title](https://img.shields.io/badge/-Stomp-000000?&logoColor=white)  
+![title](https://img.shields.io/badge/-Stomp-000000?&logoColor=white)
 
 ![title](https://img.shields.io/badge/-MySQL_8.0.29-4479A1?&logo=MySQL&logoColor=white)
 ![title](https://img.shields.io/badge/-Redis-DC382D?&logo=Redis&logoColor=white)
 ![title](https://img.shields.io/badge/-ELK_Stack-005571?&logo=ElasticStack&logoColor=white)
 
 ### Infra
+
 ![title](https://img.shields.io/badge/-EC2-232F3E?&logo=Amazon-AWS&logoColor=white)
 ![title](https://img.shields.io/badge/-NGINX-009639?&logo=NGINX&logoColor=white)
 ![title](https://img.shields.io/badge/-Docker-2496ED?&logo=Docker&logoColor=white)
 ![title](https://img.shields.io/badge/-Jenkins-D24939?&logo=Jenkins&logoColor=black)
 
 ### ETC
+
 ![title](https://img.shields.io/badge/-GitLab-FC6D26?&logo=GitLab&logoColor=white)
 ![title](https://img.shields.io/badge/-Mattermost-0058CC?&logo=Mattermost&logoColor=white)
 ![title](https://img.shields.io/badge/-Notion-000000?&logo=Notion&logoColor=white)
 
 ## 아키텍쳐
-![Architecture](./image.png)
+
+![Architecture](/README/image.png)
 
 ## ERD
 
@@ -140,19 +144,23 @@
 </table>
 
 ### 역할 분담
+
 [![title](https://img.shields.io/badge/DEVLOPER-양요셉-5f8bff)](https://github.com/devyoseph)
+
 - ERD 설계
 - Question, KoTalk API 개발
 - 닉네임 설정 페이지 프론트엔드 개발
 - 최종 발표
 
 [![title](https://img.shields.io/badge/DEVLOPER-이주형-5f8bff)](https://github.com/ljhyung)
-- ERD 설계 
+
+- ERD 설계
 - Answer, Meeting API 개발
 - 화상, 질문 상세 및 답변 페이지 프론트엔드 개발
 - 오픈비두 배포
 
 [![title](https://img.shields.io/badge/DEVLOPER-이미현-5f8bff)](https://github.com/mhlee21)
+
 - ERD 설계
 - Tag API 개발
 - Tag 페이지 프론트엔드 개발
@@ -160,21 +168,25 @@
 - 중간 발표
 
 [![title](https://img.shields.io/badge/DEVLOPER-이연정-5f8bff)](https://github.com/YeonJeongLee00)
+
 - ERD 설계
 - 마이페이지, 사용자 페이지 프론트엔드 개발
 - 마이페이지 API 개발
 
 [![title](https://img.shields.io/badge/DEVLOPER-이청-5f8bff)](https://github.com/S2econdBlue)
+
 - 소셜 로그인 구현
-- 엘라스틱, Redis API 개발 
+- 엘라스틱, Redis API 개발
 - 채팅 페이지, 헤더 프론트엔드 개발
-- Elastic, Redis 배포 
+- Elastic, Redis 배포
 
 [![title](https://img.shields.io/badge/DEVLOPER-정성우-5f8bff)](https://github.com/sw133v)
+
 - 홈페이지, 질문 생성, 태깅 시스템, 주시태그, 사이드바, 사이드바 위젯, 푸터... 프론트엔드 개발
 - 자동 배포 환경 구축
 
 # 프로젝트 산출물
+
 ## 사용자 메뉴얼
 
 [사용자 메뉴얼 바로가기](https://dull-jumbo-928.notion.site/Koflowa-52b44b7f45914ef887303bbda5356f20)
@@ -192,6 +204,7 @@
 ![mockup](/README/mockup.png)
 
 # 프로젝트 구조
+
 ## 프론트 구조
 
 ```
