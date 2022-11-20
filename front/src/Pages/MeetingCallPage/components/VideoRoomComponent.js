@@ -28,7 +28,7 @@ class VideoRoomComponent extends Component {
     this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : "koflowa202"
     this.hasBeenUpdated = false
     this.layout = new OpenViduLayout()
-    let sessionName = "tsi03137_kokomong" ? "tsi03137_kokomong" : "SessionA"
+    let sessionName = parseSessionName ? parseSessionName : "SessionA"
     let userName = parseUserName ? parseUserName : "OpenVidu_User" + Math.floor(Math.random() * 100)
     this.remotes = []
     this.localUserAccessAllowed = false

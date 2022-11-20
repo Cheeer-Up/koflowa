@@ -88,11 +88,12 @@ const TalkPage = () => {
     scrollToBottom()
   }, [chatListRef.current])
 
-  // useInterval(() => {
-  //   getAllMyRoom(acTkn).then((res) => {
-  //     setAllRoomList(res.data.result.data)
-  //   })
-  // }, 3000)
+  useInterval(() => {
+    getAllMyRoom(acTkn).then((res) => {
+      console.log(res)
+      setAllRoomList(res.data.result.data)
+    })
+  }, 1000)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -109,6 +110,7 @@ const TalkPage = () => {
   // 내가 가지고있는 모든 방의 정보를 호출
   useEffect(() => {
     getAllMyRoom(acTkn).then((res) => {
+      console.log("res.data.result.data: ", res.data.result.data)
       setAllRoomList(res.data.result.data)
     })
     return () => {
@@ -330,13 +332,6 @@ const TalkPage = () => {
   return (
     <Box>
       <br />
-      <button
-        onClick={() => {
-          makeRoom(5)
-        }}
-      >
-        채팅방 생성 디버그
-      </button>
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <PrintChatRoomAll />

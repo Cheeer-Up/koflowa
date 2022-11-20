@@ -16,12 +16,13 @@ const TagsWidget = () => {
     getRankingTags()
       .then((res) => {
         let datas = res.data.hits.hits
+        console.log(datas)
         let gatherTags = []
         if (datas !== null) {
           datas.map(({ _source }) =>
             gatherTags.push({
               tag_seq: _source.tag_seq,
-              tag_count: _source.tag_count,
+              tag_count: _source.count,
               tag_name: _source.tag_name,
             })
           )
