@@ -18,7 +18,7 @@ import TagForm from "Pages/TagForm/TagForm.component"
 import ProfilePage from "Pages/ProfilePage/ProfilePage.component"
 import MeetingCallPage from "Pages/MeetingCallPage/components/VideoRoomComponent"
 import NotFound from "Pages/NotFound/NotFound.component"
-import { BaseRoute, LayoutRoute, LayoutAllRoute } from "./Router"
+import { BaseRoute, LayoutRoute, LayoutAllRoute, LayoutNoFooterRoute } from "./Router"
 import TalkPage from "Pages/TalkPage/TalkPage.component"
 import Footer from "components/Layouts/Footer/Footer.component"
 // css 추가
@@ -151,9 +151,9 @@ const App = () => {
         <Route
           path='/talk'
           element={
-            <LayoutRoute>
+            <LayoutNoFooterRoute>
               <TalkPage />
-            </LayoutRoute>
+            </LayoutNoFooterRoute>
           }
         />
         {/* 화상 회의 페이지 */}
