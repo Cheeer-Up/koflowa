@@ -109,7 +109,7 @@ function CustomTagWidget({ name, token, getApi, postApi, deleteApi }) {
                 ) : tags.length > 0 ? (
                   <TagList tags={tags} />
                 ) : (
-                  <button onClick={handleEdit}> 태그를 추가해 보세요</button>
+                  <button onClick={handleEdit}> 태그 추가하기</button>
                 )}
               </div>
             </li>

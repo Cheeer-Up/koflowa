@@ -15,7 +15,6 @@ export const AuthSlice = createSlice({
       role: "",
       seq: "",
     },
-    // 수정상태 확인
     isEdit: false,
     file: null,
     newInfo: null,

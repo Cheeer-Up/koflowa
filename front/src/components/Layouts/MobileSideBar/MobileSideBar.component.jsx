@@ -61,7 +61,7 @@ const MobileSideBar = (props) => {
             <NavLink activeclassname='active' className='home-link' to='/users'>
               <p>사용자</p>
             </NavLink>
-            <NavLink activeclassname='active' className='home-link' to='/jobs'>
+            <NavLink activeclassname='active' className='home-link' to='/talk'>
               <p>코톡</p>
             </NavLink>
           </div>

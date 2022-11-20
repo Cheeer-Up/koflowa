@@ -4,7 +4,7 @@ const QUESTION = "/question"
 const ANSWER = "/answer"
 const TAGS = "/tags"
 const MEETING = "/meeting"
-const TALK = "/talk"
+
 const AUTH = "/auth"
 const GOOGLE = "google"
 const NICKNAME = "/nickname"
@@ -19,7 +19,7 @@ export const GOOGLE_AUTH_URL =
   GOOGLE +
   "?redirect_uri=" +
   process.env.REACT_APP_PUBLIC_URL +
-  "/nickname"
+  "/"
 
 export const GOOGLE_REGISTER_SET_NICKNAME = process.env.REACT_APP_API_URL + "/nickname/"
 
@@ -67,6 +67,11 @@ export const allTag = () => "/koflowa_tag/_search"
 // MEETING
 
 // TALK
+export const TALKROOM = "/talk/room"
+export const TALKMSG = "/talk/message"
+export const talkList = (roomSeq) => TALKMSG + "/" + roomSeq
+export const talkRead = () => TALKMSG + "/read"
+export const talkChk = () => TALKMSG + "/check"
 
 //SIGN
 export const auth = AUTH
