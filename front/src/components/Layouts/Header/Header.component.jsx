@@ -73,19 +73,22 @@ const Header = () => {
     else return <GuestLinks />
   }
 
+  console.log(window.innerWidth)
   const SearchBar = () => {
     return (
-      <form onSubmit={() => navigate.push("/questions")} className='small-search-form' autoComplete='off'>
-        <input
-          className='small-search'
-          autoComplete='off'
-          type='text'
-          name='search'
-          maxLength='35'
-          placeholder='검색...'
-        />
-        <Search className='small-search-icon' />
-      </form>
+      <div>
+        <form onSubmit={() => navigate.push("/questions")} className='small-search-form' autoComplete='off'>
+          <input
+            className='small-search'
+            autoComplete='off'
+            type='text'
+            name='search'
+            maxLength='35'
+            placeholder='검색...'
+          />
+          <Search className='small-search-icon' />
+        </form>
+      </div>
     )
   }
 
@@ -101,7 +104,8 @@ const Header = () => {
         {/* 로고 이미지 */}
         <div className='header-brand-div'>
           <Link className='navbar-brand' to='/questions'>
-            <Logo className='full-logo' />
+            {/* <Logo className='full-logo' /> */}
+            <img src='KoflowaHeader2.png' alt='' className='full-logo' />
             <SmallLogo className='glyph-logo' />
           </Link>
         </div>
