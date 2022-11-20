@@ -13,6 +13,14 @@ import {
 } from "api/urls"
 
 const rankingTagsCondition = {
+  query: {
+    range: {
+      count: {
+        gte: 1,
+      },
+    },
+  },
+  _source: ["tag_name", "modified_time", "count"],
   size: 10,
   sort: [
     {
