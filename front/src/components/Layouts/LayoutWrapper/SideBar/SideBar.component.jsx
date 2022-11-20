@@ -11,9 +11,9 @@ const SideBar = () => (
       <SideBarItem isHome={true} link='/users' text='사용자' />
       <SideBarItem isHome={true} link='/talk' text='코톡' />
       <div className='teams-tabs'>
-        <a href='https://k7d202.p.ssafy.io/meeting' className='title fc-light' target='_blank' rel='noreferrer'>
+        {/* <a href='https://k7d202.p.ssafy.io/meeting' className='title fc-light' target='_blank' rel='noreferrer'>
           화상 회의
-        </a>
+        </a> */}
       </div>
     </div>
   </div>
