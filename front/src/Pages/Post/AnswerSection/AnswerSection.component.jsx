@@ -12,24 +12,25 @@ import ButtonGroup from "../../../components/Components/ButtonGroup/ButtonGroup.
 
 import "./AnswerSection.styles.scss"
 import { selectEdit } from "redux/slice/AnswerSlice"
-  
-const AnswerSection = ({ question } ) => {
-  const [auth, setAuth] = useState("");
-  const [answer, setAnswer] = useState([]);
-  const questionSequence = question.questionSeq;
+
+const AnswerSection = ({ question }) => {
+  const [auth, setAuth] = useState("")
+  const [answer, setAnswer] = useState([])
+  const questionSequence = question.questionSeq
   const [loading, setLoading] = useState(true)
 
   let isEdit = useSelector(selectEdit)
 
   useEffect(() => {
-    setTimeout(() => 
-    getAnswerList(questionSequence).then((res)=>{
-      const payload = res.data.result.data
-      setAnswer(payload)
-      setLoading(false)
-    })
-    , 250);
-    
+    setTimeout(
+      () =>
+        getAnswerList(questionSequence).then((res) => {
+          const payload = res.data.result.data
+          setAnswer(payload)
+          setLoading(false)
+        }),
+      250
+    )
   }, [isEdit])
   // const handlePaginationChange = (e, value) => {
   //   setPage(value)
@@ -44,48 +45,23 @@ const AnswerSection = ({ question } ) => {
         <div className='answer-header fc-black-800'>
           <div className='answer-sub-header'>
             <div className='answer-headline'>
-              <h2>답변</h2>
+              <h1>{answer.length} 답변</h1>
             </div>
-            <ButtonGroup
-              buttons={["Newest", "Oldest"]}
-              selected={sortType}
-              setSelected={setSortType}
-            />
           </div>
         </div>
-        {/* {answer.loading === null ? (
-          <Spinner width='25px' height='25px' />
-        ) : (
-          answer.answers?.sort(handleSorting(sortType)).map((answer, index) => (
-            <div key={index} className='answers'>
-              <AnswerItem answer={answer} />
-              <p>test</p>
-            </div>
-          ))
-        )} */}
 
         {loading === null ? (
           <Spinner width='25px' height='25px' />
         ) : (
           answer.map((data, idx) => (
-              <div key={idx} className='answers'>
-                <AnswerItem answer={data} question={question}/>
-              </div>
-            ))
-        )
-        }
-
-        {/* <Pagination page={page} count={totalPage} handlePaginationChange={handlePaginationChange} /> */}
-
-        {/* {answer.answers?.sort().map((answer, index) => (
-          <div key={index} className='answers'>
-            <AnswerItem answer={answer} />
-            <p>test</p>
-          </div>
-        ))} */}
+            <div key={idx} className='answers'>
+              <AnswerItem answer={data} question={question} />
+            </div>
+          ))
+        )}
 
         <div className='add-answer'>
-          <AnswerForm auth={auth} questionSeq={questionSequence}/>
+          <AnswerForm auth={auth} questionSeq={questionSequence} />
         </div>
       </div>
     </Fragment>

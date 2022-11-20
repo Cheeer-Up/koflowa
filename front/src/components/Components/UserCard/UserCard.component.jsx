@@ -4,15 +4,7 @@ import { Link } from "react-router-dom"
 
 import "./UserCard.styles.scss"
 
-const UserCard = ({
-  created_at,
-  user_id,
-  gravatar,
-  username,
-  dateType,
-  float,
-  backgroundColor,
-}) => {
+const UserCard = ({ created_at, user_id, gravatar, username, float, backgroundColor }) => {
   return (
     <Fragment>
       <div className='owner' style={{ float: float, backgroundColor: backgroundColor }}>
