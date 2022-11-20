@@ -13,17 +13,10 @@ import {
 } from "api/urls"
 
 const rankingTagsCondition = {
-  query: {
-    exists: { field: "tag_count" },
-  },
-  _source: ["tag_seq", "tag_name", "tag_count"],
   size: 10,
-  collapse: {
-    field: "tag_seq",
-  },
   sort: [
     {
-      tag_count: {
+      count: {
         order: "desc",
       },
     },
@@ -37,7 +30,7 @@ const allTagsCondition = (condition) => {
     size: condition.size,
     sort: [
       {
-        created_time: {
+        modified_time: {
           order: condition.order,
         },
       },
