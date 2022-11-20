@@ -2,19 +2,17 @@
   height: 140px;
   display: flex;
   justify-content: center;
-  // padding-top: 32px;
   background-color: #232629;
 
   .socials {
     display: flex;
-    // justify-content: space-between;
     width: 100%;
 
     .social-item {
       display: flex;
       flex-direction: column;
       margin-top: 10px;
-      margin-left: 45%;
+      margin-left: 35%;
     }
   }
   .footer-item {
@@ -25,18 +23,11 @@
     display: flex;
     justify-content: center;
     margin: 40px;
-    // position: absolute;
-    // margin-top: 8%;
-    // .footer-item {
-    // margin-left: 10px;
-    // }
 
     .footer-link-list {
       display: flex;
 
       justify-content: center;
-      // margin-top: -2.2%;
-      // margin-left: 600px;
       .footerItem {
         color: #ffffff !important;
       }
