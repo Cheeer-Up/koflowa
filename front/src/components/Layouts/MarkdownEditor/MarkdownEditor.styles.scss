@@ -32,15 +32,15 @@
     button[title="Link"],
     button[title="Remove Link"] {
       span {
-        filter: invert(100%);
-        -webkit-filter: invert(100%);
+        filter: invert(0%);
+        -webkit-filter: invert(0%);
       }
     }
     button[title="Link"]:disabled,
     button[title="Remove Link"]:disabled {
       span {
-        filter: invert(0%);
-        -webkit-filter: invert(0%);
+        filter: invert(50%);
+        -webkit-filter: invert(50%);
       }
     }
   }
