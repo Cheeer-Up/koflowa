@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import "./TagBadge.styles.scss"
 
 const TagBadge = ({ tag_name, size, display, link, href }) => {
+  console.log("tag_name, size, display, link, href: ", tag_name, size, display, link, href)
   return (
     <Fragment>
       <div className='tags-badge' style={{ display }}>

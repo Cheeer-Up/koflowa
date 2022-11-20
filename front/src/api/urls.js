@@ -62,8 +62,8 @@ export const ignoreTag = (tagName) => TAGS + `/ignore/${tagName}`
 export const watchTagList = TAGS + `/watch`
 export const ignoreTagList = TAGS + `/ignore`
 export const allTagsStringList = TAGS + `/list`
-export const rankingTag = () => "/koflowa_tag_ranking/_search"
-export const allTag = () => "/koflowa_tag/_search"
+export const rankingTag = () => "/koflowatagrank/_search"
+export const allTag = () => "/koflowatagsall/_search"
 // MEETING
 
 // TALK
