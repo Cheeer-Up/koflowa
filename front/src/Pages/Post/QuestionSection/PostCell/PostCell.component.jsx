@@ -13,6 +13,7 @@ const PostCell = (data) => {
   const user = data.content.user
   const questionSeq = data.content.questionSeq
   const tags = data.content.tagList
+  console.log(user)
   return (
     <Fragment>
       <div className='post-cell'>

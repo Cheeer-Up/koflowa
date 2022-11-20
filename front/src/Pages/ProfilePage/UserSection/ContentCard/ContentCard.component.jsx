@@ -7,15 +7,16 @@ import "./ContentCard.styles.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { selectUser, selectEdit, setIsEdit, selectNewInfo, setNewInfo } from "redux/slice/AuthSlice.js"
 import { useState } from "react"
+import { fontWeight } from "styled-system"
 
-const ContentCard = ({ nickname, setNickname, about, setAbout, created_at }) => {
+const ContentCard = ({ nickname, setNickname, about, setAbout, created_at, reputation_score }) => {
   const dispatch = useDispatch()
   let isEdit = useSelector(selectEdit) // 하위 컴포넌트 수정 사항을 위해 전체 적으로 관리
   let newInfo = useSelector(selectNewInfo)
   let loginUser = useSelector(selectUser)
 
   useEffect(() => {
-    // loginUser ===
+    // console.log(reputation_score)
   }, [])
 
   const saveNickname = (e) => {
@@ -55,6 +56,12 @@ const ContentCard = ({ nickname, setNickname, about, setAbout, created_at }) => 
                 />
                 <div className='date'>
                   <p>{moment(created_at).startOf("hour").fromNow()}</p>
+                </div>
+              </h2>
+              <h2>
+                <div style={{ fontWeight: "bold" }}>{reputation_score} </div>
+                <div className='date'>
+                  <p>명성</p>
                 </div>
               </h2>
             </div>

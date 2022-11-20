@@ -18,7 +18,17 @@ const UserAnswerActivity = ({ userSeq }) => {
   useEffect(() => {
     getUserAnswer(accessToken, page - 1, size, sort, userSeq).then((data) => {
       const payload = data.data.result.data
-      setAnswers(payload.content)
+      let arr = payload.content.map((answer) => {
+        let temp = answer.content.replace(/(<([^>]+)>)/gi, "")
+        temp = temp.replace(/&nbsp;/gi, "")
+        temp = temp.replace(/\s/gi, "")
+
+        return {
+          ...answer,
+          content: temp,
+        }
+      })
+      setAnswers(arr)
       setTotalPage(payload.totalPages)
     })
   }, [page])
