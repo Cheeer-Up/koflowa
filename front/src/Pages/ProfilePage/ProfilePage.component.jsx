@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { getUserProfile, putMyProfile, postMyImage } from "api/mypages"
 
 import UserSection from "./UserSection/UserSection.component"
@@ -21,7 +21,9 @@ import {
   setFile,
   setChangeInfo,
   setChangeImage,
+  selectToken,
 } from "redux/slice/AuthSlice.js"
+import { create_Chk_With_Room } from "api/talk"
 
 const ProfilePage = () => {
   const [curUser, setCurUser] = useState([])
@@ -37,6 +39,7 @@ const ProfilePage = () => {
 
   // redux
   const dispatch = useDispatch()
+  let navigate = useNavigate()
   // 현재 로그인하고 있는 유저
   let loginUser = useSelector(selectUser)
   // 하위 컴포넌트 수정 사항을 위해 전체적으로 관리
@@ -45,7 +48,7 @@ const ProfilePage = () => {
   let file = useSelector(selectFile)
   // 수정 정보 저장
   let newInfo = useSelector(selectNewInfo)
-
+  const [acToken] = useState(useSelector(selectToken))
   useEffect(() => {
     getUserProfile(accessToken, userSeq).then((data) => {
       const payload = data.data.result.data
@@ -100,6 +103,15 @@ const ProfilePage = () => {
     setEdit(false)
   }
 
+  /**
+   *
+   * @param {*} oppSeq
+   */
+  const create_ChatRoom = (oppSeq) => {
+    create_Chk_With_Room(acToken, oppSeq).then(() => {
+      navigate("/talk")
+    })
+  }
   return loading || curUser === null ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
@@ -141,6 +153,16 @@ const ProfilePage = () => {
             setCurUser={setCurUser}
           />
         </div>
+        {Number(loginUser.seq) !== Number(userSeq) ? (
+          <div>
+            <button className='kotalk-btn' onClick={() => create_ChatRoom(userSeq)}>
+              코톡 보내기
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
+
         <div className='row-grid'>
           <UserQuestionActivity userSeq={userSeq} />
         </div>
