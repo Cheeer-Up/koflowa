@@ -1,10 +1,22 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 import moment from "moment"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { create_Chk_With_Room } from "api/talk"
+import { useSelector } from "react-redux"
+import { selectUser, selectToken } from "redux/slice/AuthSlice"
 
 import "./UserCard.styles.scss"
 
-const UserCard = ({ created_at, user_id, gravatar, username, float, backgroundColor }) => {
+const UserCard = ({ created_at, user_id, gravatar, username, dateType, float, backgroundColor }) => {
+  let navigate = useNavigate()
+  const [acToken] = useState(useSelector(selectToken))
+  const [user] = useState(useSelector(selectUser))
+  const [style, setStyle] = useState({ display: "none" })
+  const create_ChatRoom = (oppSeq) => {
+    create_Chk_With_Room(acToken, oppSeq).then(() => {
+      navigate("/talk")
+    })
+  }
   return (
     <Fragment>
       <div className='owner' style={{ float: float, backgroundColor: backgroundColor }}>
@@ -18,9 +30,39 @@ const UserCard = ({ created_at, user_id, gravatar, username, float, backgroundCo
             </Link>
           </div>
           <div className='user-profile'>
-            <Link className='user-profile-link fc-blue-600' to={`/users/${user_id}`}>
+            {/* <Link className='user-profile-link fc-blue-600' to={`/users/${user_id}`}>
               {username}
-            </Link>
+            </Link> */}
+
+            <div>
+              <div
+                className='userIconGnb'
+                onMouseEnter={(e) => {
+                  setStyle({ display: "block" })
+                }}
+                onMouseLeave={(e) => {
+                  setStyle({ display: "none" })
+                }}
+              >
+                <Link className='user-profile-link fc-blue-600' to={`/users/${user_id}`}>
+                  {username}
+                </Link>
+                <ul style={style} className='custom'>
+                  <li>
+                    <Link className='user-profile-link fc-blue-600' to={`/users/${user_id}`}>
+                      회원정보
+                    </Link>
+                  </li>
+                  {user_id !== user.seq ? (
+                    <li className='user-profile-link fc-blue-600' onClick={() => create_ChatRoom(user_id)}>
+                      코톡 보내기
+                    </li>
+                  ) : (
+                    <div></div>
+                  )}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>

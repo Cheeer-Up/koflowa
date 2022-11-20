@@ -13,7 +13,7 @@ const AvatarCard = ({ id, profile }) => {
   const dispatch = useDispatch()
   let loginUser = useSelector(selectUser)
   let file = useSelector(selectFile)
-  let isEdit = useSelector(selectEdit) // 하위 컴포넌트 수정 사항을 위해 전체 적으로 관리
+  let globalEdit = useSelector(selectEdit) // 하위 컴포넌트 수정 사항을 위해 전체 적으로 관리
 
   useEffect(() => {
     Number(userSeq) === Number(loginUser.seq) ? setImage(loginUser.profile) : setImage(profile)
@@ -41,7 +41,7 @@ const AvatarCard = ({ id, profile }) => {
         <div className='avatar'>
           <div className='avatar-link'>
             <div className='logo-wrapper'>
-              <img src={image} alt='user-logo' onClick={() => (isEdit ? fileInput.current.click() : "")} />
+              <img src={image} alt='user-logo' onClick={() => (globalEdit ? fileInput.current.click() : "")} />
               <input
                 className='display'
                 type='file'
